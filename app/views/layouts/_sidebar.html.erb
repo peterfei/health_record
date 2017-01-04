@@ -1,68 +1,75 @@
 <!-- left menu starts -->
-        <div class="col-sm-2 col-lg-2">
-            <div class="sidebar-nav">
-                <div class="nav-canvas">
-                    <div class="nav-sm nav nav-stacked">
+<div class="col-sm-2 col-lg-2">
+  <div class="sidebar-nav">
+    <div class="nav-canvas">
+      <div class="nav-sm nav nav-stacked">
 
-                    </div>
-                    <ul class="nav nav-pills nav-stacked main-menu">
-                        <li>
-                            <a class="ajax-link" href="/">
-                                <i class="glyphicon glyphicon-home"></i>
-                                <span>主页</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="ajax-link" href="<%= health_items_path %>">
-                                <i class="glyphicon glyphicon-plus"></i>
-                                <span>健康项目</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="ajax-link" href="<%= health_item_records_path %>">
-                                <i class="glyphicon glyphicon-list-alt"></i>
-                                <span>健康项目记录</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="ajax-link" href="<%= health_item_attentions_path %>">
-                                <i class="glyphicon glyphicon-volume-up"></i>
-                                <span>健康项目提醒</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="ajax-link" href="<%= medical_record_managements_path %>">
-                                <i class="glyphicon glyphicon-edit"></i>
-                                <span>病历管理</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="ajax-link" href="<%= take_medicine_managements_path %>">
-                                <i class="glyphicon glyphicon-calendar"></i>
-                                <span>服药管理</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="ajax-link" href="<%= take_medicine_attentions_path %>">
-                                <i class="glyphicon glyphicon-bell"></i>
-                                <span>服药提醒</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<%= users_path %>">
-                                <i class="glyphicon glyphicon-user"></i>
-                                <span>用户</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="ajax-link" href="#">
-                                <i class="glyphicon glyphicon-heart"></i>
-                                <span>关注</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!--/span-->
-        <!-- left menu ends -->
+      </div>
+      <ul class="nav nav-pills nav-stacked main-menu">
+        <li>
+          <a class="ajax-link" href="/">
+              <i class="glyphicon glyphicon-home"></i>
+              <span>主页</span>
+          </a>
+        </li>
+        <li>
+          <a class="ajax-link" href="<%= health_items_path %>">
+              <i class="glyphicon glyphicon-plus"></i>
+              <span>健康项目</span>
+          </a>
+        </li>
+        <li>
+          <a class="ajax-link" href="<%= health_item_records_path %>">
+              <i class="glyphicon glyphicon-list-alt"></i>
+              <span>健康项目记录</span>
+          </a>
+        </li>
+        <li>
+          <a class="ajax-link" href="<%= health_item_attentions_path %>">
+              <i class="glyphicon glyphicon-volume-up"></i>
+              <span>健康项目提醒</span>
+          </a>
+        </li>
+        <li>
+          <a class="ajax-link" href="<%= medical_record_managements_path %>">
+              <i class="glyphicon glyphicon-edit"></i>
+              <span>病历管理</span>
+          </a>
+        </li>
+        <li>
+          <a class="ajax-link" href="<%= take_medicine_managements_path %>">
+              <i class="glyphicon glyphicon-calendar"></i>
+              <span>服药管理</span>
+          </a>
+        </li>
+        <li>
+          <a class="ajax-link" href="<%= take_medicine_attentions_path %>">
+              <i class="glyphicon glyphicon-bell"></i>
+              <span>服药提醒</span>
+          </a>
+        </li>
+        <li>
+          <a href="<%= users_path %>">
+              <i class="glyphicon glyphicon-user"></i>
+              <span>用户</span>
+          </a>
+        </li>
+        <li>
+          <a class="ajax-link" href="#">
+              <i class="glyphicon glyphicon-heart"></i>
+              <span>关注</span>
+          </a>
+        </li>
+        <li class="accordion">
+          <a><i class="glyphicon glyphicon-cog"></i><span>微信管理</span></a>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a>用户管理</a></li>
+            <li><a>模版消息管理</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--/span-->
+<!-- left menu ends -->
