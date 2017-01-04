@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :categories
   devise_for :accounts, controllers: { sessions: 'accounts/sessions', registrations:'accounts/registrations', passwords:'accounts/passwords' }
   resources :accounts do
     collection do

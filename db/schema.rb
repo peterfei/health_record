@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104012812) do
+ActiveRecord::Schema.define(version: 20170104032906) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -40,6 +40,12 @@ ActiveRecord::Schema.define(version: 20170104012812) do
     t.index ["user_id"], name: "index_api_user_keys_on_user_id", using: :btree
   end
 
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name",                    comment: "分类名称"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "health_item_attentions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "item_attention_time",              comment: "提醒时间"
     t.integer  "health_item_id"
@@ -67,12 +73,13 @@ ActiveRecord::Schema.define(version: 20170104012812) do
   end
 
   create_table "medical_record_managements", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name",                    comment: "病历名称"
-    t.integer  "category",                comment: "分类"
-    t.string   "image_path",              comment: "病历图片路径"
+    t.string   "name",                     comment: "病历名称"
+    t.string   "image_path",               comment: "病历图片路径"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "category_id"
+    t.index ["category_id"], name: "index_medical_record_managements_on_category_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_medical_record_managements_on_user_id", using: :btree
   end
 
