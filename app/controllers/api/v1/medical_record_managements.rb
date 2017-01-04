@@ -10,8 +10,17 @@ module API
           desc "查询用户所有病历记录"
           get :all_medical_records do
             # authenticate!
-            MedicalRecordManagement.where("user_id = ?", params[:user_id]).
+            @dates = MedicalRecordManagement.select(:created_at).where("user_id = ?", params[:user_id]).
               group("DATE_FORMAT(created_at,'%Y-%m-%d')")
+            @results ||= []
+            @dates.each do |d|
+              @records = {}
+              @date = d.created_at.strftime("%Y-%m-%d")
+              @records[:record_date] = @date
+              @records[:record_content] = MedicalRecordManagement.where("user_id = ? AND created_at LIKE ?", params[:user_id], "%#{@date}%")
+              @results.push(@records)
+            end
+            @results
           end
 
           params do
