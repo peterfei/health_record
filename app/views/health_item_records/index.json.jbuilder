@@ -1,0 +1,1 @@
+json.array! @health_item_records, partial: 'health_item_records/health_item_record', as: :health_item_record

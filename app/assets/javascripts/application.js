@@ -12,5 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+
+//= require jquery.min
+//= require bootstrap/bootstrap.min
+//= require jquery.cookie
+//= require chosen.jquery.min
+//= require jquery.history
+//= require charisma

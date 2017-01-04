@@ -1,0 +1,17 @@
+<%= form_for(health_item_attention) do |f| %>
+  <% if health_item_attention.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(health_item_attention.errors.count, "error") %> prohibited this health_item_attention from being saved:</h2>
+
+      <ul>
+      <% health_item_attention.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

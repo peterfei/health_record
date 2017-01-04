@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Medical Record Managements</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @medical_record_managements.each do |medical_record_management| %>
+      <tr>
+        <td><%= link_to 'Show', medical_record_management %></td>
+        <td><%= link_to 'Edit', edit_medical_record_management_path(medical_record_management) %></td>
+        <td><%= link_to 'Destroy', medical_record_management, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Medical Record Management', new_medical_record_management_path %>

@@ -1,0 +1,1 @@
+json.array! @medical_record_managements, partial: 'medical_record_managements/medical_record_management', as: :medical_record_management

@@ -11,5 +11,18 @@ module HealthRecord
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+    config.active_record.default_timezone = :utc
+    config.time_zone = 'Beijing'
+
+    config.i18n.default_locale = "zh-CN"
+    # config.active_record.raise_in_transactional_callbacks = true
+    config.paths.add "app/api", glob: "**/*.rb"
+    config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+    config.middleware.use Rack::Cors do
+      allow do
+        origins "*"
+        resource "*", headers: :any, methods: [:get, :post, :put, :delete, :options]
+      end
+    end
   end
 end

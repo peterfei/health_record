@@ -1,0 +1,1 @@
+json.partial! "health_item_records/health_item_record", health_item_record: @health_item_record

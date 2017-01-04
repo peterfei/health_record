@@ -1,0 +1,2 @@
+module MedicalRecordManagementsHelper
+end

@@ -1,0 +1,11 @@
+<div id="content" class="col-lg-10 col-sm-10">
+	<%=render 'layouts/flash' %>
+	<!-- content starts -->
+	<div>
+		<ul class="breadcrumb">
+			<%= render_breadcrumbs :tag => :li, :separator => "" %>
+		</ul>
+	</div>
+	<div class=" row"><%= yield %></div>
+	<!-- content ends -->
+</div>

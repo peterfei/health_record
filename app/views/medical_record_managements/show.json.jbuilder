@@ -1,0 +1,1 @@
+json.partial! "medical_record_managements/medical_record_management", medical_record_management: @medical_record_management

@@ -1,0 +1,1 @@
+json.array! @take_medicine_managements, partial: 'take_medicine_managements/take_medicine_management', as: :take_medicine_management

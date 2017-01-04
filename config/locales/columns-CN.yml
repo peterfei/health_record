@@ -1,0 +1,15 @@
+"zh-CN":
+  activerecord:
+    attributes:
+      health_item:
+        name: "项目名称"
+        unit: "单位"
+        user_id: "所属用户"
+        is_check: "是否开启"
+      account:
+        username: "账号"
+        password: "密码"
+        password_confirmation: "确认密码"
+
+
+

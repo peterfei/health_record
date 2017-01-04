@@ -1,0 +1,1 @@
+json.array! @take_medicine_attentions, partial: 'take_medicine_attentions/take_medicine_attention', as: :take_medicine_attention

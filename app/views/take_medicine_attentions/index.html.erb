@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Take Medicine Attentions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @take_medicine_attentions.each do |take_medicine_attention| %>
+      <tr>
+        <td><%= link_to 'Show', take_medicine_attention %></td>
+        <td><%= link_to 'Edit', edit_take_medicine_attention_path(take_medicine_attention) %></td>
+        <td><%= link_to 'Destroy', take_medicine_attention, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Take Medicine Attention', new_take_medicine_attention_path %>

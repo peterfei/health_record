@@ -1,0 +1,2 @@
+module HealthItemAttentionsHelper
+end

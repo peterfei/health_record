@@ -1,0 +1,2 @@
+module TakeMedicineManagementsHelper
+end

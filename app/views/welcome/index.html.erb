@@ -1,0 +1,20 @@
+<div class=" row">
+    <div class="col-md-5">
+        <a data-toggle="tooltip" title="当天新增<%= @new_users %>人." class="well top-block" href="<%= users_path %>">
+            <i class="glyphicon glyphicon-user yellow"></i>
+
+            <h4>总用户数</h4>
+            <h4><%= @total_users %></h4>
+            <span class="notification"><%= @new_users %></span>
+        </a>
+    </div>
+    <div class="col-md-5">
+        <a data-toggle="tooltip" title="当天新增<%= @new_health_items %>条." class="well top-block" href="<%= health_items_path %>">
+            <i class="glyphicon glyphicon-plus green"></i>
+
+            <h4>健康项目</h4>
+            <h4><%= @total_health_items %></h4>
+            <span class="notification"><%= @new_health_items %></span>
+        </a>
+    </div>
+</div>

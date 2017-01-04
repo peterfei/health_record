@@ -1,0 +1,1 @@
+json.partial! "take_medicine_attentions/take_medicine_attention", take_medicine_attention: @take_medicine_attention

@@ -1,0 +1,21 @@
+"zh-CN":
+  user:
+    sex:
+      male: "男"
+      female: "女"
+    blood_type:
+      type_a: "A"
+      type_b: "B"
+      type_ab: "AB"
+      type_o: "O"
+      type_other: "其他"
+    children:
+      zero: "无"
+      one: "1个"
+      two: "2个"
+      three: "3个"
+      more: "4个或以上"
+  health_item:
+    is_check:
+      checked: "开启"
+      cancel: "关闭"
