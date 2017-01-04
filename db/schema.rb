@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104032906) do
+ActiveRecord::Schema.define(version: 20170104091005) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20170104032906) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "item_type",               comment: "项目类型"
     t.index ["user_id"], name: "index_health_items_on_user_id", using: :btree
   end
 
@@ -147,6 +148,14 @@ ActiveRecord::Schema.define(version: 20170104032906) do
     t.string   "wx_id",                   comment: "微信ID"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "wechat_sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "openid",     null: false
+    t.string   "hash_store"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["openid"], name: "index_wechat_sessions_on_openid", unique: true, using: :btree
   end
 
   add_foreign_key "api_user_keys", "users"
