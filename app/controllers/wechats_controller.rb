@@ -7,8 +7,9 @@ class WechatsController < ActionController::Base
   end
 
   on :event, with: 'subscribe' do |request|
+    # binding.pry
     # request.reply.text "User #{request[:FromUserName]} subscribe now"
-    request.reply.text "<a href='#'>subsribe</a>"
+    request.reply.text "欢迎使用,请先<a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd20fe2e6dc888486&redirect_uri=#{URI::escape(root_url)}app#/createName&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'>注册</a>成我们会员，尊享服务.".html_safe
   end
 
   on :text, with: '张轩' do |request|
