@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.5'
 #断点
 gem 'pry'
 gem 'pry-nav'
-
+gem 'rb-readline'
 #接口相关
 gem 'grape'
 gem 'grape-entity'

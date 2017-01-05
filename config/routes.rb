@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #主页
   root to: 'welcome#index'
-
+  get 'welcome/text'=>'welcome#text'
   #接口
   mount API::Base => "/"
 end

@@ -1,0 +1,12 @@
+default: &default
+  appid: "wxd20fe2e6dc888486"
+  secret: "b6ee3320495e6a751d796ce5b193e45e"
+  token:    "wechat"
+  access_token: "/var/tmp/wechat_access_token"
+development:
+  <<: *default
+  # trusted_domain_fullname: "http://wechatdo.ngrok.cc"
+
+test:
+  <<: *default
+
