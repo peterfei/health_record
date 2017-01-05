@@ -1,11 +1,8 @@
 default: &default
-  corpid: "wx53eb0519112c5efc"
-  corpsecret: "bc127b0fbc1e366ef11fc4c24b539867"
-  agentid:  1
 # Or if using public account, only need above two line
   appid: "wx53eb0519112c5efc"
   secret: "bc127b0fbc1e366ef11fc4c24b539867"
-  token:    "peterfei"
+  token:  "peterfei"
   access_token: "/var/tmp/wechat_access_token"
   encrypt_mode: false # if true must fill encoding_aes_key
   encoding_aes_key:  "my_encoding_aes_key"
@@ -29,7 +26,7 @@ production:
 
 development:
   <<: *default
-  trusted_domain_fullname: "http://peterfei.me"
+  trusted_domain_fullname: "http://www.peterfei.me"
 
 test:
   <<: *default
