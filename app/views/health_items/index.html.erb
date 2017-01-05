@@ -1,3 +1,23 @@
+<!-- search_form -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="box-self">
+      <%= search_form_for @q,:html=>{:class=>'form-horizontal'} do |f| %>
+        <div class="form-group col-md-3">
+          <%= f.label :name_cont,'项目名称',class:'col-sm-4 control-label' %>
+          <div class="col-md-8">
+            <%= f.search_field :name_cont,class:'form-control'%>
+          </div>
+        </div>
+        <div class="form-group col-md-0">
+          <%= f.submit '搜索',class:'btn btn-success' %>
+          <%= link_to '清空',health_items_path,:class=>'btn btn-primary'%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- search_form end -->
 <div class="row">
   <div class="col-md-12">
     <div class="pull-right" style="margin-right:20px;"><%= link_to '新增', new_health_item_path, class: 'btn btn-primary' %></div>
@@ -13,6 +33,7 @@
             <tr>
               <th>项目名称</th>
               <th>单位</th>
+              <th>正常值</th>
               <th>所属用户</th>
               <th>是否开启</th>
               <th>操作</th>
@@ -24,6 +45,7 @@
               <tr>
                 <td><%= health_item.name %></td>
                 <td><%= health_item.unit %></td>
+                <td><%= health_item.normal %></td>
                 <td><%= User.find(health_item.user_id).truename if health_item.user_id %></td>
                 <td><%= t("health_item.is_check.#{health_item.is_check}") if health_item.is_check.present? %></td>
                 <td><%= link_to '删除', health_item, method: :delete, data: { confirm: '确认删除吗?' } %></td>

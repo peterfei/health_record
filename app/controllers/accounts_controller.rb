@@ -1,5 +1,26 @@
 class AccountsController < ApplicationController
 	before_action :authenticate_account!
+	add_breadcrumb '账号管理', :accounts_path
+	def index
+		@account=Account.all
+	end
+
+	def new
+		add_breadcrumb "新建账号", :new_account_path
+		@account = Account.new
+	end
+
+	def create
+		binding.pry
+		@accounts = Account.new(edit_user_params)
+		respond_to do |format|
+			if @accounts.save
+				format.html { redirect_to accounts_url, notice: '添加成功！' }
+			else
+				format.html { render :new }
+			end
+		end
+	end
 
 	def edit_password
 		@account = current_account
@@ -20,6 +41,11 @@ class AccountsController < ApplicationController
 	end
 
 	private
+
+		def edit_user_params
+			params.require(:account).permit(:username, :password, :role)
+		end
+
 		def account_params
 			params.require(:account).permit(:password, :password_confirmation)
 		end

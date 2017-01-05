@@ -106,6 +106,7 @@ Devise.setup do |config|
   # algorithm), the cost increases exponentially with the number of stretches (e.g.
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
   config.stretches = Rails.env.test? ? 1 : 11
+  config.secret_key = 'f48b288c78a69b0856600baa4d72d4c36a545249a9b89940dac25d697d95ef7325bf3f17bd9c653a663560cbd198f7faa3eead3213a0a9620418f26baad3170d'
 
   # Set up a pepper to generate the hashed password.
   # config.pepper = '6ef1e7153676918d301f9ddb326b12fa10a7aac84323a06188e93bcdf55e0e792112a0034fba8158c4aa49cb345947287adb8ea8a142a320344033b0998247f1'

@@ -5,7 +5,8 @@ class HealthItemsController < ApplicationController
   # GET /health_items
   # GET /health_items.json
   def index
-    @health_items = HealthItem.all
+    @q=HealthItem.all.ransack(params[:q])
+    @health_items = @q.result
   end
 
   # GET /health_items/1
@@ -31,7 +32,7 @@ class HealthItemsController < ApplicationController
 
     respond_to do |format|
       if @health_item.save
-        format.html { redirect_to @health_item, notice: 'Health item was successfully created.' }
+        format.html { redirect_to health_items_path, notice: '新增成功！' }
         format.json { render :show, status: :created, location: @health_item }
       else
         format.html { render :new }
@@ -72,6 +73,6 @@ class HealthItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def health_item_params
-      params.fetch(:health_item, {}).permit(:name, :unit)
+      params.fetch(:health_item, {}).permit(:name, :unit, :normal)
     end
 end

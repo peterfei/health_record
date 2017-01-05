@@ -4,4 +4,5 @@ class HealthItem < ApplicationRecord
 	has_many :health_item_attentions
 
 	enum is_check:[:cancel, :checked]
+	enum item_type:[:jk, :bl]
 end

@@ -34,6 +34,9 @@ gem 'jbuilder', '~> 2.5'
 gem 'pry'
 gem 'pry-nav'
 
+###搜索
+gem 'ransack'
+
 #接口相关
 gem 'grape'
 gem 'grape-entity'
