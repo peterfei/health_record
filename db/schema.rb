@@ -69,7 +69,6 @@ ActiveRecord::Schema.define(version: 20170104091005) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "item_type",               comment: "项目类型"
     t.index ["user_id"], name: "index_health_items_on_user_id", using: :btree
   end
 
@@ -158,11 +157,3 @@ ActiveRecord::Schema.define(version: 20170104091005) do
     t.index ["openid"], name: "index_wechat_sessions_on_openid", unique: true, using: :btree
   end
 
-  add_foreign_key "api_user_keys", "users"
-  add_foreign_key "health_item_attentions", "health_items"
-  add_foreign_key "health_item_records", "health_items"
-  add_foreign_key "health_items", "users"
-  add_foreign_key "medical_record_managements", "users"
-  add_foreign_key "take_medicine_attentions", "take_medicine_managements"
-  add_foreign_key "take_medicine_managements", "users"
-end
