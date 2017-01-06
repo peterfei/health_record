@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(version: 20170105032309) do
     t.index ["openid"], name: "index_wechat_sessions_on_openid", unique: true, using: :btree
   end
 
+<<<<<<< HEAD
   add_foreign_key "api_user_keys", "users"
   add_foreign_key "health_item_attentions", "health_items"
   add_foreign_key "health_item_records", "health_items"
@@ -159,3 +160,5 @@ ActiveRecord::Schema.define(version: 20170105032309) do
   add_foreign_key "take_medicine_attentions", "take_medicine_managements"
   add_foreign_key "take_medicine_managements", "users"
 end
+=======
+>>>>>>> 1b4d252968df07d1a98ef3a2469b045f252c12af
