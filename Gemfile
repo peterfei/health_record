@@ -49,8 +49,14 @@ gem 'rack-cors'
 #devise
 gem 'devise'
 
-##面包屑
+#面包屑
 gem "breadcrumbs_on_rails"
+
+#搜索
+gem 'ransack'
+
+#分页
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

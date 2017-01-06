@@ -23,10 +23,18 @@ module API
               @user = User.new username: params[:username], password: params[:password], truename: params[:truename], sex: params[:sex], age: params[:age], blood_type: params[:blood_type], children: params[:children], wx_id: params[:wx_id]
               @user.hobby_list.add(params[:hobby_list], parse: true)
               @user.job_list.add(params[:job_list], parse: true)
-              if @user.save
-                { status: :ok }
-              else
-                error!('保存失败')
+              User.transaction do
+                if @user.save
+                  @admin_health_items = HealthItem.where("is_admin=1 AND user_id IS NULL")
+                  HealthItem.transaction do
+                    @admin_health_items.each do |item|
+                      HealthItem.create! name: item.name, unit: item.unit, is_check:0, user_id: @user.id, is_admin:1, normal_min: item.normal_min, normal_max: item.normal_max
+                    end
+                  end
+                  { status: :ok }
+                else
+                  error!('保存失败')
+                end
               end
             rescue Exception => e
               L.debug "用户注册数据提交错误**#{e.to_json}**"

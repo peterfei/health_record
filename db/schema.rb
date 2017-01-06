@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104012812) do
+ActiveRecord::Schema.define(version: 20170106020604) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170104012812) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "username"
+    t.integer  "role",                                             comment: "角色"
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
   end
 
@@ -41,10 +42,10 @@ ActiveRecord::Schema.define(version: 20170104012812) do
   end
 
   create_table "health_item_attentions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.datetime "item_attention_time",              comment: "提醒时间"
     t.integer  "health_item_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.string   "item_attention_time",              comment: "提醒时间"
     t.index ["health_item_id"], name: "index_health_item_attentions_on_health_item_id", using: :btree
   end
 
@@ -63,12 +64,15 @@ ActiveRecord::Schema.define(version: 20170104012812) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "is_admin",                comment: "是否为系统默认项目"
+    t.integer  "normal_min",              comment: "正常最小值"
+    t.integer  "normal_max",              comment: "正常最大值"
+    t.string   "subitem",                 comment: "子项目"
     t.index ["user_id"], name: "index_health_items_on_user_id", using: :btree
   end
 
   create_table "medical_record_managements", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name",                    comment: "病历名称"
-    t.integer  "category",                comment: "分类"
     t.string   "image_path",              comment: "病历图片路径"
     t.integer  "user_id"
     t.datetime "created_at", null: false
@@ -112,10 +116,10 @@ ActiveRecord::Schema.define(version: 20170104012812) do
   end
 
   create_table "take_medicine_attentions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.datetime "medicine_attention_time",                  comment: "提醒时间"
     t.integer  "take_medicine_management_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.string   "medicine_attention_time",                  comment: "提醒时间"
     t.index ["take_medicine_management_id"], name: "index_take_medicine_attentions_on_take_medicine_management_id", using: :btree
   end
 
@@ -140,6 +144,14 @@ ActiveRecord::Schema.define(version: 20170104012812) do
     t.string   "wx_id",                   comment: "微信ID"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "wechat_sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "openid",     null: false
+    t.string   "hash_store"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["openid"], name: "index_wechat_sessions_on_openid", unique: true, using: :btree
   end
 
   add_foreign_key "api_user_keys", "users"

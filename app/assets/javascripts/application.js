@@ -18,4 +18,5 @@
 //= require jquery.cookie
 //= require chosen.jquery.min
 //= require jquery.history
+//= require moment.min
 //= require charisma

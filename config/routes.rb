@@ -12,7 +12,12 @@ Rails.application.routes.draw do
   resources :health_item_attentions
   resources :health_item_records
   resources :health_items
-  resources :users
+  resources :users do
+    collection do
+      post 'check_medical_records'
+      post 'check_item_records'
+    end
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #主页
   root to: 'welcome#index'
