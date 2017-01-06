@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="well col-md-5 center login-box">
-		<%= form_for(@account) do |f| %>
+		<%= form_for(@account,:url=>create_account_accounts_path) do |f| %>
 		<% if @account.errors.any? %>
 		<div id="error_explanation">
 			<ul>
@@ -18,12 +18,13 @@
 
 		<div class="form-group">
 			<%= f.label :password %>
-			<%= f.text_field :password, class: "form-control" %>
+			<%= f.password_field :password, class: "form-control" %>
 		</div>
 
 		<div class="form-group">
 			<%= f.label :role %>
-			<%= f.text_field :role, class: "form-control" %>
+			<%#= f.select :role, class: "form-control" %>
+			<%= f.select :role,options_for_select(Account.roles.keys.map{|m| [t("account.role.#{m}"),m]},selected=@account.role),{include_blank: "---请选择---"},:class=>'form-control'%>
 		</div>
 
 		<div class="center col-md-8">
