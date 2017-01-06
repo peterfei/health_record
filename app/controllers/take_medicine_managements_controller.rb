@@ -1,10 +1,16 @@
 class TakeMedicineManagementsController < ApplicationController
   before_action :set_take_medicine_management, only: [:show, :edit, :update, :destroy]
-
+  add_breadcrumb '服药管理', :take_medicine_managements_path
   # GET /take_medicine_managements
   # GET /take_medicine_managements.json
   def index
-    @take_medicine_managements = TakeMedicineManagement.all
+    #@take_medicine_managements = TakeMedicineManagement.all
+    @q=TakeMedicineManagement.all.ransack(params[:q])
+    if params[:q]
+      @take_medicine_managements = @q.result
+    else
+      @take_medicine_managements = []
+    end
   end
 
   # GET /take_medicine_managements/1
@@ -71,4 +77,4 @@ class TakeMedicineManagementsController < ApplicationController
     def take_medicine_management_params
       params.fetch(:take_medicine_management, {})
     end
-end
+  end
