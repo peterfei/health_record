@@ -38,9 +38,9 @@ class AccountsController < ApplicationController
 	#更新账号
 	def edit_account
 		#binding.pry
-		@accounts=Account.find(params[:account][:id])
+		@account=Account.find(params[:account][:id])
 		respond_to do |format|
-			if @accounts.update(account_params)
+			if @account.update(account_params)
 				format.html { redirect_to accounts_path, notice: '密码修改成功！' }
 				format.json { render accounts_path, status: :ok }
 			else

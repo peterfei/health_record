@@ -14,6 +14,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     add_breadcrumb "详情", :user_path
+    @userfocu=UserFocu.where("user_id='#{params[:id]}'")
   end
 
   # GET /users/new
