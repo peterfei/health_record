@@ -4,6 +4,8 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+#IDE
+.idea
 # Ignore bundler config.
 /.bundle
 
@@ -19,3 +21,4 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+/config/wechat.yml

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170106020604) do
+ActiveRecord::Schema.define(version: 20170105032309) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -64,10 +64,14 @@ ActiveRecord::Schema.define(version: 20170106020604) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+<<<<<<< HEAD
     t.integer  "is_admin",                comment: "是否为系统默认项目"
     t.integer  "normal_min",              comment: "正常最小值"
     t.integer  "normal_max",              comment: "正常最大值"
     t.string   "subitem",                 comment: "子项目"
+=======
+    t.integer  "normal",                  comment: "正常值"
+>>>>>>> debf505d1f04e8b07a5a106c85bf9e31017e4a16
     t.index ["user_id"], name: "index_health_items_on_user_id", using: :btree
   end
 
@@ -154,6 +158,10 @@ ActiveRecord::Schema.define(version: 20170106020604) do
     t.index ["openid"], name: "index_wechat_sessions_on_openid", unique: true, using: :btree
   end
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> debf505d1f04e8b07a5a106c85bf9e31017e4a16
   add_foreign_key "api_user_keys", "users"
   add_foreign_key "health_item_attentions", "health_items"
   add_foreign_key "health_item_records", "health_items"
@@ -162,3 +170,5 @@ ActiveRecord::Schema.define(version: 20170106020604) do
   add_foreign_key "take_medicine_attentions", "take_medicine_managements"
   add_foreign_key "take_medicine_managements", "users"
 end
+=======
+>>>>>>> 1b4d252968df07d1a98ef3a2469b045f252c12af

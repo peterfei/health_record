@@ -34,6 +34,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'pry'
 gem 'pry-nav'
 
+###搜索
+gem 'ransack'
+
+gem 'rb-readline'
 #接口相关
 gem 'grape'
 gem 'grape-entity'
@@ -74,3 +78,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+#wechat相关
+gem 'wechat'

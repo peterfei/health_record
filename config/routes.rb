@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
+  resource :wechat, only: [:show, :create]
+  resources :categories
   devise_for :accounts, controllers: { sessions: 'accounts/sessions', registrations:'accounts/registrations', passwords:'accounts/passwords' }
   resources :accounts do
     collection do
       get 'edit_password'
       patch 'update_password'
+      post 'create_account'
+      delete 'destroy_account'
+      get 'update_account'
+      patch 'edit_account'
     end
   end
   resources :take_medicine_attentions
@@ -21,7 +27,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #主页
   root to: 'welcome#index'
-
+  get 'welcome/text'=>'welcome#text'
   #接口
   mount API::Base => "/"
 end

@@ -1,0 +1,20 @@
+template:
+  template_id: "aKEMM-rPmNQ2iFO_bWclTslMup8eG9rLNM1Iv8rkCJQ"
+  url: "http://www.baidu.com"
+  topcolor: "#FF0000"
+  data:
+    first:
+      value: "您好，您已报名成功"
+      color: "#0A0A0A"
+    key1:
+      value: "XX活动123"
+      color: "#CCCCCC"
+    key2:
+      value: "2017.1.5"
+      color: "#CCCCCC"
+    key3:
+      value: "xian"
+      color: "#CCCCCC"
+    remark:
+      value: "欢迎再次使用111111。"
+      color: "#173177"

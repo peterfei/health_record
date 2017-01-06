@@ -19,3 +19,7 @@
     is_check:
       checked: "开启"
       cancel: "关闭"
+  account:
+    role:
+      admin: "管理员"
+      general: "普通账号"
