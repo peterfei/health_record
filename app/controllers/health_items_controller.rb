@@ -73,6 +73,6 @@ class HealthItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def health_item_params
-      params.fetch(:health_item, {}).permit(:name, :unit, :normal)
+      params.fetch(:health_item, {}).permit(:name, :unit, :normal_min, :normal_max)
     end
 end

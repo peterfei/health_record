@@ -6,7 +6,8 @@
         unit: "单位"
         user_id: "所属用户"
         is_check: "是否开启"
-        normal: "正常值"
+        normal_min: "最小值"
+        normal_max: "最大值"
       account:
         username: "账号"
         password: "密码"
