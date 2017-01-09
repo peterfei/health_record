@@ -81,3 +81,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #wechat相关
 gem 'wechat'
+
+#config配置
+gem 'figaro'

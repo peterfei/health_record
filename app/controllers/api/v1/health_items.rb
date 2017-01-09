@@ -64,7 +64,7 @@ module API
           end
 
           params do
-            requires :name, type: Integer, message: "未传项目名称"
+            requires :name, type: String, message: "未传项目名称"
             requires :unit, type: String, message: "未传项目单位"
             requires :user_id, type: String, message: "未传user_id"
             requires :normal_min, type: Integer, message: "未传最小正常值"
