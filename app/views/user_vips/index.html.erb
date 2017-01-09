@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>User Vips</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_vips.each do |user_vip| %>
+      <tr>
+        <td><%= link_to 'Show', user_vip %></td>
+        <td><%= link_to 'Edit', edit_user_vip_path(user_vip) %></td>
+        <td><%= link_to 'Destroy', user_vip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User Vip', new_user_vip_path %>

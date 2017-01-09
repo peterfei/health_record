@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170106071029) do
+ActiveRecord::Schema.define(version: 20170109032115) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -143,6 +143,18 @@ ActiveRecord::Schema.define(version: 20170106071029) do
     t.index ["user_id"], name: "index_user_focus_on_user_id", using: :btree
   end
 
+  create_table "user_vips", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "card_number",                     comment: "会员卡号"
+    t.string   "integer",                         comment: "会员积分"
+    t.string   "barcode_image_path",              comment: "会员二维码"
+    t.string   "string",                          comment: "会员二维码"
+    t.string   "vip_score",                       comment: "会员积分"
+    t.integer  "user_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["user_id"], name: "index_user_vips_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "username",                comment: "账号"
     t.string   "password",                comment: "密码"
@@ -154,6 +166,8 @@ ActiveRecord::Schema.define(version: 20170106071029) do
     t.string   "wx_id",                   comment: "微信ID"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "wx_name",                 comment: "微信名称"
+    t.string   "wx_avatar",               comment: "微信头像"
   end
 
   create_table "wechat_sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -172,4 +186,5 @@ ActiveRecord::Schema.define(version: 20170106071029) do
   add_foreign_key "take_medicine_attentions", "take_medicine_managements"
   add_foreign_key "take_medicine_managements", "users"
   add_foreign_key "user_focus", "users"
+  add_foreign_key "user_vips", "users"
 end

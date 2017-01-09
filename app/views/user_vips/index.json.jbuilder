@@ -1,0 +1,1 @@
+json.array! @user_vips, partial: 'user_vips/user_vip', as: :user_vip

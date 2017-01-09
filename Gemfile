@@ -34,10 +34,15 @@ gem 'jbuilder', '~> 2.5'
 gem 'pry'
 gem 'pry-nav'
 
-###搜索
+#搜索
 gem 'ransack'
 
+#编译ruby语言
 gem 'rb-readline'
+
+#分页
+gem 'kaminari'
+
 #接口相关
 gem 'grape'
 gem 'grape-entity'
@@ -58,9 +63,6 @@ gem "breadcrumbs_on_rails"
 
 #搜索
 gem 'ransack'
-
-#分页
-gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,0 +1,2 @@
+class UserVip < ApplicationRecord
+end
