@@ -5,13 +5,8 @@ class TakeMedicineManagementsController < ApplicationController
   # GET /take_medicine_managements
   # GET /take_medicine_managements.json
   def index
-    #@take_medicine_managements = TakeMedicineManagement.all
     @q=TakeMedicineManagement.all.ransack(params[:q])
-    if params[:q]
-      @take_medicine_managements = @q.result
-    else
-      @take_medicine_managements = []
-    end
+    @take_medicine_managements = @q.result.page(params[:page])
   end
 
   # GET /take_medicine_managements/1
