@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    add_breadcrumb "详情", :user_path
+    add_breadcrumb "个人信息", :user_path
   end
 
   # GET /users/new
@@ -175,7 +175,7 @@ class UsersController < ApplicationController
 
     render json: @result
   end
-
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

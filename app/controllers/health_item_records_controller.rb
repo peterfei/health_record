@@ -1,10 +1,23 @@
 class HealthItemRecordsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, only: [:get_health_items]
   before_action :set_health_item_record, only: [:show, :edit, :update, :destroy]
+  add_breadcrumb '数据统计', :health_item_records_path
 
   # GET /health_item_records
   # GET /health_item_records.json
   def index
-    @health_item_records = HealthItemRecord.all
+    if params[:q]
+      @health_item_id = params[:q][:health_item_id_eq]
+      @user_id = params[:q][:health_item_user_id_eq]
+      @q = HealthItemRecord.all.ransack(params[:q])
+      @health_item_records = @q.result
+    else
+      @health_item = HealthItem.where("user_id IS NOT NULL AND is_check=1").first
+      @health_item_id = @health_item.id rescue nil
+      @user_id = @health_item.user_id rescue nil
+      @q = HealthItemRecord.where("health_item_id = ?", @health_item_id).ransack(params[:q])
+      @health_item_records = @q.result
+    end
   end
 
   # GET /health_item_records/1
@@ -59,6 +72,17 @@ class HealthItemRecordsController < ApplicationController
       format.html { redirect_to health_item_records_url, notice: 'Health item record was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  # ########################################################
+  # | Author: wangyang
+  # | Time: 2017-01-06 17:58:47
+  # | Description: 获取用户选择的健康项目
+  # | Args: user_id
+  # ########################################################
+  def get_health_items
+    @health_items = HealthItem.where("user_id = ? AND is_check=1", params[:user_id])
+    render json: @health_items
   end
 
   private

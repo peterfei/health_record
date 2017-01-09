@@ -1,6 +1,6 @@
 class HealthItemsController < ApplicationController
   before_action :set_health_item, only: [:show, :edit, :update, :destroy]
-  add_breadcrumb '健康项目', :health_items_path
+  add_breadcrumb '项目管理', :health_items_path
 
   # GET /health_items
   # GET /health_items.json
@@ -16,7 +16,7 @@ class HealthItemsController < ApplicationController
 
   # GET /health_items/new
   def new
-    add_breadcrumb "新增", :new_health_item_path
+    add_breadcrumb "新增项目", :new_health_item_path
     @health_item = HealthItem.new
   end
 
