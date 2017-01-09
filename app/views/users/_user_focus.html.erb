@@ -3,24 +3,28 @@
       <div class="box col-md-12">
         <div class="box-inner">
           <div class="box-content">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>称呼</th>
-                  <th>账号</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% @userfocu.each do |focu| %>
+            <% if @userfocu.present? %>
+              <table class="table table-bordered">
+                <thead>
                   <tr>
-                    <td><%= focu.appellation %></td>
-                    <td><%= User.find(focu.follow_id).username %></td>
-                    <td><%= link_to '查看数据', users_path<<"/#{focu.follow_id}" %></td>
+                    <th>称呼</th>
+                    <th>账号</th>
+                    <th>操作</th>
                   </tr>
-                <% end %>
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  <% @userfocu.each do |focu| %>
+                    <tr>
+                      <td><%= focu.appellation %></td>
+                      <td><%= User.find(focu.follow_id).username %></td>
+                      <td><%= link_to '查看数据', User.find(focu.follow_id), class: "btn btn-success" %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            <% else %>
+              <h3 class="text-center">暂无数据</h3>
+            <% end %>
           </div>
         </div>
       </div>

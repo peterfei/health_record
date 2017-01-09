@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="text-center"><h2>账号管理</h2></div>
+  <div class="text-center"><h2>账号管理</h2></div>
   <div class="col-md-12">
     <div class="pull-right" style="margin-right:20px;"><%= link_to '新建账号', new_account_path, class: 'btn btn-primary' %></div>
   </div>
@@ -27,11 +27,11 @@
                 <td><%= cont.created_at.strftime('%Y-%m-%d %H : %M') %></td>
                 <% if cont.username != 'admin' %>
                 <td>
-                    <%= link_to '编辑', update_account_accounts_path(id:cont.id), class: 'btn btn-primary btn-sm' %>
+                    <%= link_to '修改密码', update_account_accounts_path(id:cont.id), class: 'btn btn-primary btn-sm' %>
                     <%= link_to '删除', destroy_account_accounts_path(id:cont.id), method: :delete, data: { confirm: '确认删除吗?' } ,class: 'btn btn-danger btn-sm'%>
                 </td>
                 <%else%>
-                <td><%= link_to '编辑', update_account_accounts_path(id:cont.id) , class: 'btn btn-primary btn-sm' %></td>
+                <td><%= link_to '修改密码', update_account_accounts_path(id:cont.id) , class: 'btn btn-primary btn-sm' %></td>
                 <%end%>
             </tr>
             <% end %>

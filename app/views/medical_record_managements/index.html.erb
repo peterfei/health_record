@@ -1,25 +1,92 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="box-self">
+      <form  method="GET" accept-charset="UTF-8" action="/medical_record_managements" class="form-horizontal">
+        <div class="form-group col-md-3">
+          <label class="col-sm-4 control-label">姓名:</label>
+          <div class="col-md-8">
+            <input type="text" name="name" id="name" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group col-md-5">
+          <label class="col-sm-3 control-label">日期:</label>
+          <div class="col-md-4">
+            <input type="text" name="start_at" id="start_at" class="form-control"/>
+          </div>
+          <div class="text-center col-sm-1">至</div>
+          <div class="col-md-4">
+            <input type="text" name="end_at" id="end_at" class="form-control"/>
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="col-sm-4 control-label">类型:</label>
+          <div class="col-md-8">
+            <select name="category" id="category" class="form-control">
+              <option value="">--- 请选择 ---</option>
+              <% Setting.category.each do |c|%>
+                <option value="<%= c %>"><%= c %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-2">
+          <button type="submit" class="btn btn-success">搜索</button>
+          <%= link_to '清空',medical_record_managements_path,:class=>'btn btn-primary'%>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
-<h1>Medical Record Managements</h1>
+<div class="row">
+  <div class="text-center"><h2>病历管理</h2></div>
+    <div class="box col-md-12">
+      <div class="box-inner">
+        <div class="box-header well">
+          <h2>病历管理</h2>
+        </div>
+        <div class="box-content">
+        <% if @medical_record_managements && @medical_record_managements.length>0 %>
+          <% @medical_record_managements.each do |medical_record_management| %>
+            <h3><%= medical_record_management[:record_date] %></h3>
+            <ul class="thumbnails">
+            <% medical_record_management[:record_content].each do |content| %>
+              <li class="thumbnail">
+                <a href="<%= content.image_path %>" target="_blank">
+                  <img src="<%= content.image_path %>" />
+                </a>
+                <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
+                <dt class="text-center"><%= User.find(content.user_id).truename %> | <%= content.name %></dt>
+              </li>
+            <% end %>
+            </ul>
+          <% end %>
+        <% else %>
+          <h3 class="text-center">暂无数据</h3>
+        <% end %>
+          <!-- <h3 class="text-center">暂无数据</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+          <h3>2017/01/05</h3>
+          <ul class="thumbnails">
+            <li class="thumbnail">
+              <a href="/medical_record_management/1.jpg" target="_blank"><img src="/medical_record_management/1.jpg" /></a>
+              <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
+              <dt class="text-center">123</dt>
+            </li>
+            <li class="thumbnail">
+              <a href="/medical_record_management/1.jpg" target="_blank"><img src="/medical_record_management/1.jpg" /></a>
+              <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
+              <dt class="text-center">123</dt>
+            </li>
+            <li class="thumbnail">
+              <a href="/medical_record_management/1.jpg" target="_blank"><img src="/medical_record_management/1.jpg" /></a>
+              <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
+              <dt class="text-center">123</dt>
+            </li>
+          </ul> -->
 
-  <tbody>
-    <% @medical_record_managements.each do |medical_record_management| %>
-      <tr>
-        <td><%= link_to 'Show', medical_record_management %></td>
-        <td><%= link_to 'Edit', edit_medical_record_management_path(medical_record_management) %></td>
-        <td><%= link_to 'Destroy', medical_record_management, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<br>
-
-<%= link_to 'New Medical Record Management', new_medical_record_management_path %>

@@ -53,23 +53,23 @@ function checkreitemrecords(){
           }
           str += '</tr>';
           if(result.health_item_records){
-    for(var j=0;j<result.health_item_records.length;j++){
-      str += '<tr>';
-      str += '<td>'+new Date(result.health_item_records[j].created_at).toLocaleString()+'</td>';
-      var contents = result.health_item_records[j].content.split(",");
-      for(var k=0;k<contents.length;k++){
-        str += '<td>'+contents[k]+result.health_item.unit;
-        if(contents[k]>result.health_item.normal_max){
-          str += '<i class="pull-right glyphicon glyphicon-arrow-up red">';
-        }else if(contents[k]<result.health_item.normal_min){
-          str += '<i class="pull-right glyphicon glyphicon-arrow-down red">';
-        }else{
-          str += '<i class="pull-right glyphicon glyphicon-thumbs-up green">';
-        }
-        str += '</td>';
-      }
-      str += '</tr>';
-    }
+            for(var j=0;j<result.health_item_records.length;j++){
+              str += '<tr>';
+              str += '<td>'+new Date(result.health_item_records[j].created_at).toLocaleString()+'</td>';
+              var contents = result.health_item_records[j].content.split(",");
+              for(var k=0;k<contents.length;k++){
+                str += '<td>'+contents[k]+result.health_item.unit;
+                if(contents[k]>result.health_item.normal_max){
+                  str += '<i class="pull-right glyphicon glyphicon-arrow-up red">';
+                }else if(contents[k]<result.health_item.normal_min){
+                  str += '<i class="pull-right glyphicon glyphicon-arrow-down red">';
+                }else{
+                  str += '<i class="pull-right glyphicon glyphicon-thumbs-up green">';
+                }
+                str += '</td>';
+              }
+              str += '</tr>';
+            }
           }
         }else{
           str += '<tr><th>采集时间</th>';

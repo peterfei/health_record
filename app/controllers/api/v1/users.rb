@@ -12,15 +12,16 @@ module API
             requires :age, type: Integer, message: "未传年龄"
             requires :blood_type, type: Integer, message: "未传血型"
             requires :children, type: Integer, message: "未传子女数"
-            requires :wx_id, type: String, message: "未传微信ID"
+            # requires :wx_id, type: String, message: "未传微信ID"
             requires :hobby_list, type: String, message: "未传兴趣爱好"
             requires :job_list, type: String, message: "未传职业"
+            requires :code, type: String, message: "未传code"
           end
           desc "用户注册"
           post :register do
             begin
               L.info "用户注册提交数据为**#{params.to_json}**"
-              @user = User.new username: params[:username], password: params[:password], truename: params[:truename], sex: params[:sex], age: params[:age], blood_type: params[:blood_type], children: params[:children], wx_id: params[:wx_id]
+              @user = User.new username: params[:username], password: params[:password], truename: params[:truename], sex: params[:sex], age: params[:age], blood_type: params[:blood_type], children: params[:children]
               @user.hobby_list.add(params[:hobby_list], parse: true)
               @user.job_list.add(params[:job_list], parse: true)
               User.transaction do
@@ -44,8 +45,8 @@ module API
 
           params do
             requires :wx_id, type: String, message: "未传wx_id"
-            optional :username, type: String, message: "未传username"
-            optional :password, type: String, message: "未传Password"
+            optional :username, type: String
+            optional :password, type: String
           end
           desc "用户登录"
           post :login do

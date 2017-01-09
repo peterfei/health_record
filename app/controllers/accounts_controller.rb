@@ -33,6 +33,7 @@ class AccountsController < ApplicationController
 
 	#编辑账号
 	def update_account
+		add_breadcrumb "修改密码", :update_account_accounts_path
 		@account=Account.find(params[:id])
 	end
 	#更新账号

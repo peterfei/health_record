@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :user_vips
   resource :wechat, only: [:show, :create]
   devise_for :accounts, controllers: { sessions: 'accounts/sessions', registrations:'accounts/registrations', passwords:'accounts/passwords' }
   resources :accounts do
@@ -15,7 +16,11 @@ Rails.application.routes.draw do
   resources :take_medicine_managements
   resources :medical_record_managements
   resources :health_item_attentions
-  resources :health_item_records
+  resources :health_item_records do
+    collection do
+      post 'get_health_items'
+    end
+  end
   resources :health_items
   resources :users do
     collection do

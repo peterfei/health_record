@@ -6,8 +6,9 @@
         unit: "单位"
         user_id: "所属用户"
         is_check: "是否开启"
-        normal_min: "最小值"
-        normal_max: "最大值"
+        is_admin: "是否系统默认项目"
+        normal_min: "正常最小值"
+        normal_max: "正常最大值"
       account:
         username: "账号"
         password: "密码"
