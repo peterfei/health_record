@@ -1,0 +1,21 @@
+# config/application.yml
+defaults: &defaults
+  sms_setting:
+    sms_url: 'http://www.jianzhou.sh.cn/JianzhouSMSWSServer/http/sendBatchMessage'
+    account: 'sdk_rongyikeji'
+    password:  'Rytech_123.com'
+    content_tag: '【e租365VIP】'
+    verify_code: ''
+  model:
+
+  default:
+    password: "123456"
+development:
+  <<: *defaults
+  neat_setting: 800
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

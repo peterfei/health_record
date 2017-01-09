@@ -12,7 +12,7 @@ module API
             requires :age, type: Integer, message: "未传年龄"
             requires :blood_type, type: Integer, message: "未传血型"
             requires :children, type: Integer, message: "未传子女数"
-            requires :wx_id, type: String, message: "未传微信ID"
+            requires :code, type: String, message: "未传微信code"
             requires :hobby_list, type: String, message: "未传兴趣爱好"
             requires :job_list, type: String, message: "未传职业"
           end
@@ -20,7 +20,16 @@ module API
           post :register do
             begin
               L.info "用户注册提交数据为**#{params.to_json}**"
-              @user = User.new username: params[:username], password: params[:password], truename: params[:truename], sex: params[:sex], age: params[:age], blood_type: params[:blood_type], children: params[:children], wx_id: params[:wx_id]
+
+              ###begin TODO 获取微信用户的openid
+              result = Curl.get("https://api.weixin.qq.com/sns/oauth2/access_token?appid=#{Setting.wx['appid']}&secret=#{Setting.wx['secret']}&code=#{params[:code]}&grant_type=authorization_code")
+              if result['errmsg'].present?
+                wx_id = '666666'
+              else
+                wx_id = result['openid']
+              end
+              ###end
+              @user = User.new username: params[:username], password: params[:password], truename: params[:truename], sex: params[:sex], age: params[:age], blood_type: params[:blood_type], children: params[:children], wx_id: wx_id
               @user.hobby_list.add(params[:hobby_list], parse: true)
               @user.job_list.add(params[:job_list], parse: true)
               if @user.save
@@ -34,17 +43,18 @@ module API
             end
           end
 
+
           params do
-            requires :wx_id, type: String, message: "未传wx_id"
-            optional :username, type: String, message: "未传username"
-            optional :password, type: String, message: "未传Password"
+            requires :wx_id, type: String, message: '未传wx_id'
+            optional :username, type: String, message: '未传username'
+            optional :password, type: String, message: '未传Password'
           end
-          desc "用户登录"
+          desc '用户登录'
           post :login do
             if params[:wx_id]
-              user = User.find_by("wx_id = ?", params[:wx_id])
+              user = User.find_by('wx_id = ?', params[:wx_id])
               if user.present?
-                token = ApiUserKey.where("user_id = ?", user.id).first
+                token = ApiUserKey.where('user_id = ?', user.id).first
                 if token && !token.expired?
                   { token: token.access_token, user: user }
                 else
@@ -70,8 +80,18 @@ module API
             end
           end
 
+          params do
+            requires :phone, type: String, message: '手机号码不能为空'
+          end
+          desc '发送验证手机验证码'
+          post :verify_code do
+            if params[:phone].empty?
+              error!('手机号码不能为空')
+            else
+               SmsApi.new.verify_code(params[:phone])
+            end
+          end
         end
-
     end
   end
 end

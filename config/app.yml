@@ -3,6 +3,16 @@ defaults: &defaults
   hobby: ['读书','书法','绘画','写作','唱歌','跳舞','乒乓球','羽毛球','广场舞','太极拳','旅游','跑步','下棋','其他']
   job: ['教师','医生','律师','工程师','企业家','公务员','职工','自由职业','其他']
 
+  sms_setting:
+    sms_url: 'http://www.jianzhou.sh.cn/JianzhouSMSWSServer/http/sendBatchMessage'
+    account: 'sdk_rongyikeji'
+    password:  'Rytech_123.com'
+    content_tag: '【e租365VIP】'
+    verify_code: ''
+
+  wx:
+    appid: "wx53eb0519112c5efc"
+    secret: "bc127b0fbc1e366ef11fc4c24b539867"
 development:
   <<: *defaults
 

@@ -38,7 +38,7 @@ gem 'rb-readline'
 gem 'grape'
 gem 'grape-entity'
 gem 'grape-kaminari',git:'https://github.com/monterail/grape-kaminari.git' #分页
-
+gem 'grape-raketasks'
 #标签
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'rails-settings-cached'
@@ -71,3 +71,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #wechat相关
 gem 'wechat'
+
+
+#http request
+gem 'curb'
+
+#计划任务
+gem 'whenever'

@@ -9,11 +9,11 @@ class WechatsController < ActionController::Base
   on :event, with: 'subscribe' do |request|
     # binding.pry
     # request.reply.text "User #{request[:FromUserName]} subscribe now"
-    request.reply.text "欢迎使用,请先<a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxd20fe2e6dc888486&redirect_uri=#{URI::escape(root_url)}app#/createName&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'>注册</a>成我们会员，尊享服务.".html_safe
+    request.reply.text "欢迎使用,请先<a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx53eb0519112c5efc&redirect_uri=#{URI::escape(root_url << 'app#/createName')}&response_type=code&scope=snsapi_base&state=123#wechat_redirect'>注册</a>成我们会员，尊享服务."
   end
 
   on :text, with: '张轩' do |request|
-    request.reply.text "<a href='http://www.baidu.com'>subsribe</a>" #回复帮助信息
+    request.reply.text "欢迎使用,请先<a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx53eb0519112c5efc&redirect_uri=#{URI::escape(root_url << 'app#/createName')}&response_type=code&scope=snsapi_base&state=123#wechat_redirect'>注册</a>成我们会员，尊享服务." #回复帮助信息
   end
 
 

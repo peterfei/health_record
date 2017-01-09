@@ -1,7 +1,7 @@
 default: &default
-  appid: "wxd20fe2e6dc888486"
-  secret: "b6ee3320495e6a751d796ce5b193e45e"
-  token:    "wechat"
+  appid: "wx53eb0519112c5efc"
+  secret: "bc127b0fbc1e366ef11fc4c24b539867"
+  token:    "peterfei"
   access_token: "/var/tmp/wechat_access_token"
 development:
   <<: *default
