@@ -90,3 +90,5 @@ gem 'curb'
 
 #计划任务
 gem 'whenever'
+#config配置
+gem 'figaro'

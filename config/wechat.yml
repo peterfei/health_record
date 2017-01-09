@@ -1,12 +1,15 @@
 default: &default
-  appid: "wx53eb0519112c5efc"
-  secret: "bc127b0fbc1e366ef11fc4c24b539867"
-  token:    "peterfei"
-  access_token: "/var/tmp/wechat_access_token"
+  appid:  <%= Figaro.env.wechat_app_id %>
+  secret: <%= Figaro.env.wechat_secret %>
+  token:  <%= Figaro.env.wechat_token %>
+
 development:
   <<: *default
+  access_token: "/var/tmp/wechat_access_token"
   # trusted_domain_fullname: "http://wechatdo.ngrok.cc"
 
 test:
   <<: *default
 
+production:
+  <<: *default
