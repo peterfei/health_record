@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170109032115) do
+ActiveRecord::Schema.define(version: 20170109053942) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -145,9 +145,7 @@ ActiveRecord::Schema.define(version: 20170109032115) do
 
   create_table "user_vips", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "card_number",                     comment: "会员卡号"
-    t.string   "integer",                         comment: "会员积分"
-    t.string   "barcode_image_path",              comment: "会员二维码"
-    t.string   "string",                          comment: "会员二维码"
+    t.string   "barcode_image_path",              comment: "会员条码"
     t.string   "vip_score",                       comment: "会员积分"
     t.integer  "user_id"
     t.datetime "created_at",         null: false
@@ -156,18 +154,19 @@ ActiveRecord::Schema.define(version: 20170109032115) do
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "username",                comment: "账号"
-    t.string   "password",                comment: "密码"
-    t.string   "truename",                comment: "姓名"
-    t.integer  "sex",                     comment: "性别"
-    t.integer  "age",                     comment: "年龄"
-    t.integer  "blood_type",              comment: "血型"
-    t.integer  "children",                comment: "子女数"
-    t.string   "wx_id",                   comment: "微信ID"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "wx_name",                 comment: "微信名称"
-    t.string   "wx_avatar",               comment: "微信头像"
+    t.string   "username",                            comment: "账号"
+    t.string   "password",                            comment: "密码"
+    t.string   "truename",                            comment: "姓名"
+    t.integer  "sex",                                 comment: "性别"
+    t.integer  "age",                                 comment: "年龄"
+    t.integer  "blood_type",                          comment: "血型"
+    t.integer  "children",                            comment: "子女数"
+    t.string   "wx_id",                               comment: "微信ID"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.string   "wx_name",                             comment: "微信名称"
+    t.string   "wx_avatar",                           comment: "微信头像"
+    t.integer  "vip_mark",   default: 0,              comment: "是否是VIP:0不是，1是"
   end
 
   create_table "wechat_sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

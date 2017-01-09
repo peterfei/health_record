@@ -54,8 +54,8 @@ module API
 
           params do
             requires :wx_id, type: String, message: '未传wx_id'
-            optional :username, type: String, message: '未传username'
-            optional :password, type: String, message: '未传Password'
+            optional :username, type: String
+            optional :password, type: String
           end
           desc '用户登录'
           post :login do
