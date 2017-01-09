@@ -6,10 +6,18 @@ class TakeMedicineManagementsController < ApplicationController
   # GET /take_medicine_managements.json
   def index
     @q=TakeMedicineManagement.all.ransack(params[:q])
-    @take_medicine_managements = @q.result.page(params[:page])
+    if params[:q]
+      if params[:q][:user_truename_cont] != ''|| params[:q][:name_cont] != ''
+        @take_medicine_managements = @q.result
+      else
+        @take_medicine_managements = []
+      end
+    else
+      @take_medicine_managements = []
+    end
   end
 
-  # GET /take_medicine_managements/1
+  # GET /take_medicine_managements/1`
   # GET /take_medicine_managements/1.json
   def show
   end
