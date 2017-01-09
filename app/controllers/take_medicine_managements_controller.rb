@@ -1,6 +1,7 @@
 class TakeMedicineManagementsController < ApplicationController
   before_action :set_take_medicine_management, only: [:show, :edit, :update, :destroy]
   add_breadcrumb '服药管理', :take_medicine_managements_path
+  
   # GET /take_medicine_managements
   # GET /take_medicine_managements.json
   def index
