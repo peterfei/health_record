@@ -1,6 +1,7 @@
 class User < ApplicationRecord
 	has_many :api_user_keys
 	has_many :health_items
+	has_many :user_focus
 	has_many :medical_record_managements
 	has_many :take_medicine_managements
 

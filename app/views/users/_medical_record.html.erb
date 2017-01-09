@@ -1,17 +1,20 @@
-<div class="row">
-  <div class="col-lg-12">
-    <div class="box-self">
-      <form  method="GET" accept-charset="UTF-8" action="/medical_record_managements" class="form-horizontal">
-        <div class="form-group col-md-3">
-          <label class="col-sm-4 control-label">姓名:</label>
-          <div class="col-md-8">
-            <input type="text" name="name" id="name" class="form-control"/>
-          </div>
+<div class="tab-pane" id="medical_record">
+  <!-- search_form -->
+  <div class="row">
+    <div class="box col-md-12">
+      <div class="box-content">
+        <div class="page-header">
+          <h1 class="text-center">病历记录</h1>
+        </div>
+
+        <div class="form-group col-md-2">
+          <div style="font-size:18px;font-weight:bold;">姓名：<%= @user.truename %></div>
+          <input type="hidden" name="user_id" id="user_id" value="<%= @user.id %>">
         </div>
         <div class="form-group col-md-5">
           <label class="col-sm-3 control-label">日期:</label>
           <div class="col-md-4">
-            <input type="text" name="start_at" id="start_at" class="form-control"/>
+            <input type="text" name="start_at" id="start_at" class="form-control col-md-4"/>
           </div>
           <div class="text-center col-sm-1">至</div>
           <div class="col-md-4">
@@ -30,41 +33,19 @@
           </div>
         </div>
         <div class="form-group col-md-2">
-          <button type="submit" class="btn btn-success">搜索</button>
-          <%= link_to '清空',medical_record_managements_path,:class=>'btn btn-primary'%>
+          <button class="btn btn-primary" onclick="checkmedicalrecords();">查看</button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
-</div>
+  <!-- search_form end -->
 
-<div class="row">
-  <div class="text-center"><h2>病历管理</h2></div>
-    <div class="box col-md-12">
+  <div class="row" id="medical_records_info">
+    <!-- <div class="box col-md-12">
       <div class="box-inner">
-        <div class="box-header well">
-          <h2>病历管理</h2>
-        </div>
         <div class="box-content">
-        <% if @medical_record_managements && @medical_record_managements.length>0 %>
-          <% @medical_record_managements.each do |medical_record_management| %>
-            <h3><%= medical_record_management[:record_date] %></h3>
-            <ul class="thumbnails">
-            <% medical_record_management[:record_content].each do |content| %>
-              <li class="thumbnail">
-                <a href="<%= content.image_path %>" target="_blank">
-                  <img src="<%= content.image_path %>" />
-                </a>
-                <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
-                <dt class="text-center"><%= User.find(content.user_id).truename %> | <%= content.name %></dt>
-              </li>
-            <% end %>
-            </ul>
-          <% end %>
-        <% else %>
+
           <h3 class="text-center">暂无数据</h3>
-        <% end %>
-          <!-- <h3 class="text-center">暂无数据</h3>
 
           <h3>2017/01/05</h3>
           <ul class="thumbnails">
@@ -83,10 +64,11 @@
               <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
               <dt class="text-center">123</dt>
             </li>
-          </ul> -->
+          </ul>
 
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
+</div>
 

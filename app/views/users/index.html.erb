@@ -1,25 +1,101 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Users</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<!-- search_form -->
+<div class="row">
+  <div class="box col-md-12">
+    <%= search_form_for @q,:html=>{:class=>'form-horizontal'} do |f| %>
+      <div class="form-group col-md-3">
+        <%= f.label :truename_cont,'姓名',class:'col-sm-4 control-label' %>
+        <div class="col-md-8">
+          <%= f.search_field :truename_cont,class:'form-control'%>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.label :sex_eq,'性别',class:'col-sm-4 control-label' %>
+        <div class="col-md-8">
+          <%= f.select :sex_eq, options_for_select(User.sexes.map{|m,n|[t("user.sex.#{m}"),n]}), {:include_blank=>'请选择'}, {class:'form-control'} %>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.label :age_eq,'年龄',class:'col-sm-4 control-label' %>
+        <div class="col-md-8">
+          <%= f.search_field :age_eq,class:'form-control'%>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.label :blood_type_eq,'血型',class:'col-sm-4 control-label' %>
+        <div class="col-md-8">
+          <%= f.select :blood_type_eq, options_for_select(User.blood_types.map{|m,n|[t("user.blood_type.#{m}"),n]}), {:include_blank=>'请选择'}, class:'form-control'%>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.label :truename_cont,'职业',class:'col-sm-4 control-label' %>
+        <div class="col-md-8">
+          <%= f.search_field :truename_cont,class:'form-control'%>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.label :truename_cont,'兴趣爱好',class:'col-sm-5 control-label' %>
+        <div class="col-md-7">
+          <%= f.search_field :truename_cont,class:'form-control'%>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.submit '搜索',class:'btn btn-success' %>
+        <%= link_to '清空',users_path,:class=>'btn btn-primary'%>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
+<!-- search_form end -->
 
-<br>
+<div class="row">
+  <div class="text-center"><h2>会员中心</h2></div>
+  <div class="box col-md-12">
+    <div class="box-inner">
+      <div class="box-header well">
+        <h2>会员中心</h2>
+      </div>
+      <div class="box-content">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>姓名</th>
+              <th>性别</th>
+              <th>年龄</th>
+              <th>血型</th>
+              <th>职业</th>
+              <th>兴趣爱好</th>
+              <th>手机号码</th>
+              <th>操作</th>
+            </tr>
+          </thead>
 
-<%= link_to 'New User', new_user_path %>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.truename %></td>
+                <td><%= t("user.sex.#{user.sex}") if user.sex.present? %></td>
+                <td><%= user.age %></td>
+                <td><%= t("user.blood_type.#{user.blood_type}") if user.blood_type.present? %></td>
+                <td><%= user.job_list.join(",") rescue '' %></td>
+                <td><%= user.hobby_list.join(",") rescue '' %></td>
+                <td><%= user.username %></td>
+                <td>
+                  <%= link_to '查看', user, class: "btn btn-primary"  %>
+                  <%= link_to '删除', user, method: :delete, data: { confirm: '确认删除吗?' }, class: "btn btn-danger" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <div class="row">
+          <div class="col-md-12 center-block">
+            <div class="dataTables_paginate paging_bootstrap pagination">
+              <%= paginate @users %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

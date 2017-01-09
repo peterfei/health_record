@@ -21,6 +21,16 @@
         <%= f.text_field :unit, class: "form-control" %>
       </div>
 
+      <div class="form-group">
+        <%= f.label :normal_min %>
+        <%= f.text_field :normal_min, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :normal_max  %>
+        <%= f.text_field :normal_max, class: "form-control" %>
+      </div>
+
       <div class="center col-md-8">
         <%= f.submit "添加", class: "btn btn-success" %>
         <%= link_to "返回", health_items_path, class: "btn btn-primary" %>

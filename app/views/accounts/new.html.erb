@@ -1,0 +1,36 @@
+<div class="row">
+	<div class="well col-md-5 center login-box">
+		<%= form_for(@account,:url=>create_account_accounts_path) do |f| %>
+		<% if @account.errors.any? %>
+		<div id="error_explanation">
+			<ul>
+				<% @account.errors.full_messages.each do |message| %>
+				<li><%= message %></li>
+				<% end %>
+			</ul>
+		</div>
+		<% end %>
+
+		<div class="form-group">
+			<%= f.label :username %>
+			<%= f.text_field :username, class: "form-control" %>
+		</div>
+
+		<div class="form-group">
+			<%= f.label :password %>
+			<%= f.password_field :password, class: "form-control" %>
+		</div>
+
+		<div class="form-group">
+			<%= f.label :role %>
+			<%#= f.select :role, class: "form-control" %>
+			<%= f.select :role,options_for_select(Account.roles.keys.map{|m| [t("account.role.#{m}"),m]},selected=@account.role),{include_blank: "---请选择---"},:class=>'form-control'%>
+		</div>
+
+		<div class="center col-md-8">
+			<%= f.submit "添加", class: "btn btn-success" %>
+			<%= link_to "返回", accounts_path, class: "btn btn-primary" %>
+		</div>
+		<% end %>
+	</div>
+</div>
