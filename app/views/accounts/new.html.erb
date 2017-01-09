@@ -1,10 +1,10 @@
 <div class="row">
 	<div class="well col-md-5 center login-box">
-		<%= form_for(@account,:url=>create_account_accounts_path) do |f| %>
-		<% if @account.errors.any? %>
+		<%= form_for(@accounts,:url=>create_account_accounts_path) do |f| %>
+		<% if @accounts.errors.any? %>
 		<div id="error_explanation">
 			<ul>
-				<% @account.errors.full_messages.each do |message| %>
+				<% @accounts.errors.full_messages.each do |message| %>
 				<li><%= message %></li>
 				<% end %>
 			</ul>
@@ -24,7 +24,7 @@
 		<div class="form-group">
 			<%= f.label :role %>
 			<%#= f.select :role, class: "form-control" %>
-			<%= f.select :role,options_for_select(Account.roles.keys.map{|m| [t("account.role.#{m}"),m]},selected=@account.role),{include_blank: "---请选择---"},:class=>'form-control'%>
+			<%= f.select :role,options_for_select(Account.roles.keys.map{|m| [t("account.role.#{m}"),m]},selected=@accounts.role),{include_blank: "---请选择---"},:class=>'form-control'%>
 		</div>
 
 		<div class="center col-md-8">

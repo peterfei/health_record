@@ -7,6 +7,7 @@ module API
       mount API::V1::TakeMedicineManagements
       mount API::V1::TakeMedicineAttentions
       mount API::V1::Commons
+      mount API::V1::UserFocus
     end
   end
 end

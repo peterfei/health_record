@@ -8,7 +8,7 @@ class AccountsController < ApplicationController
 	#新增账号
 	def new
 		add_breadcrumb "新建账号", :new_account_path
-		@account = Account.new
+		@accounts = Account.new
 	end
 	#新增进数据库
 	def create_account
