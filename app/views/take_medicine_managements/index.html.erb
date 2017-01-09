@@ -1,25 +1,66 @@
-<p id="notice"><%= notice %></p>
+<!-- search_form -->
+<div class="row">
+  <div class="col-lg-12">
+    <div class="box-self">
+      <%= search_form_for @q,:html=>{:class=>'form-horizontal'} do |f| %>
+        <div class="form-group col-md-4">
+          <%= f.label :user_truename_cont,'姓名',class:'col-sm-4 control-label' %>
+          <div class="col-md-8">
+            <%= f.search_field :user_truename_cont,class:'form-control'%>
+          </div>
+        </div>
 
-<h1>Take Medicine Managements</h1>
+        <div class="form-group col-md-4">
+          <%= f.label :name_cont,'药品名称',class:'col-sm-5 control-label' %>
+          <div class="col-md-7">
+            <%= f.search_field :name_cont,class:'form-control'%>
+          </div>
+        </div>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+        <div class="form-group col-md-4">
+          <%= f.submit '搜索',class:'btn btn-success' %>
+          <%= link_to '清空',take_medicine_managements_path,:class=>'btn btn-primary'%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- search_form end -->
+<div class="row">
+  <div class="text-center"><h2>服药管理</h2></div>
+  <div class="box col-md-12">
+    <div class="box-inner">
+      <div class="box-header well">
+        <h2>服药管理</h2>
+      </div>
+      <div class="box-content">
+        <%if @take_medicine_managements.count != 0 %>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>姓名</th>
+              <th>药品名称</th>
+              <th>用法用量</th>
+              <th>提醒</th>
+            </tr>
+          </thead>
 
-  <tbody>
-    <% @take_medicine_managements.each do |take_medicine_management| %>
-      <tr>
-        <td><%= link_to 'Show', take_medicine_management %></td>
-        <td><%= link_to 'Edit', edit_take_medicine_management_path(take_medicine_management) %></td>
-        <td><%= link_to 'Destroy', take_medicine_management, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+          <tbody>
+          <% @take_medicine_managements.each do |t| %>
+            <tr>
+              <td><%= t.user.truename %></td>
+              <td><%= t.name %></td>
+              <td>一日<%= t.usage %>次/一次<%= t.dosage %>片</td>
+              <td><%= t.take_medicine_attentions.map{|m| m.medicine_attention_time}.join(" | ") if t.take_medicine_attentions %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+        <%else%>
+          <h3 class="text-center">暂无数据</h3>
+        <%end%>
+      </div>
+    </div>
+  </div>
+</div>
 
-<br>
-
-<%= link_to 'New Take Medicine Management', new_take_medicine_management_path %>

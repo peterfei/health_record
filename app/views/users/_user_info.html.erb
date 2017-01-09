@@ -1,0 +1,35 @@
+<div class="tab-pane active" id="user_info">
+	<div class="row">
+		<div class="box col-md-12">
+			<div class="box-content">
+				<div class="page-header">
+					<h1 class="text-center">基本信息</h1>
+				</div>
+				<table class="table table-bordered">
+					<tr>
+						<th style="width:100px;">姓名:</th>
+						<td style="width:262px;"><%= @user.truename %></td>
+						<th style="width:100px;">性别:</th>
+						<td style="width:262px;"><%= t("user.sex.#{@user.sex}") %></td>
+						<th style="width:100px;">年龄:</th>
+						<td><%= @user.age %></td>
+					</tr>
+					<tr>
+						<th>血型:</th>
+						<td><%= t("user.blood_type.#{@user.blood_type}") %></td>
+						<th>子女数:</th>
+						<td><%= t("user.children.#{@user.children}") %></td>
+						<th>职业:</th>
+						<td><%= @user.job_list.join(",") rescue '' %></td>
+					</tr>
+					<tr>
+						<th>兴趣爱好:</th>
+						<td><%= @user.hobby_list.join(",") rescue '' %></td>
+						<th>关注的数据:</th>
+						<td colspan="3"><%= @user.health_items.map{|m| m.name}.join(",") rescue '' %></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

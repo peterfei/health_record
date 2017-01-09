@@ -1,0 +1,29 @@
+<div class="tab-pane" id="take_medicine">
+	<div class="row">
+		<div class="box col-md-12">
+			<div class="box-content">
+				<div class="page-header">
+					<h1 class="text-center">服药记录</h1>
+				</div>
+				<table class="table table-bordered">
+					<tr>
+						<th>药品名称</th>
+						<th>用法用量</th>
+						<th>服药提醒</th>
+					</tr>
+					<% if @user.take_medicine_managements %>
+						<% @user.take_medicine_managements.each do |take_medicine_management| %>
+							<tr>
+								<td><%= take_medicine_management.name %></td>
+								<td>一日<%= take_medicine_management.usage %>次/一次<%= take_medicine_management.dosage %>片</td>
+								<td><%= take_medicine_management.take_medicine_attentions.map{|m| m.medicine_attention_time}.join(" | ") if take_medicine_management.take_medicine_attentions %></td>
+							</tr>
+						<% end %>
+					<% else %>
+						<tr><td colspan="3">暂无数据</td></tr>
+					<% end %>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

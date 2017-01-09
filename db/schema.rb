@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170104091005) do
+ActiveRecord::Schema.define(version: 20170109032115) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20170104091005) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "username"
+    t.integer  "role",                                             comment: "角色"
     t.index ["reset_password_token"], name: "index_accounts_on_reset_password_token", unique: true, using: :btree
   end
 
@@ -40,17 +41,11 @@ ActiveRecord::Schema.define(version: 20170104091005) do
     t.index ["user_id"], name: "index_api_user_keys_on_user_id", using: :btree
   end
 
-  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name",                    comment: "分类名称"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "health_item_attentions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.datetime "item_attention_time",              comment: "提醒时间"
     t.integer  "health_item_id"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.string   "item_attention_time",              comment: "提醒时间"
     t.index ["health_item_id"], name: "index_health_item_attentions_on_health_item_id", using: :btree
   end
 
@@ -69,17 +64,19 @@ ActiveRecord::Schema.define(version: 20170104091005) do
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "is_admin",                comment: "是否为系统默认项目"
+    t.integer  "normal_min",              comment: "正常最小值"
+    t.integer  "normal_max",              comment: "正常最大值"
+    t.string   "subitem",                 comment: "子项目"
     t.index ["user_id"], name: "index_health_items_on_user_id", using: :btree
   end
 
   create_table "medical_record_managements", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name",                     comment: "病历名称"
-    t.string   "image_path",               comment: "病历图片路径"
+    t.string   "name",                    comment: "病历名称"
+    t.string   "image_path",              comment: "病历图片路径"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "category_id"
-    t.index ["category_id"], name: "index_medical_record_managements_on_category_id", unique: true, using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_medical_record_managements_on_user_id", using: :btree
   end
 
@@ -119,10 +116,10 @@ ActiveRecord::Schema.define(version: 20170104091005) do
   end
 
   create_table "take_medicine_attentions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.datetime "medicine_attention_time",                  comment: "提醒时间"
     t.integer  "take_medicine_management_id"
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
+    t.string   "medicine_attention_time",                  comment: "提醒时间"
     t.index ["take_medicine_management_id"], name: "index_take_medicine_attentions_on_take_medicine_management_id", using: :btree
   end
 
@@ -136,6 +133,28 @@ ActiveRecord::Schema.define(version: 20170104091005) do
     t.index ["user_id"], name: "index_take_medicine_managements_on_user_id", using: :btree
   end
 
+  create_table "user_focus", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "appellation"
+    t.integer  "whether"
+    t.integer  "follow_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_user_focus_on_user_id", using: :btree
+  end
+
+  create_table "user_vips", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "card_number",                     comment: "会员卡号"
+    t.string   "integer",                         comment: "会员积分"
+    t.string   "barcode_image_path",              comment: "会员二维码"
+    t.string   "string",                          comment: "会员二维码"
+    t.string   "vip_score",                       comment: "会员积分"
+    t.integer  "user_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["user_id"], name: "index_user_vips_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "username",                comment: "账号"
     t.string   "password",                comment: "密码"
@@ -147,6 +166,8 @@ ActiveRecord::Schema.define(version: 20170104091005) do
     t.string   "wx_id",                   comment: "微信ID"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "wx_name",                 comment: "微信名称"
+    t.string   "wx_avatar",               comment: "微信头像"
   end
 
   create_table "wechat_sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -157,3 +178,13 @@ ActiveRecord::Schema.define(version: 20170104091005) do
     t.index ["openid"], name: "index_wechat_sessions_on_openid", unique: true, using: :btree
   end
 
+  add_foreign_key "api_user_keys", "users"
+  add_foreign_key "health_item_attentions", "health_items"
+  add_foreign_key "health_item_records", "health_items"
+  add_foreign_key "health_items", "users"
+  add_foreign_key "medical_record_managements", "users"
+  add_foreign_key "take_medicine_attentions", "take_medicine_managements"
+  add_foreign_key "take_medicine_managements", "users"
+  add_foreign_key "user_focus", "users"
+  add_foreign_key "user_vips", "users"
+end

@@ -1,4 +1,30 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well">
+                <h2>个人信息</h2>
+            </div>
+            <div class="box-content">
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="active"><a href="#user_info">基本信息</a></li>
+                    <li><a href="#medical_record">病历记录</a></li>
+                    <li><a href="#take_medicine">服药记录</a></li>
+                    <li><a href="#health_item_record">数据统计</a></li>
+                    <li><a href="#user_focus">关注家人</a></li>
+                </ul>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+                <div id="myTabContent" class="tab-content">
+                    <%= render 'user_info'%>
+
+                    <%= render 'medical_record'%>
+
+                    <%= render 'take_medicine'%>
+
+                    <%= render 'health_item_record'%>
+
+                    <%= render 'user_focus'%>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

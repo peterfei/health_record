@@ -33,7 +33,16 @@ gem 'jbuilder', '~> 2.5'
 #断点
 gem 'pry'
 gem 'pry-nav'
+
+#搜索
+gem 'ransack'
+
+#编译ruby语言
 gem 'rb-readline'
+
+#分页
+gem 'kaminari'
+
 #接口相关
 gem 'grape'
 gem 'grape-entity'
@@ -49,8 +58,11 @@ gem 'rack-cors'
 #devise
 gem 'devise'
 
-##面包屑
+#面包屑
 gem "breadcrumbs_on_rails"
+
+#搜索
+gem 'ransack'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

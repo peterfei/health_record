@@ -15,12 +15,12 @@ module API
             requires :code, type: String, message: "未传微信code"
             requires :hobby_list, type: String, message: "未传兴趣爱好"
             requires :job_list, type: String, message: "未传职业"
+            requires :code, type: String, message: "未传code"
           end
           desc "用户注册"
           post :register do
             begin
               L.info "用户注册提交数据为**#{params.to_json}**"
-
               ###begin TODO 获取微信用户的openid
               result = Curl.get("https://api.weixin.qq.com/sns/oauth2/access_token?appid=#{Setting.wx['appid']}&secret=#{Setting.wx['secret']}&code=#{params[:code]}&grant_type=authorization_code")
               if result['errmsg'].present?
@@ -32,10 +32,18 @@ module API
               @user = User.new username: params[:username], password: params[:password], truename: params[:truename], sex: params[:sex], age: params[:age], blood_type: params[:blood_type], children: params[:children], wx_id: wx_id
               @user.hobby_list.add(params[:hobby_list], parse: true)
               @user.job_list.add(params[:job_list], parse: true)
-              if @user.save
-                { status: :ok }
-              else
-                error!('保存失败')
+              User.transaction do
+                if @user.save
+                  @admin_health_items = HealthItem.where("is_admin=1 AND user_id IS NULL")
+                  HealthItem.transaction do
+                    @admin_health_items.each do |item|
+                      HealthItem.create! name: item.name, unit: item.unit, is_check:0, user_id: @user.id, is_admin:1, normal_min: item.normal_min, normal_max: item.normal_max
+                    end
+                  end
+                  { status: :ok }
+                else
+                  error!('保存失败')
+                end
               end
             rescue Exception => e
               L.debug "用户注册数据提交错误**#{e.to_json}**"

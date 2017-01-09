@@ -1,0 +1,1 @@
+json.partial! "user_vips/user_vip", user_vip: @user_vip

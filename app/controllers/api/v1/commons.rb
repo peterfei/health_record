@@ -13,6 +13,11 @@ module API
         get :jobs do
           Setting.job
         end
+
+        desc "病历分类"
+        get :categorys do
+          Setting.category
+        end
       end
       
     end

@@ -1,11 +1,12 @@
 class HealthItemsController < ApplicationController
   before_action :set_health_item, only: [:show, :edit, :update, :destroy]
-  add_breadcrumb '健康项目', :health_items_path
+  add_breadcrumb '项目管理', :health_items_path
 
   # GET /health_items
   # GET /health_items.json
   def index
-    @health_items = HealthItem.all
+    @q=HealthItem.all.ransack(params[:q])
+    @health_items = @q.result
   end
 
   # GET /health_items/1
@@ -15,7 +16,7 @@ class HealthItemsController < ApplicationController
 
   # GET /health_items/new
   def new
-    add_breadcrumb "新增", :new_health_item_path
+    add_breadcrumb "新增项目", :new_health_item_path
     @health_item = HealthItem.new
   end
 
@@ -31,7 +32,7 @@ class HealthItemsController < ApplicationController
 
     respond_to do |format|
       if @health_item.save
-        format.html { redirect_to @health_item, notice: 'Health item was successfully created.' }
+        format.html { redirect_to health_items_path, notice: '新增成功！' }
         format.json { render :show, status: :created, location: @health_item }
       else
         format.html { render :new }
@@ -72,6 +73,6 @@ class HealthItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def health_item_params
-      params.fetch(:health_item, {}).permit(:name, :unit)
+      params.fetch(:health_item, {}).permit(:name, :unit, :normal_min, :normal_max)
     end
 end
