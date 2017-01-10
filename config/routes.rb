@@ -32,6 +32,9 @@ Rails.application.routes.draw do
   #主页
   root to: 'welcome#index'
   get 'welcome/text'=>'welcome#text'
+  # 微信相关
+  get 'wx_rist' =>'welcome#wx_rist'
+  get 'wx_health_data'=>'welcome#wx_health_data'
   #接口
   mount API::Base => "/"
 end
