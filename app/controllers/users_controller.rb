@@ -6,6 +6,17 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    if params[:q].present?
+      @truename = params[:q][:truename_cont]
+      @sex = params[:q][:sex_eq]
+      @age = params[:q][:age_eq]
+      @nation = params[:q][:nation_cont]
+      @id_type = params[:q][:id_type_eq]
+      @id_code = params[:q][:id_code_cont]
+      @blood_type = params[:q][:blood_type_eq]
+      @education = params[:q][:education_eq]
+      @duty = params[:q][:duty_cont]
+    end
     @q = User.all.ransack(params[:q])
     @users = @q.result.page(params[:page])
   end
@@ -76,6 +87,7 @@ class UsersController < ApplicationController
   # ########################################################
   def check_medical_records
     if params[:category].present?
+        @category = params[:category]
         @tag_ids = Tag.where("name LIKE ?", "%#{params[:category]}%").map{|m| m.id}.join(",") rescue nil
         if @tag_ids.present?
           @medical_record_management_ids = Tagging.where("taggable_type='MedicalRecordManagement' AND context='category' AND tag_id IN (?)", @tag_ids).map{|m| m.taggable_id}.join(",") rescue nil

@@ -2,34 +2,38 @@
   <div class="col-lg-12">
     <div class="box-self">
       <form  method="GET" accept-charset="UTF-8" action="/medical_record_managements" class="form-horizontal">
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label class="col-sm-4 control-label">姓名:</label>
           <div class="col-md-8">
-            <input type="text" name="name" id="name" class="form-control"/>
+            <input type="text" name="name" value="<%= @name %>" id="name" class="form-control"/>
           </div>
         </div>
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-8">
           <label class="col-sm-3 control-label">日期:</label>
           <div class="col-md-4">
-            <input type="text" name="start_at" id="start_at" class="form-control"/>
+            <input type="text" name="start_at" value="<%= @start %>" id="start_at" class="form-control datepicker"/>
           </div>
           <div class="text-center col-sm-1">至</div>
           <div class="col-md-4">
-            <input type="text" name="end_at" id="end_at" class="form-control"/>
+            <input type="text" name="end_at" value="<%= @end %>" id="end_at" class="form-control datepicker"/>
           </div>
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label class="col-sm-4 control-label">类型:</label>
           <div class="col-md-8">
-            <select name="category" id="category" class="form-control">
+            <select name="category" id="category" class="form-control select2">
               <option value="">--- 请选择 ---</option>
               <% Setting.category.each do |c|%>
-                <option value="<%= c %>"><%= c %></option>
+                <% if @category == c %>
+                  <option value="<%= c %>" selected="selected"><%= c %></option>
+                <% else %>
+                  <option value="<%= c %>"><%= c %></option>
+                <% end %>
               <% end %>
             </select>
           </div>
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-4">
           <button type="submit" class="btn btn-success">搜索</button>
           <%= link_to '清空',medical_record_managements_path,:class=>'btn btn-primary'%>
         </div>

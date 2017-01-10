@@ -9,6 +9,8 @@ class HealthItemRecordsController < ApplicationController
     if params[:q]
       @health_item_id = params[:q][:health_item_id_eq]
       @user_id = params[:q][:health_item_user_id_eq]
+      @start_at = DateTime.parse(params[:q][:created_at_gt]).strftime('%Y-%m-%d') if params[:q][:created_at_gt].present?
+      @end_at = DateTime.parse(params[:q][:created_at_lt]).strftime('%Y-%m-%d') if params[:q][:created_at_lt].present?
       @q = HealthItemRecord.all.ransack(params[:q])
       @health_item_records = @q.result
     else
