@@ -1,5 +1,6 @@
 class UserVipsController < ApplicationController
   before_action :set_user_vip, only: [:show, :edit, :update, :destroy]
+  add_breadcrumb '会员中心', :users_path
 
   # GET /user_vips
   # GET /user_vips.json
@@ -10,6 +11,7 @@ class UserVipsController < ApplicationController
   # GET /user_vips/1
   # GET /user_vips/1.json
   def show
+    add_breadcrumb '会员信息', :user_vip_path
   end
 
   # GET /user_vips/new

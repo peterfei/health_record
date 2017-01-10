@@ -64,6 +64,9 @@ gem "breadcrumbs_on_rails"
 #搜索
 gem 'ransack'
 
+#select2
+gem "select2-rails"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -83,3 +86,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #wechat相关
 gem 'wechat'
+
+#config配置
+gem 'figaro'

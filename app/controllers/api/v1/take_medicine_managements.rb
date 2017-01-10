@@ -24,10 +24,15 @@ module API
             # authenticate!
             begin
               L.info "添加服药记录提交数据为**#{params.to_json}**"
-              if TakeMedicineManagement.create! name: params[:name], usage: params[:usage], dosage: params[:dosage], user_id: params[:user_id]
-                { status: :ok }
+              @record = TakeMedicineManagement.find_by("user_id = ? AND name = ?")
+              if @record.present?
+                error!('服药记录已存在')
               else
-                error!('保存失败')
+                if TakeMedicineManagement.create! name: params[:name], usage: params[:usage], dosage: params[:dosage], user_id: params[:user_id]
+                  { status: :ok }
+                else
+                  error!('保存失败')
+                end
               end
             rescue Exception => e
               L.debug "添加服药记录数据提交错误**#{e.to_json}**"

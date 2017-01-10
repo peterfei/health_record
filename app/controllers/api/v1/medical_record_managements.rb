@@ -35,10 +35,17 @@ module API
             # authenticate!
             begin
               L.info "添加病历记录提交数据为**#{params.to_json}**"
-              if MedicalRecordManagement.create! name: params[:name], category: params[:category], image_path: params[:image_path], user_id: params[:user_id]
-                { status: :ok }
+              @record = MedicalRecordManagement.find_by("user_id = ? AND name = ?", params[:user_id], params[:name])
+              if @record.present? && @record.category_list.join(",") == params[:category]
+                error!('病历记录已存在')
               else
-                error!('保存失败')
+                @medical_record_management = MedicalRecordManagement.new  name: params[:name], image_path: params[:image_path], user_id: params[:user_id]
+                @medical_record_management.category_list.add(params[:category], parse: true)
+                if @medical_record_management.save
+                  { status: :ok }
+                else
+                  error!('保存失败')
+                end
               end
             rescue Exception => e
               L.debug "添加病历记录数据提交错误**#{e.to_json}**"

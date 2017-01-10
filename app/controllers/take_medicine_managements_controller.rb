@@ -5,7 +5,6 @@ class TakeMedicineManagementsController < ApplicationController
   # GET /take_medicine_managements
   # GET /take_medicine_managements.json
   def index
-    #@take_medicine_managements = TakeMedicineManagement.all
     @q=TakeMedicineManagement.all.ransack(params[:q])
     if params[:q]
       if params[:q][:user_truename_cont] != ''|| params[:q][:name_cont] != ''

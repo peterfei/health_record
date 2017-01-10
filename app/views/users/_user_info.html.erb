@@ -5,30 +5,46 @@
 				<div class="page-header">
 					<h1 class="text-center">基本信息</h1>
 				</div>
-				<table class="table table-bordered">
-					<tr>
-						<th style="width:100px;">姓名:</th>
-						<td style="width:262px;"><%= @user.truename %></td>
-						<th style="width:100px;">性别:</th>
-						<td style="width:262px;"><%= t("user.sex.#{@user.sex}") %></td>
-						<th style="width:100px;">年龄:</th>
-						<td><%= @user.age %></td>
-					</tr>
-					<tr>
-						<th>血型:</th>
-						<td><%= t("user.blood_type.#{@user.blood_type}") %></td>
-						<th>子女数:</th>
-						<td><%= t("user.children.#{@user.children}") %></td>
-						<th>职业:</th>
-						<td><%= @user.job_list.join(",") rescue '' %></td>
-					</tr>
-					<tr>
-						<th>兴趣爱好:</th>
-						<td><%= @user.hobby_list.join(",") rescue '' %></td>
-						<th>关注的数据:</th>
-						<td colspan="3"><%= @user.health_items.map{|m| m.name}.join(",") rescue '' %></td>
-					</tr>
-				</table>
+				<% if @user.vip_mark==1 %>
+					<table class="table table-bordered">
+						<tr>
+							<th style="width:100px;">姓名:</th>
+							<td style="width:262px;"><%= @user.truename %></td>
+							<th style="width:100px;">性别:</th>
+							<td style="width:262px;"><%= t("user.sex.#{@user.sex}") %></td>
+							<th style="width:100px;">年龄:</th>
+							<td><%= @user.age %></td>
+						</tr>
+						<tr>
+							<th>血型:</th>
+							<td><%= t("user.blood_type.#{@user.blood_type}") %></td>
+							<th>子女数:</th>
+							<td><%= t("user.children.#{@user.children}") %></td>
+							<th>职业:</th>
+							<td><%= @user.job_list.join(",") rescue '' %></td>
+						</tr>
+						<tr>
+							<th>兴趣爱好:</th>
+							<td><%= @user.hobby_list.join(",") rescue '' %></td>
+							<th>关注的数据:</th>
+							<td colspan="3"><%= @user.health_items.map{|m| m.name}.join(",") rescue '' %></td>
+						</tr>
+					</table>
+				<% else %>
+					<table class="table table-bordered">
+						<tr>
+							<th>微信名称:&nbsp;&nbsp;&nbsp;&nbsp;<%= @user.wx_name %></th>
+						</tr>
+						<tr>
+							<th>
+								微信头像:&nbsp;&nbsp;&nbsp;&nbsp;
+								<a href="<%= @user.wx_avatar %>" target="_blank">
+									<img style="width:200px;height:250px;" src="<%= @user.wx_avatar %>" />
+								</a>
+							</th>
+						</tr>
+					</table>
+				<% end %>
 			</div>
 		</div>
 	</div>

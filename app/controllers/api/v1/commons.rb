@@ -9,9 +9,19 @@ module API
           Setting.hobby
         end
 
+        desc "用户特长"
+        get :specialitys do
+          Setting.speciality
+        end
+
         desc "用户职业"
         get :jobs do
           Setting.job
+        end
+
+        desc "用户职称"
+        get :skill_levels do
+          Setting.skill_level
         end
 
         desc "病历分类"

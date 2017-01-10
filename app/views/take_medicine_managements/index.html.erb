@@ -34,7 +34,6 @@
         <h2>服药管理</h2>
       </div>
       <div class="box-content">
-        <%if @take_medicine_managements.count != 0 %>
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -56,9 +55,12 @@
           <% end %>
           </tbody>
         </table>
-        <%else%>
-          <h3 class="text-center">暂无数据</h3>
-        <%end%>
+
+        <div style="background:#f1f1f1;" class="text-center">
+          <%= paginate @take_medicine_managements %>
+          <%= page_entries_info @take_medicine_managements %>
+        </div>
+
       </div>
     </div>
   </div>

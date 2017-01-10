@@ -68,6 +68,12 @@
             <% end %>
           </tbody>
         </table>
+
+        <div style="background:#f1f1f1;" class="text-center">
+          <%= paginate @health_items %>
+          <%= page_entries_info @health_items %>
+        </div>
+        
       </div>
     </div>
   </div>

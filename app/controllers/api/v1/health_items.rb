@@ -75,10 +75,14 @@ module API
             # authenticate!
             begin
               L.info "添加健康项目提交数据为**#{params.to_json}**"
-              if HealthItem.create! name: params[:name], unit: params[:unit], is_check: 0, user_id: params[:user_id], is_admin:0, normal_min: params[:normal_min], normal_max: params[:normal_max]
-                { status: :ok }
+              if HealthItem.find_by("user_id = ? AND name = ?", params[:user_id], params[:name]).present?
+                error!('项目已存在')
               else
-                error!('保存失败')
+                if HealthItem.create! name: params[:name], unit: params[:unit], is_check: 0, user_id: params[:user_id], is_admin:0, normal_min: params[:normal_min], normal_max: params[:normal_max]
+                  { status: :ok }
+                else
+                  error!('保存失败')
+                end
               end
             rescue Exception => e
               L.debug "添加健康项目数据提交错误**#{e.to_json}**"
@@ -87,7 +91,7 @@ module API
           end
 
           params do
-            requires :health_item_id, type: String, message: "未传health_item_id"
+            requires :health_item_id, type: Integer, message: "未传health_item_id"
           end
           desc "删除健康项目"
           get :delete_health_item do
