@@ -3,6 +3,7 @@ module API
     class Base < Grape::API
       mount API::V1::Users
       mount API::V1::HealthItems
+      mount API::V1::HealthItemRecords
       mount API::V1::HealthItemAttentions
       mount API::V1::MedicalRecordManagements
       mount API::V1::TakeMedicineManagements

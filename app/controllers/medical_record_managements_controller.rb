@@ -5,6 +5,10 @@ class MedicalRecordManagementsController < ApplicationController
   # GET /medical_record_managements
   # GET /medical_record_managements.json
   def index
+    @category = params[:category]
+    @name = params[:name]
+    @start = params[:start_at]
+    @end = params[:end_at]
     if params[:category].present?
         @tag_ids = Tag.where("name LIKE ?", "%#{params[:category]}%").map{|m| m.id}.join(",") rescue nil
         if @tag_ids.present?

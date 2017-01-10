@@ -5,40 +5,76 @@
       <div class="form-group col-md-3">
         <%= f.label :truename_cont,'姓名',class:'col-sm-4 control-label' %>
         <div class="col-md-8">
-          <%= f.search_field :truename_cont,class:'form-control'%>
+          <%= f.search_field :truename_cont, value: @truename, class:'form-control'%>
         </div>
       </div>
       <div class="form-group col-md-3">
         <%= f.label :sex_eq,'性别',class:'col-sm-4 control-label' %>
         <div class="col-md-8">
-          <%= f.select :sex_eq, options_for_select(User.sexes.map{|m,n|[t("user.sex.#{m}"),n]}), {:include_blank=>'请选择'}, {class:'form-control'} %>
+          <%= f.select :sex_eq, options_for_select(User.sexes.map{|m,n|[t("user.sex.#{m}"),n]}, selected=@sex), {:include_blank=>'请选择'}, {class:'form-control select2'} %>
         </div>
       </div>
       <div class="form-group col-md-3">
         <%= f.label :age_eq,'年龄',class:'col-sm-4 control-label' %>
         <div class="col-md-8">
-          <%= f.search_field :age_eq,class:'form-control'%>
+          <%= f.search_field :age_eq, value: @age, class:'form-control'%>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.label :nation_cont,'民族',class:'col-sm-4 control-label' %>
+        <div class="col-md-8">
+          <%= f.search_field :nation_cont, value: @nation, class:'form-control'%>
         </div>
       </div>
       <div class="form-group col-md-3">
         <%= f.label :blood_type_eq,'血型',class:'col-sm-4 control-label' %>
         <div class="col-md-8">
-          <%= f.select :blood_type_eq, options_for_select(User.blood_types.map{|m,n|[t("user.blood_type.#{m}"),n]}), {:include_blank=>'请选择'}, class:'form-control'%>
+          <%= f.select :blood_type_eq, options_for_select(User.blood_types.map{|m,n|[t("user.blood_type.#{m}"),n]}, selected=@blood_type), {:include_blank=>'请选择'}, class:'form-control select2'%>
         </div>
       </div>
       <div class="form-group col-md-3">
-        <%= f.label :truename_cont,'职业',class:'col-sm-4 control-label' %>
-        <div class="col-md-8">
-          <%= f.search_field :truename_cont,class:'form-control'%>
-        </div>
-      </div>
-      <div class="form-group col-md-3">
-        <%= f.label :truename_cont,'兴趣爱好',class:'col-sm-5 control-label' %>
+        <%= f.label :id_type_eq,'证件类型',class:'col-sm-5 control-label' %>
         <div class="col-md-7">
-          <%= f.search_field :truename_cont,class:'form-control'%>
+          <%= f.select :id_type_eq, options_for_select(User.id_types.map{|m,n|[t("user.id_type.#{m}"),n]}, selected=@id_type), {:include_blank=>'请选择'}, class:'form-control select2'%>
         </div>
       </div>
       <div class="form-group col-md-3">
+        <%= f.label :id_code_cont,'证件号码',class:'col-sm-5 control-label' %>
+        <div class="col-md-7">
+          <%= f.search_field :id_code_cont, value: @id_code, class:'form-control'%>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.label :created_at,'兴趣爱好',class:'col-sm-5 control-label' %>
+        <div class="col-md-7">
+          <%= f.search_field :created_at,class:'form-control'%>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.label :education_eq,'学历',class:'col-sm-4 control-label' %>
+        <div class="col-md-8">
+          <%= f.select :education_eq, options_for_select(User.educations.map{|m,n|[t("user.education.#{m}"),n]}, selected=@education), {:include_blank=>'请选择'}, class:'form-control select2'%>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.label :created_at,'职业',class:'col-sm-4 control-label' %>
+        <div class="col-md-8">
+          <%= f.search_field :created_at,class:'form-control'%>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.label :duty_cont,'职务',class:'col-sm-4 control-label' %>
+        <div class="col-md-8">
+          <%= f.search_field :duty_cont, value: @duty, class:'form-control'%>
+        </div>
+      </div>
+      <div class="form-group col-md-3">
+        <%= f.label :created_at,'职称',class:'col-sm-4 control-label' %>
+        <div class="col-md-8">
+          <%= f.search_field :created_at,class:'form-control'%>
+        </div>
+      </div>
+      <div class="form-group">
         <%= f.submit '搜索',class:'btn btn-success' %>
         <%= link_to '清空',users_path,:class=>'btn btn-primary'%>
       </div>
@@ -55,45 +91,100 @@
         <h2>会员中心</h2>
       </div>
       <div class="box-content">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>姓名</th>
-              <th>性别</th>
-              <th>年龄</th>
-              <th>血型</th>
-              <th>职业</th>
-              <th>兴趣爱好</th>
-              <th>手机号码</th>
-              <th>操作</th>
-            </tr>
-          </thead>
+        <ul class="nav nav-tabs" id="myTab">
+          <li class="active"><a href="#user_vip">VIP会员</a></li>
+          <li><a href="#user_general">普通会员</a></li>
+        </ul>
 
-          <tbody>
-            <% @users.each do |user| %>
-              <tr>
-                <td><%= user.truename %></td>
-                <td><%= t("user.sex.#{user.sex}") if user.sex.present? %></td>
-                <td><%= user.age %></td>
-                <td><%= t("user.blood_type.#{user.blood_type}") if user.blood_type.present? %></td>
-                <td><%= user.job_list.join(",") rescue '' %></td>
-                <td><%= user.hobby_list.join(",") rescue '' %></td>
-                <td><%= user.username %></td>
-                <td>
-                  <%= link_to '查看', user, class: "btn btn-primary"  %>
-                  <%= link_to '删除', user, method: :delete, data: { confirm: '确认删除吗?' }, class: "btn btn-danger" %>
-                  <% if user.vip_mark==1 %>
-                    <%= link_to '会员卡', UserVip.find(user.id), class: "btn btn-success"  %>
+        <div id="myTabContent" class="tab-content">
+          <div class="tab-pane active" id="user_vip">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>姓名</th>
+                  <th>性别</th>
+                  <th>年龄</th>
+                  <th>民族</th>
+                  <th>血型</th>
+                  <th>证件类型</th>
+                  <th>证件号码</th>
+                  <th>学历</th>
+                  <th>职业</th>
+                  <th>职务</th>
+                  <th>职称</th>
+                  <th>兴趣爱好</th>
+                  <th>手机号码</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @users.each do |user| %>
+                  <% if user.vip_mark == 1%>
+                  <tr>
+                    <td><%= user.truename %></td>
+                    <td><%= t("user.sex.#{user.sex}") if user.sex.present? %></td>
+                    <td><%= user.age %></td>
+                    <td><%= user.nation %></td>
+                    <td><%= t("user.blood_type.#{user.blood_type}") if user.blood_type.present? %></td>
+                    <td><%= t("user.id_type.#{user.id_type}") if user.id_type.present? %></td>
+                    <td><%= user.id_code %></td>
+                    <td><%= t("user.education.#{user.education}") if user.education.present? %></td>
+                    <td><%= user.job_list.join(",") rescue '' %></td>
+                    <td><%= user.duty %></td>
+                    <td><%= user.skill_level_list.join(",") rescue '' %></td>
+                    <td><%= user.hobby_list.join(",") rescue '' %></td>
+                    <td><%= user.username %></td>
+                    <td>
+                      <%= link_to '查看', user, class: "btn btn-primary"  %>
+                      <%= link_to '删除', user, method: :delete, data: { confirm: '确认删除吗?' }, class: "btn btn-danger" %>
+                      <% if user.vip_mark==1 %>
+                        <%= link_to '会员卡', UserVip.find(user.id), class: "btn btn-success"  %>
+                      <% end %>
+                    </td>
+                  </tr>
                   <% end %>
-                  </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
+                <% end %>
+              </tbody>
+            </table>
 
-        <div style="background:#f1f1f1;" class="text-center">
-          <%= paginate @users %>
-          <%= page_entries_info @users %>
+            <div style="background:#f1f1f1;" class="text-center">
+              <%= paginate @users %>
+              <%= page_entries_info @users %>
+            </div>
+          </div>
+
+          <div class="tab-pane" id="user_general">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>微信名称</th>
+                  <th>微信头像</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @users.each do |user| %>
+                  <% if user.vip_mark == 0 %>
+                  <tr>
+                    <td><%= user.wx_name %></td>
+                    <td><img style="width:100px;height:120px;" src="<%= user.wx_avatar %>"/></td>
+                    <td>
+                      <%= link_to '查看', user, class: "btn btn-primary"  %>
+                      <%= link_to '删除', user, method: :delete, data: { confirm: '确认删除吗?' }, class: "btn btn-danger" %>
+                    </td>
+                  </tr>
+                  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+
+            <div style="background:#f1f1f1;" class="text-center">
+              <%= paginate @users %>
+              <%= page_entries_info @users %>
+            </div>
+          </div>
         </div>
 
       </div>
