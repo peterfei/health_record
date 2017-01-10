@@ -22,5 +22,6 @@
 # Ignore Byebug command history file.
 .byebug_history
 /config/wechat.yml
+/config/wechat_menu.yml
 # Ignore application configuration
 /config/application.yml

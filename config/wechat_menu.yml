@@ -1,7 +1,7 @@
 # More option see https://github.com/Eric-Guo/wechat#menu-create
 button:
  -
-  name: "我要"
+  name: "刘非要"
   sub_button:
    -
     type: "scancode_waitmsg"
@@ -28,5 +28,5 @@ button:
     key:  "ANNUAL_LEAVE"
  -
   type: "view"
-  name: "关于"
+  name: "gguangyu"
   url:  "http://www.baidu.com"
