@@ -19,6 +19,7 @@
 //= require chosen.jquery.min
 //= require jquery.history
 //= require charisma
+//= require JsBarcode.all.min
 //= require moment
 //= require datepicker/bootstrap-datepicker
 //= require bootstrap-datetimepicker
@@ -72,3 +73,4 @@ $(function () {
 	// 初始化页面中的 select
 	$('body').init_components();
 });
+
