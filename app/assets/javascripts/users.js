@@ -36,11 +36,10 @@ function checkmedicalrecords(){
 }
 //获取数据统计
 function checkreitemrecords(){
-  var user_id = $("#user_id").val();
-  var start_at = $("#start_at").val();
-  var end_at = $("#end_at").val();
+  var start_at = $("#start_at_record").val();
+  var end_at = $("#end_at_record").val();
   var health_item_id = $("#health_item_id").val();
-  $.post("/users/check_item_records", { user_id: user_id, start_at: start_at, end_at: end_at, health_item_id: health_item_id },
+  $.post("/users/check_item_records", { start_at: start_at, end_at: end_at, health_item_id: health_item_id },
     function(result) {
       if(result){
         $("#item_records_info").html('');
@@ -75,19 +74,19 @@ function checkreitemrecords(){
           str += '<tr><th>采集时间</th>';
           str += '<th>'+result.health_item.name+'</th></tr>';
           if(result.health_item_records){
-    for(var j=0;j<result.health_item_records.length;j++){
-      str += '<tr>';
-      str += '<td>'+new Date(result.health_item_records[j].created_at).toLocaleString()+'</td>';
-      str += '<td>'+result.health_item_records[j].content+result.health_item.unit;
-      if(result.health_item_records[j].content>result.health_item.normal_max){
-        str += '<i class="pull-right glyphicon glyphicon-arrow-up red">';
-      }else if(result.health_item_records[j].content<result.health_item.normal_min){
-        str += '<i class="pull-right glyphicon glyphicon-arrow-down red">';
-      }else{
-        str += '<i class="pull-right glyphicon glyphicon-thumbs-up green">';
-      }
-      str += '</td></tr>';
-    }
+            for(var j=0;j<result.health_item_records.length;j++){
+              str += '<tr>';
+              str += '<td>'+new Date(result.health_item_records[j].created_at).toLocaleString()+'</td>';
+              str += '<td>'+result.health_item_records[j].content+result.health_item.unit;
+              if(result.health_item_records[j].content>result.health_item.normal_max){
+                str += '<i class="pull-right glyphicon glyphicon-arrow-up red">';
+              }else if(result.health_item_records[j].content<result.health_item.normal_min){
+                str += '<i class="pull-right glyphicon glyphicon-arrow-down red">';
+              }else{
+                str += '<i class="pull-right glyphicon glyphicon-thumbs-up green">';
+              }
+              str += '</td></tr>';
+            }
           }
         }
         str += '</table></div></div></div>';

@@ -61,7 +61,13 @@
                   <td><%= health_item_record.health_item.user.truename %></td>
                   <td><%= health_item_record.created_at.strftime('%Y-%m-%d %H:%M') %></td>
                   <% health_item_record.content.split(",").each do |c| %>
-                    <td><%= c %></td>
+                    <% if c.to_i>health_item_record.health_item.normal_max %>
+                      <td><%= c %><%= health_item_record.health_item.unit %><i class="pull-right glyphicon glyphicon-arrow-up red"></td>
+                    <% elsif c.to_i<health_item_record.health_item.normal_min %>
+                      <td><%= c %><%= health_item_record.health_item.unit %><i class="pull-right glyphicon glyphicon-arrow-down red"></td>
+                    <% else %>
+                      <td><%= c %><%= health_item_record.health_item.unit %><i class="pull-right glyphicon glyphicon-thumbs-up green"></td>
+                    <% end %>
                   <% end %>
                 </tr>
               <% end %>

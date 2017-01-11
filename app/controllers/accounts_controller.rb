@@ -23,12 +23,12 @@ class AccountsController < ApplicationController
 	end
 	#删除账号
 	def destroy_account
-	  @account=Account.find(params[:id])
-	  @account.destroy
-	  respond_to do |format|
-	    format.html { redirect_to accounts_url, notice: '删除成功！' }
-	    format.json { head :no_content }
-	  end
+		@account=Account.find(params[:id])
+		@account.destroy
+		respond_to do |format|
+			format.html { redirect_to accounts_url, notice: '删除成功！' }
+			format.json { head :no_content }
+		end
 	end
 
 	#编辑账号
@@ -45,7 +45,7 @@ class AccountsController < ApplicationController
 				format.html { redirect_to accounts_path, notice: '密码修改成功！' }
 				format.json { render accounts_path, status: :ok }
 			else
-				format.html { render :update_account }
+				format.html { render :update_account}
 				format.json { render json: @accounts.errors, status: :unprocessable_entity }
 			end
 		end
@@ -61,21 +61,21 @@ class AccountsController < ApplicationController
 			if @account.update(account_params)
 				bypass_sign_in(@account)
 				format.html { redirect_to root_path, notice: '密码修改成功！' }
-	        		format.json { render root_path, status: :ok }
+				format.json { render root_path, status: :ok }
 			else
 				format.html { render :edit_password }
-	        		format.json { render json: @account.errors, status: :unprocessable_entity }
+				format.json { render json: @account.errors, status: :unprocessable_entity }
 			end
 		end
 	end
 
 	private
 
-		def edit_user_params
-			params.require(:account).permit(:username, :password, :role)
-		end
+	def edit_user_params
+		params.require(:account).permit(:username, :password, :role)
+	end
 
-		def account_params
-			params.require(:account).permit(:password, :password_confirmation)
-		end
+	def account_params
+		params.require(:account).permit(:password, :password_confirmation)
+	end
 end
