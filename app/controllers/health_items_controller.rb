@@ -5,8 +5,9 @@ class HealthItemsController < ApplicationController
   # GET /health_items
   # GET /health_items.json
   def index
+    @name = params[:q][:name_cont] if params[:q].present?
     @q=HealthItem.all.ransack(params[:q])
-    @health_items = @q.result
+    @health_items = @q.result.page(params[:page])
   end
 
   # GET /health_items/1

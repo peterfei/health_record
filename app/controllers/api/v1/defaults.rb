@@ -26,9 +26,31 @@ module API
             end
           end
 
+          #生成会员卡号
+          def create_card_number
+            sn = Time.now.strftime('%Y%m%d') << '000001'
+            begin
+              card_number =  UserVip.last.card_number
+              if card_number.present?
+                if card_number[0,8].eql? (Time.now.strftime('%Y%m%d'))
+                  card_number.succ rescue sn
+                else
+                  sn
+                end
+              else
+                sn
+              end
+            rescue Exception => e
+              sn
+            end
+          end
+
+          #生成会员条形码
+          def create_barcode
+            '123.jpg'
+          end
+
         end
-
-
 
         rescue_from ActiveRecord::RecordNotFound do |e|
           error_response(message: e.message, status: 404)

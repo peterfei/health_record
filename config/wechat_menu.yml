@@ -1,12 +1,12 @@
 # More option see https://github.com/Eric-Guo/wechat#menu-create
 button:
  -
-  name: "刘非要"
+  name: "健康中心"
   sub_button:
    -
-    type: "scancode_waitmsg"
-    name: "绑定用餐二维码"
-    key: "BINDING_QR_CODE"
+    type: "view"
+    name: "健康数据"
+    url: "http://wechat.ittun.com/wx_health_data"
    -
     type: "click"
     name: "预订午餐"

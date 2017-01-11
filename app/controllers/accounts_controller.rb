@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
 	before_action :authenticate_account!
 	add_breadcrumb '账号管理', :accounts_path
 	def index
-		@account=Account.all
+		@account=Account.all.page(params[:page])
 	end
 
 	#新增账号

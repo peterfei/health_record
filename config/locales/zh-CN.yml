@@ -3,6 +3,11 @@
     sex:
       male: "男"
       female: "女"
+    id_type:
+      identity: "身份证"
+      passport: "护照"
+      officer: "军官证"
+      other_id: "其他证件"
     blood_type:
       type_a: "A"
       type_b: "B"
@@ -15,6 +20,13 @@
       two: "2个"
       three: "3个"
       more: "4个或以上"
+    education:
+      primary: "小学"
+      middle: "初中"
+      high: "高中"
+      bachelor: "学士"
+      master: "硕士"
+      doctor: "博士"
   health_item:
     is_check:
       checked: "开启"
@@ -23,3 +35,19 @@
     role:
       admin: "管理员"
       general: "普通账号"
+  views:
+    pagination:
+      first: "&laquo; 首页"
+      last: "尾页 &raquo;"
+      previous: "&lsaquo; 上一页"
+      next: "下一页 &rsaquo;"
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "暂无信息"
+          one: "只有<b>1</b>条信息"
+          other: "共<b>%{count}</b>条信息"
+      more_pages:
+        display_entries: "当前显示总共&nbsp;<b>%{total}</b>&nbsp;条信息中的<b>%{first}&nbsp;-&nbsp;%{last}条</b>"

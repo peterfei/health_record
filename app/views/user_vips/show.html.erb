@@ -1,4 +1,38 @@
-<p id="notice"><%= notice %></p>
-
-<%= link_to 'Edit', edit_user_vip_path(@user_vip) %> |
-<%= link_to 'Back', user_vips_path %>
+<div class="row">
+	<div class="text-center"><h2>会员信息</h2></div>
+	<div class="box col-md-12">
+		<div class="box-inner">
+			<div class="box-header well">
+			  <h2>会员信息</h2>
+			</div>
+			<div class="box-content">
+				<table class="table table-bordered">
+						<tr>
+							<th>微信名称:&nbsp;&nbsp;&nbsp;&nbsp;<%= User.find(@user_vip.user_id).wx_name %></th>
+							<th>
+								微信头像:&nbsp;&nbsp;&nbsp;&nbsp;
+								<a href="<%= User.find(@user_vip.user_id).wx_avatar %>" target="_blank">
+									<img style="width:120px;height:150px;" src="<%= User.find(@user_vip.user_id).wx_avatar %>" />
+								</a>
+							</th>
+						</tr>
+						<tr>
+							<th>会员卡号:&nbsp;&nbsp;&nbsp;&nbsp;<%= @user_vip.card_number %></th>
+							<th>
+								条形码:&nbsp;&nbsp;&nbsp;&nbsp;
+								<a href="<%= @user_vip.barcode_image_path %>" target="_blank">
+									<img style="width:300px;height:80px;" src="<%= @user_vip.barcode_image_path %>" />
+								</a>
+							</th>
+						</tr>
+						<tr>
+							<th colspan="2">积分:&nbsp;&nbsp;&nbsp;&nbsp;<h2><%= @user_vip.vip_score %></h2></th>
+						</tr>
+						<tr>
+							<th colspan="2">注册时间:&nbsp;&nbsp;&nbsp;&nbsp;<%= @user_vip.created_at.strftime('%Y-%m-%d %H:%M') %></th>
+						</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
