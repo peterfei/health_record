@@ -1,84 +1,147 @@
 <!-- search_form -->
 <div class="row">
   <div class="box col-md-12">
-    <%= search_form_for @q,:html=>{:class=>'form-horizontal'} do |f| %>
-      <div class="form-group col-md-3">
-        <%= f.label :truename_cont,'姓名',class:'col-sm-4 control-label' %>
-        <div class="col-md-8">
-          <%= f.search_field :truename_cont, value: @truename, class:'form-control'%>
-        </div>
+    <form class="form-horizontal" action="/users" accept-charset="UTF-8" method="GET">
+    <div class="form-group col-md-3">
+      <label class="col-sm-4 control-label">姓名</label>
+      <div class="col-md-8">
+        <input type="text" name="truename" value="<%= @truename %>" id="truename" class="form-control"/>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.label :sex_eq,'性别',class:'col-sm-4 control-label' %>
-        <div class="col-md-8">
-          <%= f.select :sex_eq, options_for_select(User.sexes.map{|m,n|[t("user.sex.#{m}"),n]}, selected=@sex), {:include_blank=>'请选择'}, {class:'form-control select2'} %>
-        </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="col-sm-4 control-label">性别</label>
+      <div class="col-md-8">
+        <select name="sex" id="sex" class="form-control select2">
+          <option value="">--- 请选择 ---</option>
+          <% User.sexes.each_with_index do |sex| %>
+            <% if sex[1].to_s == @sex %>
+            <option value="<%= sex[1] %>" selected="selected"><%= t("user.sex.#{sex[0]}")  %></option>
+            <% else %>
+            <option value="<%= sex[1] %>"><%= t("user.sex.#{sex[0]}")  %></option>
+            <% end %>
+          <% end %>
+        </select>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.label :age_eq,'年龄',class:'col-sm-4 control-label' %>
-        <div class="col-md-8">
-          <%= f.search_field :age_eq, value: @age, class:'form-control'%>
-        </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="col-sm-4 control-label">年龄</label>
+      <div class="col-md-8">
+        <input type="text" name="age" value="<%= @age %>" id="age" class="form-control"/>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.label :nation_cont,'民族',class:'col-sm-4 control-label' %>
-        <div class="col-md-8">
-          <%= f.search_field :nation_cont, value: @nation, class:'form-control'%>
-        </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="col-sm-4 control-label">民族</label>
+      <div class="col-md-8">
+        <input type="text" name="nation" value="<%= @nation %>" id="nation" class="form-control"/>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.label :blood_type_eq,'血型',class:'col-sm-4 control-label' %>
-        <div class="col-md-8">
-          <%= f.select :blood_type_eq, options_for_select(User.blood_types.map{|m,n|[t("user.blood_type.#{m}"),n]}, selected=@blood_type), {:include_blank=>'请选择'}, class:'form-control select2'%>
-        </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="col-sm-4 control-label">血型</label>
+      <div class="col-md-8">
+        <select name="blood_type" id="blood_type" class="form-control select2">
+          <option value="">--- 请选择 ---</option>
+          <% User.blood_types.each do |blood_type| %>
+            <% if blood_type[1].to_s == @blood_type %>
+            <option value="<%= blood_type[1] %>" selected="selected"><%= t("user.blood_type.#{blood_type[0]}") %></option>
+            <% else %>
+            <option value="<%= blood_type[1] %>"><%= t("user.blood_type.#{blood_type[0]}") %></option>
+            <% end %>
+          <% end %>
+        </select>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.label :id_type_eq,'证件类型',class:'col-sm-5 control-label' %>
-        <div class="col-md-7">
-          <%= f.select :id_type_eq, options_for_select(User.id_types.map{|m,n|[t("user.id_type.#{m}"),n]}, selected=@id_type), {:include_blank=>'请选择'}, class:'form-control select2'%>
-        </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="col-sm-5 control-label">证件类型</label>
+      <div class="col-md-7">
+        <select name="id_type" id="id_type" class="form-control select2">
+          <option value="">--- 请选择 ---</option>
+          <% User.id_types.each do |id_type| %>
+            <% if id_type[1].to_s == @id_type %>
+            <option value="<%= id_type[1] %>" selected="selected"><%= t("user.id_type.#{id_type[0]}") %></option>
+            <% else %>
+            <option value="<%= id_type[1] %>"><%= t("user.id_type.#{id_type[0]}") %></option>
+            <% end %>
+          <% end %>
+        </select>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.label :id_code_cont,'证件号码',class:'col-sm-5 control-label' %>
-        <div class="col-md-7">
-          <%= f.search_field :id_code_cont, value: @id_code, class:'form-control'%>
-        </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="col-sm-5 control-label">证件号码</label>
+      <div class="col-md-7">
+        <input type="text" name="id_code" value="<%= @id_code %>" id="id_code" class="form-control"/>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.label :created_at,'兴趣爱好',class:'col-sm-5 control-label' %>
-        <div class="col-md-7">
-          <%= f.search_field :created_at,class:'form-control'%>
-        </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="col-sm-5 control-label">兴趣爱好</label>
+      <div class="col-md-7">
+        <select name="hobby" id="hobby" class="form-control select2">
+          <option value="">--- 请选择 ---</option>
+          <% Setting.hobby.each do |h| %>
+            <% if h == @hobby %>
+            <option value="<%= h %>" selected="selected"><%= h %></option>
+            <% else %>
+            <option value="<%= h %>"><%= h %></option>
+            <% end %>
+          <% end %>
+        </select>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.label :education_eq,'学历',class:'col-sm-4 control-label' %>
-        <div class="col-md-8">
-          <%= f.select :education_eq, options_for_select(User.educations.map{|m,n|[t("user.education.#{m}"),n]}, selected=@education), {:include_blank=>'请选择'}, class:'form-control select2'%>
-        </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="col-sm-4 control-label">学历</label>
+      <div class="col-md-8">
+        <select name="education" id="education" class="form-control select2">
+          <option value="">--- 请选择 ---</option>
+          <% User.educations.each do |education| %>
+            <% if education[1].to_s == @education %>
+            <option value="<%= education[1] %>" selected="selected"><%= t("user.education.#{education[0]}") %></option>
+            <% else %>
+            <option value="<%= education[1] %>"><%= t("user.education.#{education[0]}") %></option>
+            <% end %>
+          <% end %>
+        </select>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.label :created_at,'职业',class:'col-sm-4 control-label' %>
-        <div class="col-md-8">
-          <%= f.search_field :created_at,class:'form-control'%>
-        </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="col-sm-4 control-label">职业</label>
+      <div class="col-md-8">
+        <select name="job" id="job" class="form-control select2">
+          <option value="">--- 请选择 ---</option>
+          <% Setting.job.each do |j| %>
+            <% if j == @job %>
+            <option value="<%= j %>" selected="selected"><%= j %></option>
+            <% else %>
+            <option value="<%= j %>"><%= j %></option>
+            <% end %>
+          <% end %>
+        </select>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.label :duty_cont,'职务',class:'col-sm-4 control-label' %>
-        <div class="col-md-8">
-          <%= f.search_field :duty_cont, value: @duty, class:'form-control'%>
-        </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="col-sm-4 control-label">职务</label>
+      <div class="col-md-8">
+        <input type="text" name="duty" value="<%= @duty %>" id="duty" class="form-control"/>
       </div>
-      <div class="form-group col-md-3">
-        <%= f.label :created_at,'职称',class:'col-sm-4 control-label' %>
-        <div class="col-md-8">
-          <%= f.search_field :created_at,class:'form-control'%>
-        </div>
+    </div>
+    <div class="form-group col-md-3">
+      <label class="col-sm-4 control-label">职称</label>
+      <div class="col-md-8">
+        <select name="skill_level" id="skill_level" class="form-control select2">
+          <option value="">--- 请选择 ---</option>
+          <% Setting.skill_level.each do |s| %>
+            <% if s == @skill_level %>
+            <option value="<%= s %>" selected="selected"><%= s %></option>
+            <% else %>
+            <option value="<%= s %>"><%= s %></option>
+            <% end %>
+          <% end %>
+        </select>
       </div>
-      <div class="form-group">
-        <%= f.submit '搜索',class:'btn btn-success' %>
-        <%= link_to '清空',users_path,:class=>'btn btn-primary'%>
-      </div>
-    <% end %>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-success">搜索</button>
+      <%= link_to '清空',users_path,:class=>'btn btn-primary'%>
+    </div>
+    </form>
   </div>
 </div>
 <!-- search_form end -->
@@ -92,12 +155,21 @@
       </div>
       <div class="box-content">
         <ul class="nav nav-tabs" id="myTab">
+          <% if params[:general_active] %>
+          <li><a href="#user_vip">VIP会员</a></li>
+          <li class="active"><a href="#user_general">普通会员</a></li>
+          <% else %>
           <li class="active"><a href="#user_vip">VIP会员</a></li>
           <li><a href="#user_general">普通会员</a></li>
+          <% end %>
         </ul>
 
         <div id="myTabContent" class="tab-content">
+          <% if params[:general_active].present? %>
+          <div class="tab-pane" id="user_vip">
+          <% else %>
           <div class="tab-pane active" id="user_vip">
+          <% end %>
             <table class="table">
               <thead>
                 <tr>
@@ -119,8 +191,7 @@
               </thead>
 
               <tbody>
-                <% @users.each do |user| %>
-                  <% if user.vip_mark == 1%>
+                <% @vip_users.each do |user| %>
                   <tr>
                     <td><%= user.truename %></td>
                     <td><%= t("user.sex.#{user.sex}") if user.sex.present? %></td>
@@ -143,18 +214,21 @@
                       <% end %>
                     </td>
                   </tr>
-                  <% end %>
                 <% end %>
               </tbody>
             </table>
 
             <div style="background:#f1f1f1;" class="text-center">
-              <%= paginate @users %>
-              <%= page_entries_info @users %>
+              <%= paginate @vip_users %>
+              <%= page_entries_info @vip_users %>
             </div>
           </div>
 
+          <% if params[:general_active].present? %>
+          <div class="tab-pane active" id="user_general">
+          <% else %>
           <div class="tab-pane" id="user_general">
+          <% end %>
             <table class="table">
               <thead>
                 <tr>
@@ -165,8 +239,7 @@
               </thead>
 
               <tbody>
-                <% @users.each do |user| %>
-                  <% if user.vip_mark == 0 %>
+                <% @general_users.each do |user| %>
                   <tr>
                     <td><%= user.wx_name %></td>
                     <td><img style="width:100px;height:120px;" src="<%= user.wx_avatar %>"/></td>
@@ -175,14 +248,13 @@
                       <%= link_to '删除', user, method: :delete, data: { confirm: '确认删除吗?' }, class: "btn btn-danger" %>
                     </td>
                   </tr>
-                  <% end %>
                 <% end %>
               </tbody>
             </table>
 
             <div style="background:#f1f1f1;" class="text-center">
-              <%= paginate @users %>
-              <%= page_entries_info @users %>
+              <%= paginate @general_users, param_name: :general_page, params: { general_active:1 } %>
+              <%= page_entries_info @general_users %>
             </div>
           </div>
         </div>

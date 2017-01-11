@@ -6,19 +6,53 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    if params[:q].present?
-      @truename = params[:q][:truename_cont]
-      @sex = params[:q][:sex_eq]
-      @age = params[:q][:age_eq]
-      @nation = params[:q][:nation_cont]
-      @id_type = params[:q][:id_type_eq]
-      @id_code = params[:q][:id_code_cont]
-      @blood_type = params[:q][:blood_type_eq]
-      @education = params[:q][:education_eq]
-      @duty = params[:q][:duty_cont]
+    @truename = params[:truename]
+    @sex = params[:sex]
+    @age = params[:age]
+    @nation = params[:nation]
+    @blood_type = params[:blood_type]
+    @id_type = params[:id_type]
+    @id_code = params[:id_code]
+    @hobby = params[:hobby]
+    @education = params[:education]
+    @job = params[:job]
+    @duty = params[:duty]
+    @skill_level = params[:skill_level]
+    @general_active = params[:general_active]
+    @ex_where = "vip_mark=1"
+    if params[:truename].present?
+      @ex_where << " AND truename LIKE '%#{params[:truename]}%'"
     end
-    @q = User.all.ransack(params[:q])
-    @users = @q.result.page(params[:page])
+    if params[:sex].present?
+      @ex_where << " AND sex = #{params[:sex]}"
+    end
+    if params[:age].present?
+      @ex_where << " AND age = #{params[:age]}"
+    end
+    if params[:nation].present?
+      @ex_where << " AND nation LIKE '%#{params[:nation]}%'"
+    end
+    if params[:blood_type].present?
+      @ex_where << " AND blood_type = #{params[:blood_type]}"
+    end
+    if params[:id_type].present?
+      @ex_where << " AND id_type = #{params[:id_type]}"
+    end
+    if params[:id_code].present?
+      @ex_where << " AND id_code LIKE '%#{params[:id_code]}%'"
+    end
+    if params[:education].present?
+      @ex_where << " AND education = #{params[:education]}"
+    end
+    if params[:duty].present?
+      @ex_where << " AND duty LIKE '%#{params[:duty]}%'"
+    end
+    if params[:hobby].present? || params[:job].present? || params[:skill_level].present?
+      @vip_users = User.where(@ex_where).tagged_with([params[:hobby], params[:job], params[:skill_level]], :any=> true, :wild => true).page(params[:vip_page])
+    else
+      @vip_users = User.where(@ex_where).page(params[:vip_page])
+    end
+    @general_users = User.where("vip_mark=0").page(params[:general_page])
   end
 
   # GET /users/1
@@ -26,6 +60,18 @@ class UsersController < ApplicationController
   def show
     add_breadcrumb "详情", :user_path
     @userfocu=UserFocu.where("user_id='#{params[:id]}'")
+    @dates = MedicalRecordManagement.select(:created_at).where("user_id = ?", @user.id).
+        group("DATE_FORMAT(created_at,'%Y-%m-%d')")
+    @medical_record_managements = []
+    if @dates.present?
+      @dates.each do |d|
+        @record = {}
+        @date = d.created_at.strftime("%Y-%m-%d")
+        @record[:record_date] = @date
+        @record[:record_content] = MedicalRecordManagement.where("user_id = ? AND created_at LIKE ?", @user.id, "%#{@date}%")
+        @medical_record_managements.push(@record)
+      end
+    end
   end
 
   # GET /users/new
@@ -86,76 +132,35 @@ class UsersController < ApplicationController
   # | Args: user_id,start_at,end_at,category
   # ########################################################
   def check_medical_records
+    @ex_where = "user_id = #{params[:user_id]}"
+    if params[:start_at].present?
+      @ex_where << " AND created_at > '#{params[:start_at]}'"
+    end
+    if params[:end_at].present?
+      @ex_where << " AND created_at < '#{params[:end_at]}'"
+    end
     if params[:category].present?
-        @category = params[:category]
-        @tag_ids = Tag.where("name LIKE ?", "%#{params[:category]}%").map{|m| m.id}.join(",") rescue nil
-        if @tag_ids.present?
-          @medical_record_management_ids = Tagging.where("taggable_type='MedicalRecordManagement' AND context='category' AND tag_id IN (?)", @tag_ids).map{|m| m.taggable_id}.join(",") rescue nil
-          if @medical_record_management_ids.present?
-            if params[:start_at].present? && !params[:end_at].present?
-              @start_at = DateTime.parse(params[:start_at])
-              @dates = MedicalRecordManagement.select(:created_at).
-                where("id IN (?) AND user_id = ? AND created_at > ?", @medical_record_management_ids, params[:user_id], @start_at).
-                group("DATE_FORMAT(created_at,'%Y-%m-%d')")
-            elsif !params[:start_at].present? && params[:end_at].present?
-              @end_at = DateTime.parse(params[:end_at])
-              @dates = MedicalRecordManagement.select(:created_at).
-                where("id IN (?) AND user_id = ? AND created_at < ?", @medical_record_management_ids, params[:user_id], @end_at).
-                group("DATE_FORMAT(created_at,'%Y-%m-%d')")
-            elsif params[:start_at].present? && params[:end_at].present?
-              @start_at = DateTime.parse(params[:start_at])
-              @end_at = DateTime.parse(params[:end_at])
-              @dates = MedicalRecordManagement.select(:created_at).
-                where("id IN (?) AND user_id = ? AND created_at > ? AND created_at < ?", @medical_record_management_ids, params[:user_id], @start_at, @end_at).
-                group("DATE_FORMAT(created_at,'%Y-%m-%d')")
-            else
-              @dates = MedicalRecordManagement.select(:created_at).
-                where("id IN (?) AND user_id = ?", @medical_record_management_ids, params[:user_id]).
-                group("DATE_FORMAT(created_at,'%Y-%m-%d')")
-            end
-            @medical_record_managements = []
-            if @dates.present?
-              @dates.each do |d|
-                @record = {}
-                @date = d.created_at.strftime("%Y-%m-%d")
-                @record[:record_date] = @date
-                @record[:record_content] = MedicalRecordManagement.where("id IN (?) AND user_id = ? AND created_at LIKE ?", @medical_record_management_ids, params[:user_id], "%#{@date}%")
-                @medical_record_managements.push(@record)
-              end
-            end
-          end
-        end
+      @dates = MedicalRecordManagement.select(:created_at).where(@ex_where).
+        group("DATE_FORMAT(created_at,'%Y-%m-%d')").
+        tagged_with([params[:category]], :any=> true, :wild => true)
     else
-      if params[:start_at].present? && !params[:end_at].present?
-        @start_at = DateTime.parse(params[:start_at])
-        @dates = MedicalRecordManagement.select(:created_at).
-          where("user_id = ? AND created_at > ?", params[:user_id], @start_at).
-          group("DATE_FORMAT(created_at,'%Y-%m-%d')")
-      elsif !params[:start_at].present? && params[:end_at].present?
-        @end_at = DateTime.parse(params[:end_at])
-        @dates = MedicalRecordManagement.select(:created_at).
-          where("user_id = ? AND created_at < ?", params[:user_id], @end_at).
-          group("DATE_FORMAT(created_at,'%Y-%m-%d')")
-      elsif params[:start_at].present? && params[:end_at].present?
-        @start_at = DateTime.parse(params[:start_at])
-        @end_at = DateTime.parse(params[:end_at])
-        @dates = MedicalRecordManagement.select(:created_at).
-          where("user_id = ? AND created_at > ? AND created_at < ?", params[:user_id], @start_at, @end_at).
-          group("DATE_FORMAT(created_at,'%Y-%m-%d')")
-      else
-        @dates = MedicalRecordManagement.select(:created_at).
-          where("user_id = ?", params[:user_id]).
-          group("DATE_FORMAT(created_at,'%Y-%m-%d')")
-      end
-      @medical_record_managements = []
-      if @dates.present?
-        @dates.each do |d|
-          @record = {}
-          @date = d.created_at.strftime("%Y-%m-%d")
-          @record[:record_date] = @date
+      @dates = MedicalRecordManagement.select(:created_at).where(@ex_where).
+        group("DATE_FORMAT(created_at,'%Y-%m-%d')")
+    end
+      # binding.pry
+    @medical_record_managements = []
+    if @dates.present?
+      @dates.each do |d|
+        @record = {}
+        @date = d.created_at.strftime("%Y-%m-%d")
+        @record[:record_date] = @date
+        if params[:category].present?
+          @record[:record_content] = MedicalRecordManagement.where("user_id = ? AND created_at LIKE ?", params[:user_id], "%#{@date}%").
+            tagged_with([params[:category]], :any=> true, :wild => true)
+        else
           @record[:record_content] = MedicalRecordManagement.where("user_id = ? AND created_at LIKE ?", params[:user_id], "%#{@date}%")
-          @medical_record_managements.push(@record)
         end
+        @medical_record_managements.push(@record)
       end
     end
 
@@ -169,20 +174,16 @@ class UsersController < ApplicationController
   # | Args: user_id,start_at,end_at,health_item_id
   # ########################################################
   def check_item_records
+    @ex_where = "1=1"
+    if params[:start_at].present?
+      @ex_where << " AND created_at > '#{params[:start_at]}'"
+    end
+    if params[:end_at].present?
+      @ex_where << " AND created_at < '#{params[:end_at]}'"
+    end
     if params[:health_item_id].present?
       @health_item = HealthItem.find(params[:health_item_id])
-      if params[:start_at].present? && !params[:end_at].present?
-        @health_item_records = @health_item.health_item_records.
-          where("created_at > ?", params[:start_at])
-      elsif !params[:start_at].present? && params[:end_at].present?
-        @health_item_records = @health_item.health_item_records.
-          where("created_at < ?", params[:end_at])
-      elsif params[:start_at].present? && params[:end_at].present?
-        @health_item_records = @health_item.health_item_records.
-          where("created_at BETWEEN ? AND ?", params[:start_at], params[:end_at])
-      else
-        @health_item_records = @health_item.health_item_records
-      end
+      @health_item_records = @health_item.health_item_records.where(@ex_where)
       @result = { :health_item=> @health_item, :health_item_records=> @health_item_records }
     end
 
