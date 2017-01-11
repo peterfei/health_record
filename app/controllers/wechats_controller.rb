@@ -9,14 +9,11 @@ class WechatsController < ActionController::Base
   on :event, with: 'subscribe' do |request|
     user = OpenStruct.new(wechat.user request[:FromUserName])
     begin
-      # binding.pry
       User.create! truename:user.nickname,sex:user.sex,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname
     rescue Exception => e
       L.debug "微信关注用户获取失败#{e.to_json}"
     end
-    request.reply.text "欢迎使用"
-    # request.reply.text "User #{request[:FromUserName]} subscribe now"
-    request.reply.text "欢迎使用,请先<a href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx53eb0519112c5efc&redirect_uri=#{URI::escape(root_url << 'app#/createName')}&response_type=code&scope=snsapi_base&state=123#wechat_redirect'>注册</a>成我们会员，尊享服务."
+    request.reply.text "欢迎使用 #{request[:FromUserName]}"
   end
 
   on :text, with: '张轩' do |request|

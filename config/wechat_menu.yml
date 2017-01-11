@@ -1,12 +1,12 @@
 # More option see https://github.com/Eric-Guo/wechat#menu-create
 button:
  -
-  name: "健康中心"
+  name: "张轩"
   sub_button:
    -
     type: "view"
     name: "健康数据"
-    url: "http://wechat.ittun.com/wx_health_data"
+    url: "http://zhangxuan.ittun.com/wx_health_data"
    -
     type: "click"
     name: "预订午餐"

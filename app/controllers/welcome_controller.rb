@@ -9,7 +9,7 @@ class WelcomeController < ApplicationController
 
 	def text
 		template = YAML.load(File.read("#{Rails.public_path}/tem.yml"))
-		wechat.template_message_send Wechat::Message.to('oF2Dhjny0UcMln2M6TIEJWH3HuIw').template(template['template'])
+		wechat.template_message_send Wechat::Message.to("oF2Dhjny0UcMln2M6TIEJWH3HuIw").template(template['template'])
 	end
 
 	def wx_rist
