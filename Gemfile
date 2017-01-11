@@ -90,6 +90,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #wechat相关
 gem 'wechat'
+gem "omniauth-wechat-oauth2"
 
 #config配置
 gem 'figaro'
