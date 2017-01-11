@@ -14,12 +14,14 @@ module API
               where("user_id = ?", params[:user_id]).
               group("DATE_FORMAT(created_at,'%Y-%m-%d')")
             @results = []
-            @dates.each do |d|
-              @record = {}
-              @date = d.created_at.strftime("%Y-%m-%d")
-              @record[:record_date] = @date
-              @record[:record_content] = MedicalRecordManagement.where("user_id = ? AND created_at LIKE ?", params[:user_id], "%#{@date}%")
-              @results.push(@record)
+            if @dates.present?
+              @dates.each do |d|
+                @record = {}
+                @date = d.created_at.strftime("%Y-%m-%d")
+                @record[:record_date] = @date
+                @record[:record_content] = MedicalRecordManagement.where("user_id = ? AND created_at LIKE ?", params[:user_id], "%#{@date}%")
+                @results.push(@record)
+              end
             end
             @results
           end

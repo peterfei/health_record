@@ -75,7 +75,8 @@ module API
                                             blood_type: params[:blood_type],
                                             children: params[:children],
                                             education: params[:education],
-                                            duty: params[:duty])
+                                            duty: params[:duty],
+                                            vip_mark:1)
                     UserVip.transaction do
                       if UserVip.create! card_number: create_card_number, barcode_image_path: create_barcode, user_id: @user.id
                         { status: :ok }
@@ -103,7 +104,8 @@ module API
                                                         blood_type: params[:blood_type],
                                                         children: params[:children],
                                                         education: params[:education],
-                                                        duty: params[:duty]
+                                                        duty: params[:duty],
+                                                        vip_mark:1
                   @new_user.hobby_list.add(params[:hobby_list], parse: true)
                   @new_user.speciality_list.add(params[:speciality_list], parse: true)
                   @new_user.job_list.add(params[:job_list], parse: true)
@@ -137,23 +139,27 @@ module API
             if params[:wx_id]
               user = User.find_by("wx_id = ?", params[:wx_id])
               if user.present?
-                token = ApiUserKey.where("user_id = ?", user.id).first
-                if token && !token.expired?
-                  { token: token.access_token, user: user }
-                else
-                  if params[:username] && params[:password]
-                    if params[:username]
-                      user = User.find_by username:params[:username].downcase
-                    end
-                    if user && user.valid_password?(params[:password])
-                      key = ApiUserKey.create(user_id: user.id)
-                      { token: key.access_token, user: user }
-                    else
-                      error!('用户名或密码错误', 401)
-                    end
+                if user.vip_mark==1
+                  token = ApiUserKey.where("user_id = ?", user.id).first
+                  if token && !token.expired?
+                    { token: token.access_token, user: user }
                   else
-                    error!('登录时间已过期,请重新登录')
+                    if params[:username] && params[:password]
+                      if params[:username]
+                        user = User.find_by username:params[:username].downcase
+                      end
+                      if user && user.valid_password?(params[:password])
+                        key = ApiUserKey.create(user_id: user.id)
+                        { token: key.access_token, user: user }
+                      else
+                        error!('用户名或密码错误', 401)
+                      end
+                    else
+                      error!('登录时间已过期,请重新登录')
+                    end
                   end
+                else
+                  error!('您还不是会员,请先注册成为会员')
                 end
               else
                 error!('未知的wx_id,请注册')

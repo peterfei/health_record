@@ -3,6 +3,11 @@
     sex:
       male: "男"
       female: "女"
+    id_type:
+      identity: "身份证"
+      passport: "护照"
+      officer: "军官证"
+      other_id: "其他证件"
     blood_type:
       type_a: "A"
       type_b: "B"
@@ -15,6 +20,13 @@
       two: "2个"
       three: "3个"
       more: "4个或以上"
+    education:
+      primary: "小学"
+      middle: "初中"
+      high: "高中"
+      bachelor: "学士"
+      master: "硕士"
+      doctor: "博士"
   health_item:
     is_check:
       checked: "开启"
