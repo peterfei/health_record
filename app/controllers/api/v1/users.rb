@@ -64,15 +64,15 @@ module API
                 @user.job_list.add(params[:job_list], parse: true)
                 @user.skill_level_list.add(params[:skill_level_list], parse: true)
                 User.transaction do
-                  if @user.update(username: params[:username], 
-                                            password: params[:password], 
-                                            truename: params[:truename], 
-                                            sex: params[:sex], 
-                                            age: params[:age], 
-                                            nation: params[:nation], 
-                                            id_type:params[:id_type], 
-                                            id_code:params[:id_code], 
-                                            blood_type: params[:blood_type], 
+                  if @user.update(username: params[:username],
+                                            password: params[:password],
+                                            truename: params[:truename],
+                                            sex: params[:sex],
+                                            age: params[:age],
+                                            nation: params[:nation],
+                                            id_type:params[:id_type],
+                                            id_code:params[:id_code],
+                                            blood_type: params[:blood_type],
                                             children: params[:children],
                                             education: params[:education],
                                             duty: params[:duty])
@@ -89,18 +89,18 @@ module API
                 end
               else
                 User.transaction do
-                  @new_user = User.new :wx_id=> params[:wx_id], 
-                                                        wx_name: params[:wx_name], 
-                                                        wx_avatar: params[:wx_avatar], 
-                                                        username: params[:username], 
-                                                        password: params[:password], 
-                                                        truename: params[:truename], 
-                                                        sex: params[:sex], 
-                                                        age: params[:age], 
-                                                        nation: params[:nation], 
-                                                        id_type:params[:id_type], 
-                                                        id_code:params[:id_code], 
-                                                        blood_type: params[:blood_type], 
+                  @new_user = User.new :wx_id=> params[:wx_id],
+                                                        wx_name: params[:wx_name],
+                                                        wx_avatar: params[:wx_avatar],
+                                                        username: params[:username],
+                                                        password: params[:password],
+                                                        truename: params[:truename],
+                                                        sex: params[:sex],
+                                                        age: params[:age],
+                                                        nation: params[:nation],
+                                                        id_type:params[:id_type],
+                                                        id_code:params[:id_code],
+                                                        blood_type: params[:blood_type],
                                                         children: params[:children],
                                                         education: params[:education],
                                                         duty: params[:duty]
@@ -161,6 +161,14 @@ module API
             else
               error!('未传wx_id')
             end
+          end
+
+          params do
+            requires :user_id, type: Integer, message: "未传user_id"
+          end
+          desc "是否是VIP"
+          get :vip_mark do
+            User.find(params[:user_id]).vip_mark
           end
 
         end

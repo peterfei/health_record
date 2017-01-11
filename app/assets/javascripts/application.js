@@ -20,4 +20,4 @@
 //= require jquery.history
 //= require moment.min
 //= require charisma
-//= require JsBarcode.all.min
+//= require jquery.qrcode.min

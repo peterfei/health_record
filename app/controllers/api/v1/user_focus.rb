@@ -89,7 +89,7 @@ module API
 				desc"关注列表"
 				get :list_focu do
 					# authenticate!
-					UserFocu.where("whether=0 and follow_id='#{params[:user_id]}'")
+					UserFocu.where("follow_id='#{params[:user_id]}'")
 				end
 			end
 

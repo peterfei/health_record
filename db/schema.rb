@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170109094017) do
+ActiveRecord::Schema.define(version: 20170111025102) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -144,12 +144,11 @@ ActiveRecord::Schema.define(version: 20170109094017) do
   end
 
   create_table "user_vips", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "card_number",                                 comment: "会员卡号"
-    t.string   "barcode_image_path",                          comment: "会员条码"
+    t.string   "card_number",                          comment: "会员卡号"
     t.integer  "user_id"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.integer  "vip_score",          default: 0,              comment: "会员积分"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "vip_score",   default: 0,              comment: "会员积分"
     t.index ["user_id"], name: "index_user_vips_on_user_id", using: :btree
   end
 
