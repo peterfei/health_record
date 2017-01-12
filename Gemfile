@@ -37,9 +37,6 @@ gem 'pry-nav'
 #搜索
 gem 'ransack'
 
-#编译ruby语言
-gem 'rb-readline'
-
 #分页
 gem 'kaminari'
 
@@ -88,6 +85,9 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+#编译ruby语言
+gem 'rb-readline'
 
 #wechat相关
 gem 'wechat'

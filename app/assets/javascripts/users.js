@@ -43,50 +43,92 @@ function checkreitemrecords(){
     function(result) {
       if(result){
         $("#item_records_info").html('');
+        if(!result.health_item.normal_max){
+          result.health_item.normal_max = '';
+        }
+        if(!result.health_item.normal_min){
+          result.health_item.normal_min = '';
+        }
         var str = '<div class="box col-md-12"><div class="box-inner"><div class="box-content"><table class="table table-bordered">';
-        if(result.health_item.subitem){
+        if(result.health_item_subs && result.health_item_subs.length>0){
           str += '<tr><th>采集时间</th>';
-          var subitems = result.health_item.subitem.split(",");
-          for(var i=0;i<subitems.length;i++){
-            str += '<th>'+subitems[i]+'</th>';
+          for(var i=0;i<result.health_item_subs.length;i++){
+            if(!result.health_item_subs[i].sub_max){
+              result.health_item_subs[i].sub_max = '';
+            }
+            if(!result.health_item_subs[i].sub_min){
+              result.health_item_subs[i].sub_min = '';
+            }
+            str += '<th>';
+            str += result.health_item_subs[i].name;
+            if(result.health_item_subs[i].sub_max && result.health_item_subs[i].sub_min){
+              str += '(正常范围:'+result.health_item_subs[i].sub_min+'~'+result.health_item_subs[i].sub_max+')';
+            }else{
+              str += '(正常范围:'+result.health_item.normal_min+'~'+result.health_item.normal_max+')';
+            }
+            if(result.health_item_subs[i].sub_unit){
+              str += '(单位:'+result.health_item_subs[i].sub_unit+')';
+            }else{
+              str += '(单位:'+result.health_item.unit+')';
+            }
+            str += '</th>';
           }
           str += '</tr>';
-          if(result.health_item_records){
+          if(result.health_item_records && result.health_item_records.length>0){
             for(var j=0;j<result.health_item_records.length;j++){
               str += '<tr>';
               str += '<td>'+new Date(result.health_item_records[j].created_at).toLocaleString()+'</td>';
               var contents = result.health_item_records[j].content.split(",");
               for(var k=0;k<contents.length;k++){
-                str += '<td>'+contents[k]+result.health_item.unit;
-                if(contents[k]>result.health_item.normal_max){
-                  str += '<i class="pull-right glyphicon glyphicon-arrow-up red">';
-                }else if(contents[k]<result.health_item.normal_min){
-                  str += '<i class="pull-right glyphicon glyphicon-arrow-down red">';
-                }else{
-                  str += '<i class="pull-right glyphicon glyphicon-thumbs-up green">';
+                str += '<td>'+contents[k];
+                if(result.health_item_subs[k].sub_max && result.health_item_subs[k].sub_min){
+                  if(contents[k]>result.health_item_subs[k].sub_max){
+                    str += '<i class="pull-right glyphicon glyphicon-arrow-up red">';
+                  }else if(contents[k]<result.health_item_subs[k].sub_min){
+                    str += '<i class="pull-right glyphicon glyphicon-arrow-down red">';
+                  }else{
+                    str += '<i class="pull-right glyphicon glyphicon-thumbs-up green">';
+                  }
                 }
                 str += '</td>';
               }
               str += '</tr>';
             }
+          }else{
+            var colspan = result.health_item_subs.length+2;
+            str += '<tr>';
+            str += '<td colspan="'+colspan+'" class="text-center"><h4>暂无数据</h4></td>';
+            str += '</tr>';
           }
         }else{
           str += '<tr><th>采集时间</th>';
-          str += '<th>'+result.health_item.name+'</th></tr>';
-          if(result.health_item_records){
+          str += '<th>';
+          str += result.health_item.name;
+          if(result.health_item.normal_min && result.health_item.normal_max){
+            str += '(正常范围:'+result.health_item.normal_min+'~'+result.health_item.normal_max+')';
+          }
+          if(result.health_item.unit){
+            str += '(单位:'+result.health_item.unit+')';
+          }
+          str += '</th></tr>';
+          if(result.health_item_records && result.health_item_records.length>0){
             for(var j=0;j<result.health_item_records.length;j++){
               str += '<tr>';
               str += '<td>'+new Date(result.health_item_records[j].created_at).toLocaleString()+'</td>';
-              str += '<td>'+result.health_item_records[j].content+result.health_item.unit;
-              if(result.health_item_records[j].content>result.health_item.normal_max){
-                str += '<i class="pull-right glyphicon glyphicon-arrow-up red">';
-              }else if(result.health_item_records[j].content<result.health_item.normal_min){
-                str += '<i class="pull-right glyphicon glyphicon-arrow-down red">';
-              }else{
-                str += '<i class="pull-right glyphicon glyphicon-thumbs-up green">';
+              str += '<td>'+result.health_item_records[j].content;
+              if(result.health_item.normal_max && result.health_item.normal_min){
+                if(result.health_item_records[j].content>result.health_item.normal_max){
+                  str += '<i class="pull-right glyphicon glyphicon-arrow-up red">';
+                }else if(result.health_item_records[j].content<result.health_item.normal_min){
+                  str += '<i class="pull-right glyphicon glyphicon-arrow-down red">';
+                }else{
+                  str += '<i class="pull-right glyphicon glyphicon-thumbs-up green">';
+                }
               }
               str += '</td></tr>';
             }
+          }else{
+            str += '<tr><td colspan="3" class="text-center"><h4>暂无数据</h4></td></tr>';
           }
         }
         str += '</table></div></div></div>';

@@ -1,4 +1,4 @@
-class User < ApplicationRecord
+	class User < ApplicationRecord
 	has_many :api_user_keys
 	has_one :user_vip
 	has_many :user_focus
@@ -6,7 +6,7 @@ class User < ApplicationRecord
 	has_many :medical_record_managements
 	has_many :take_medicine_managements
 
-	acts_as_taggable_on :hobby, :job
+	acts_as_taggable_on :hobby, :job, :speciality, :skill_level
 	enum sex: [:male, :female]
 	enum id_type: [:identity, :passport, :officer, :other_id]
 	enum blood_type: [:type_a, :type_b, :type_ab, :type_o, :type_other]

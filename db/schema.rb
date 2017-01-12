@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170111025102) do
+ActiveRecord::Schema.define(version: 20170112085534) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -57,17 +57,27 @@ ActiveRecord::Schema.define(version: 20170111025102) do
     t.index ["health_item_id"], name: "index_health_item_records_on_health_item_id", using: :btree
   end
 
+  create_table "health_item_subs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name",                                   comment: "子项目名称"
+    t.string   "sub_unit",                               comment: "子项目单位"
+    t.float    "sub_max",        limit: 24,              comment: "子项目正常最大值"
+    t.float    "sub_min",        limit: 24,              comment: "子项目正常最小值"
+    t.integer  "health_item_id"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["health_item_id"], name: "index_health_item_subs_on_health_item_id", using: :btree
+  end
+
   create_table "health_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name",                    comment: "名称"
-    t.string   "unit",                    comment: "单位"
-    t.integer  "is_check",                comment: "是否开启项目数据记录"
+    t.string   "name",                               comment: "名称"
+    t.string   "unit",                               comment: "单位"
+    t.integer  "is_check",                           comment: "是否开启项目数据记录"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "is_admin",                comment: "是否为系统默认项目"
-    t.integer  "normal_min",              comment: "正常最小值"
-    t.integer  "normal_max",              comment: "正常最大值"
-    t.string   "subitem",                 comment: "子项目"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.integer  "is_admin",                           comment: "是否为系统默认项目"
+    t.float    "normal_max", limit: 24,              comment: "正常最大值"
+    t.float    "normal_min", limit: 24,              comment: "正常最小值"
     t.index ["user_id"], name: "index_health_items_on_user_id", using: :btree
   end
 
@@ -134,10 +144,10 @@ ActiveRecord::Schema.define(version: 20170111025102) do
   end
 
   create_table "user_focus", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "appellation"
-    t.integer  "whether"
-    t.integer  "follow_id"
-    t.integer  "user_id"
+    t.string   "appellation",              comment: "称呼"
+    t.integer  "whether",                  comment: "处理结果：0为未处理，1为同意，2为忽略"
+    t.integer  "follow_id",                comment: "被关注人ID"
+    t.integer  "user_id",                  comment: "请求关注人ID"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["user_id"], name: "index_user_focus_on_user_id", using: :btree
@@ -173,6 +183,7 @@ ActiveRecord::Schema.define(version: 20170111025102) do
     t.string   "id_code",                             comment: "证件号码"
     t.integer  "education",                           comment: "最高学历"
     t.string   "duty",                                comment: "职务"
+    t.index ["wx_id"], name: "index_users_on_wx_id", unique: true, using: :btree
   end
 
   create_table "wechat_sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -186,6 +197,7 @@ ActiveRecord::Schema.define(version: 20170111025102) do
   add_foreign_key "api_user_keys", "users"
   add_foreign_key "health_item_attentions", "health_items"
   add_foreign_key "health_item_records", "health_items"
+  add_foreign_key "health_item_subs", "health_items"
   add_foreign_key "health_items", "users"
   add_foreign_key "medical_record_managements", "users"
   add_foreign_key "take_medicine_attentions", "take_medicine_managements"

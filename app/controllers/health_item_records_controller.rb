@@ -8,17 +8,18 @@ class HealthItemRecordsController < ApplicationController
   def index
     if params[:q]
       @health_item_id = params[:q][:health_item_id_eq]
+      @health_item = HealthItem.find(@health_item_id)
       @user_id = params[:q][:health_item_user_id_eq]
       @start_at = DateTime.parse(params[:q][:created_at_gt]).strftime('%Y-%m-%d') if params[:q][:created_at_gt].present?
       @end_at = DateTime.parse(params[:q][:created_at_lt]).strftime('%Y-%m-%d') if params[:q][:created_at_lt].present?
       @q = HealthItemRecord.all.ransack(params[:q])
-      @health_item_records = @q.result
+      @health_item_records = @q.result.page(params[:page])
     else
       @health_item = HealthItem.where("user_id IS NOT NULL AND is_check=1").first
       @health_item_id = @health_item.id rescue nil
       @user_id = @health_item.user_id rescue nil
       @q = HealthItemRecord.where("health_item_id = ?", @health_item_id).ransack(params[:q])
-      @health_item_records = @q.result
+      @health_item_records = @q.result.page(params[:page])
     end
   end
 

@@ -12,9 +12,9 @@ module API
           get :all_health_items do
             # authenticate!
             if params[:status]==1
-              HealthItem.where("user_id = ? AND is_check=1", params[:user_id])
+              HealthItem.where("user_id = ? AND is_check=1", params[:user_id]).map{|m| m.attributes}
             else
-              HealthItem.where("user_id = ?", params[:user_id])
+              HealthItem.where("user_id = ?", params[:user_id]).map{|m| m.attributes}
             end
           end
 
