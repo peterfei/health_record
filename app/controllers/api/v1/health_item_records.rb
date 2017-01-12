@@ -2,19 +2,21 @@ module API
   module V1
     class HealthItemRecords< Grape::API
         include API::V1::Defaults
-
+        include Grape::Kaminari
         resource :health_item_records do
+
+          desc "查询某健康项目记录"
           params do
             requires :health_item_id, type: Integer, message: "未传health_item_id"
           end
-          desc "查询某健康项目记录"
           get :item_records do
             # authenticate!
             @health_item = HealthItem.find(params[:health_item_id])
             @health_item_subs = @health_item.health_item_subs rescue nil
-            @dates = HealthItemRecord.select(:created_at).
+            @all_dates = HealthItemRecord.select(:created_at).
               where("health_item_id = ?", params[:health_item_id]).
               group("DATE_FORMAT(created_at,'%Y-%m-%d')")
+            @dates = paginate(@all_dates)
             @item_records = []
             if @dates.present?
               @dates.each do |d|
@@ -25,11 +27,12 @@ module API
                 if @health_item_subs.present?
                   @record[:record_content] = []
                   @contents.each do |c|
+                    @temp = {}
+                    @temp[:subitem_time] = c.created_at.strftime('%H:%M')
                     @subitem = []
                     @subitem_contents = c.content.split(",") rescue nil
                     @subitem_contents.each_with_index do |subitem_content, index|
                       @content = {}
-                      @content[:created_at] = c.created_at.strftime('%H:%M')
                       @content[:name] = @health_item_subs[index].name
                       @content[:content] = subitem_content
                       if @health_item_subs[index].sub_max.present?
@@ -64,7 +67,8 @@ module API
                       end
                       @subitem.push(@content)
                     end
-                    @record[:record_content].push(@subitem)
+                    @temp[:subitem_content] = @subitem
+                    @record[:record_content].push(@temp)
                   end
                 else
                   @record[:record_content] = []
@@ -98,7 +102,7 @@ module API
                 @item_records.push(@record)
               end
             end
-            { :health_item=> @health_item, :item_records=> @item_records}
+            { :health_item=> @health_item, :item_records=> @item_records }
           end
 
         end
