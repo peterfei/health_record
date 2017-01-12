@@ -168,65 +168,78 @@ module API
 					error!('未传wx_id')
 				end
 			end
-				# encoding: utf-8
-				# ########################################################
-				# | 作者: guoxiaofeng <guoxiaofeng@rongyitech.com>
-				# | 开发时间: 2017-01-11 13:38:17
-				# | 功能说明:是否是VIP
-				# | 备注:vip_mark
-				# | 标签:get
-				# ########################################################
-				params do
-					requires :user_id, type: Integer, message: "未传user_id"
-				end
-				desc "是否是VIP"
-				get :vip_mark do
-					User.find(params[:user_id]).vip_mark
-				end
-				# encoding: utf-8
-				# ########################################################
-				# | 作者: guoxiaofeng <guoxiaofeng@rongyitech.com>
-				# | 开发时间: 2017-01-11 13:43:05
-				# | 功能说明:编辑个人信息
-				# | 备注:edit_details
-				# | 标签:post
-				# ########################################################
-				params do
-					requires :user_id, type: Integer, message: "未传user_id"
-					requires :truename, type: String, message: "未传姓名"
-					requires :sex, type: Integer, message: "未传性别"
-					requires :age, type: Integer, message: "未传年龄"
-					requires :blood_type, type: Integer, message: "未传血型"
-					requires :children, type: Integer, message: "未传子女数"
-					requires :hobby_list, type: String, message: "未传兴趣爱好"
-					requires :job_list, type: String, message: "未传职业"
-				end
-				desc "编辑个人信息"
-				post :edit_details do
-					begin
-						L.info "编辑个人信息提交数据为**#{params.to_json}**"
-						@user=User.find(params[:user_id])
-						if @user.present?
-							if @user.hobby_list=params[:hobby_list]
-								@user.job_list=params[:job_list]
-								@user.save!
-								@user.update(truename:params[:truename],
-									sex:params[:sex],
-									age:params[:age],
-									blood_type:params[:blood_type],
-									children:params[:children])
-								{ status: :ok }
-							else
-								error!('编辑失败')
-							end
+			# encoding: utf-8
+			# ########################################################
+			# | 作者: guoxiaofeng <guoxiaofeng@rongyitech.com>
+			# | 开发时间: 2017-01-11 13:38:17
+			# | 功能说明:是否是VIP
+			# | 备注:vip_mark
+			# | 标签:get
+			# ########################################################
+			params do
+				requires :user_id, type: Integer, message: "未传user_id"
+			end
+			desc "是否是VIP"
+			get :vip_mark do
+				User.find(params[:user_id]).vip_mark
+			end
+			# encoding: utf-8
+			# ########################################################
+			# | 作者: guoxiaofeng <guoxiaofeng@rongyitech.com>
+			# | 开发时间: 2017-01-11 13:43:05
+			# | 功能说明:编辑个人信息
+			# | 备注:edit_details
+			# | 标签:post
+			# ########################################################
+			params do
+				requires :user_id, type: Integer, message: "未传user_id"
+				requires :truename, type: String, message: "未传姓名"
+				requires :sex, type: Integer, message: "未传性别"
+				requires :age, type: Integer, message: "未传年龄"
+				requires :nation, type: String, message: "未传民族"
+				requires :education, type: Integer, message: "未传学历"
+				requires :id_code, type: String, message: "未传证件号码"
+				requires :id_type, type: Integer, message: "未传证件类型"
+				requires :blood_type, type: Integer, message: "未传血型"
+				requires :children, type: Integer, message: "未传子女数"
+				requires :duty, type: String, message: "未传职务"
+				requires :hobby_list, type: String, message: "未传兴趣爱好"
+				requires :speciality_list, type: String, message: "未传特长"
+				requires :skill_level_list, type: String, message: "未传子职称"
+				requires :job_list, type: String, message: "未传职业"
+			end
+			desc "编辑个人信息"
+			post :edit_details do
+				begin
+					L.info "编辑个人信息提交数据为**#{params.to_json}**"
+					@user=User.find(params[:user_id])
+					if @user.present?
+						@user.hobby_list=params[:hobby_list]
+						@user.job_list=params[:job_list]
+						@user.speciality_list=params[:speciality_list]
+						@user.skill_level_list=params[:skill_level_list]
+						@user.save!
+						if@user.update(truename:params[:truename],
+							sex:params[:sex],
+							age:params[:age],
+							nation:params[:nation],
+							education:params[:education],
+							id_code:params[:id_code],
+							id_type:params[:id_type],
+							duty:params[:duty],
+							blood_type:params[:blood_type],
+							children:params[:children])
+							{ status: :ok }
+						else
+							error!('编辑失败')
 						end
-					rescue Exception => e
-						L.debug "编辑个人信息数据提交错误**#{e.to_json}**"
-						error!('提交失败')
 					end
+				rescue Exception => e
+					L.debug "编辑个人信息数据提交错误**#{e.to_json}**"
+					error!('提交失败')
 				end
-
 			end
 		end
 	end
+end
 end

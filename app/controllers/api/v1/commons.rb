@@ -2,7 +2,7 @@ module API
   module V1
     class Commons< Grape::API
       include API::V1::Defaults
-      
+      # wechat_api
       resource :commons do
         desc "用户兴趣爱好"
         get :hobbys do
@@ -28,6 +28,13 @@ module API
         get :categorys do
           Setting.category
         end
+      end
+
+      resource :wechat do
+         desc "获取js api tickets"
+         get :get_js_api_tickets do
+            binding.pry
+         end
       end
       
     end
