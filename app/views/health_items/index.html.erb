@@ -63,7 +63,10 @@
                     否
                   <% end %>
                 </td>
-                <td><%= link_to '删除', health_item, method: :delete, data: { confirm: '确认删除吗?' }, class:'btn btn-danger btn-sm' %></td>
+                <td>
+                  <%= link_to '删除', health_item, method: :delete, data: { confirm: '确认删除吗?' }, class:'btn btn-danger btn-sm' %>
+                  <%= link_to '子项目', health_item_subs_path(:health_item_id=> health_item.id), class:'btn btn-success btn-sm' %>
+                </td>
               </tr>
             <% end %>
           </tbody>

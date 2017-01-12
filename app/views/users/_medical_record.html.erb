@@ -41,24 +41,31 @@
   <!-- search_form end -->
 
   <div class="row" id="medical_records_info">
-    <% if @medical_record_managements && @medical_record_managements.length>0 %>
-      <% @medical_record_managements.each do |medical_record_management| %>
-        <h3><%= medical_record_management[:record_date] %></h3>
-        <ul class="thumbnails">
-        <% medical_record_management[:record_content].each do |content| %>
-          <li class="thumbnail">
-            <a href="<%= content.image_path %>" target="_blank">
-              <img src="<%= content.image_path %>" />
-            </a>
-            <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
-            <dt class="text-center"><%= User.find(content.user_id).truename %> | <%= content.name %></dt>
-          </li>
-        <% end %>
-        </ul>
-      <% end %>
-    <% else %>
-      <h3 class="text-center">暂无数据</h3>
-    <% end %>
+    <div class="box col-md-12">
+      <div class="box-inner">
+        <div class="box-content">
+          <% if @medical_record_managements && @medical_record_managements.length>0 %>
+            <% @medical_record_managements.each do |medical_record_management| %>
+              <h3><%= medical_record_management[:record_date] %></h3>
+              <ul class="thumbnails">
+              <% medical_record_management[:record_content].each do |content| %>
+                <li class="thumbnail">
+                  <a href="<%= content.image_path %>" target="_blank">
+                    <img src="<%= content.image_path %>" />
+                  </a>
+                  <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
+                  <dt class="text-center"><%= User.find(content.user_id).truename %> | <%= content.name %></dt>
+                </li>
+              <% end %>
+              </ul>
+            <% end %>
+          <% else %>
+            <h3 class="text-center">暂无数据</h3>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
     <!-- <div class="box col-md-12">
       <div class="box-inner">
         <div class="box-content">

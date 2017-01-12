@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="text-center"><h2><%= @health_item.name %>子项目列表</h2></div>
+  <div class="col-md-12">
+    <div class="pull-right" style="margin-right:20px;">
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">新增子项目</button>
+    </div>
+  </div>
+  <div class="box col-md-12">
+    <div class="box-inner">
+      <div class="box-header well">
+        <h2>子项目列表</h2>
+      </div>
+      <div class="box-content">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>名称</th>
+              <th>单位</th>
+              <th>正常值</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @health_item_subs.each do |health_item_sub| %>
+              <tr>
+                <td><%= health_item_sub.name %></td>
+                <td><%= health_item_sub.sub_unit %></td>
+                <td>
+                  <% if health_item_sub.sub_min != nil && health_item_sub.sub_max != nil%>
+                    <%= health_item_sub.sub_min %>
+                    ~
+                    <%= health_item_sub.sub_max %>
+                  <%end%>
+                </td>
+                <td>
+                  <%= link_to '删除', health_item_sub_path(:id=> health_item_sub.id, :health_item_id=> params[:health_item_id]), method: :delete, data: { confirm: '确认删除吗?' }, class:'btn btn-danger btn-sm' %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">添加子项目</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="well col-md-8 center">
+            <%= form_for(HealthItemSub.new, :health_item_id=> params[:health_item_id]) do |f| %>
+              <div class="form-group">
+                <%= f.label :name %>
+                <%= f.text_field :name, class: "form-control" %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :sub_unit %>
+                <%= f.text_field :sub_unit, class: "form-control" %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :sub_min %>
+                <%= f.text_field :sub_min, class: "form-control" %>
+              </div>
+
+              <div class="form-group">
+                <%= f.label :sub_max  %>
+                <%= f.text_field :sub_max, class: "form-control" %>
+              </div>
+
+              <div class="center col-md-8">
+                <%= f.hidden_field :health_item_id, value: params[:health_item_id] %>
+                <%= f.submit "添加", class: "btn btn-success" %>
+              </div>
+            <% end %>
+            <!-- <form id="new_health_item_sub" class="new_health_item_sub" method="post" accept-charset="UTF-8" action="/health_item_subs">
+            <div class="form-group">
+              <label>名称</label>
+              <input type="text" name="name" id="name" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+              <label>单位</label>
+              <input type="text" name="sub_unit" id="sub_unit" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+              <label>最大值</label>
+              <input type="text" name="sub_max" id="sub_max" class="form-control"/>
+            </div>
+
+            <div class="form-group">
+              <label>最小值</label>
+              <input type="text" name="sub_min" id="sub_min" class="form-control"/>
+            </div>
+
+            <div class="center col-md-8">
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+              <input type="hidden" name="health_item_id" id="health_item_id" value="<%= params[:health_item_id] %>"/>
+              <input type="submit" value="添加" class="btn btn-success" />
+            </div>
+            </form> -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
