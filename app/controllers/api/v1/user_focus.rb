@@ -14,23 +14,23 @@ module API
 				# ########################################################
 				params do
 					requires :tel, type: String, message: "未传tel"
-					requires :user_id, type: Integer, message: "未传user_id"
+					# requires :user_id, type: Integer, message: "未传user_id"
 					requires :appellation, type: String, message: "未传appellation"
 				end
 				desc "添加关注"
 				post :add_focu do
-					# authenticate!
+					authenticate!
 					begin
 						L.info "添加关注提交数据为**#{params.to_json}**"
 						user=User.find_by("username=#{params[:tel]}")
 						if user.present?
-							if  user.id != params[:user_id]
+							if  user.id != @current_user.id
 								follow_id=user.id
-								focu=UserFocu.where("user_id='#{params[:user_id]}' and follow_id='#{follow_id}' and (whether = 1 or whether = 0) ")
+								focu=UserFocu.where("user_id='#{@current_user.id}' and follow_id='#{follow_id}' and (whether = 1 or whether = 0) ")
 								if focu.present?
 									error!('请勿重复提交！')
 								else
-									if UserFocu.create! appellation: params[:appellation], follow_id: follow_id, user_id: params[:user_id], whether: 0
+									if UserFocu.create! appellation: params[:appellation], follow_id: follow_id, user_id: @current_user.id, whether: 0
 										{ status: :ok }
 									else
 										error!('保存失败')
@@ -83,13 +83,13 @@ module API
 				# | 备注:关注列表
 				# | 标签:post
 				# ########################################################
-				params do
-					requires :user_id, type: Integer, message: "未传user_id"
-				end
+				# params do
+				# 	requires :user_id, type: Integer, message: "未传user_id"
+				# end
 				desc"关注列表"
 				get :list_focu do
-					# authenticate!
-					UserFocu.where("follow_id='#{params[:user_id]}'")
+					authenticate!
+					UserFocu.where("follow_id='#{@current_user.id}'")
 				end
 			end
 
