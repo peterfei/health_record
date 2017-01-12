@@ -9,6 +9,11 @@
         is_admin: "是否系统默认项目"
         normal_min: "正常最小值"
         normal_max: "正常最大值"
+      health_item_sub:
+        name: "子项目名称"
+        sub_unit: "单位"
+        sub_min: "正常最小值"
+        sub_max: "正常最大值"
       account:
         username: "账号"
         password: "密码"

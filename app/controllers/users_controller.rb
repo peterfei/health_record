@@ -183,8 +183,9 @@ class UsersController < ApplicationController
     end
     if params[:health_item_id].present?
       @health_item = HealthItem.find(params[:health_item_id])
+      @health_item_subs = @health_item.health_item_subs
       @health_item_records = @health_item.health_item_records.where(@ex_where)
-      @result = { :health_item=> @health_item, :health_item_records=> @health_item_records }
+      @result = { :health_item=> @health_item, :health_item_subs=> @health_item_subs, :health_item_records=> @health_item_records }
     end
 
     render json: @result
