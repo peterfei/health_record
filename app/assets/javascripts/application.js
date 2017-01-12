@@ -19,7 +19,7 @@
 //= require chosen.jquery.min
 //= require jquery.history
 //= require charisma
-//= require JsBarcode.all.min
+//= require jquery.qrcode.min
 //= require moment
 //= require datepicker/bootstrap-datepicker
 //= require bootstrap-datetimepicker
