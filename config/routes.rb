@@ -32,7 +32,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #主页
   root to: 'welcome#index'
-  # get 'text'=>'welcome#text'
+  get 'text'=>'welcome#text'
   # 微信相关
   get 'wx_rist' =>'wechat_api#wx_rist'
   get 'wx_health_data'=>'wechat_api#wx_health_data'

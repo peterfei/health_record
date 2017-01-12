@@ -44,7 +44,7 @@ gem 'kaminari'
 gem 'grape'
 gem 'grape-entity'
 gem 'grape-kaminari',git:'https://github.com/monterail/grape-kaminari.git' #分页
-
+gem 'grape-raketasks'
 #标签
 gem 'acts-as-taggable-on', '~> 4.0'
 gem 'rails-settings-cached'
@@ -80,6 +80,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'rails_panel'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -92,5 +93,11 @@ gem 'rb-readline'
 gem 'wechat'
 gem "omniauth-wechat-oauth2"
 
+
+#http request
+gem 'curb'
+
+#计划任务
+gem 'whenever'
 #config配置
 gem 'figaro'

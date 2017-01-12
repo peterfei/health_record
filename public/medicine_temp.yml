@@ -1,0 +1,19 @@
+template:
+  template_id: "hswltO3csp14NMY8hRXEDl2LATjCZOL6ArU5r0NQUL8"
+  topcolor: "#FF0000"
+  data:
+    first:
+      value: "健康提醒！"
+      color: "#0A0A0A"
+    key1:
+      value: "药品名称"
+      color: "#A21A28"
+    key2:
+      value: "用法用量"
+      color: "#A21A28"
+    key3:
+      value: "提醒时间"
+      color: "#A21A28"
+    remark:
+      value: "谢谢使用！"
+      color: "#173177"
