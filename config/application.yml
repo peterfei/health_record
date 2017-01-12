@@ -16,6 +16,7 @@ wechat_secret: "bc127b0fbc1e366ef11fc4c24b539867"
 wechat_token:  "zhangxuan"
 wechat_encoding_aes_key: "EncodingAESKey"
 wechat_trusted_domain_fullname: "http://your_dev.proxy.qqbrowser.cc"
+wechat_medicine_template: "hswltO3csp14NMY8hRXEDl2LATjCZOL6ArU5r0NQUL8"
 sms_api: 'http://www.jianzhou.sh.cn/JianzhouSMSWSServer/http/sendBatchMessage'
 account: 'sdk_rongyikeji'
 password:  'Rytech_123.com'

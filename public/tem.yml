@@ -1,20 +1,19 @@
 template:
-  template_id: "crz_UWUdFnlmcHwMFYwqCdXoTRTO-vHlf2WjfK3aZXM"
-  url: "http://www.baidu.com"
+  template_id: "hswltO3csp14NMY8hRXEDl2LATjCZOL6ArU5r0NQUL8"
   topcolor: "#FF0000"
   data:
     first:
-      value: "您好，您已报名成功"
+      value: "健康提醒！"
       color: "#0A0A0A"
     key1:
-      value: "XX活动123"
+      value: "药品名称"
       color: "#CCCCCC"
     key2:
-      value: "2017.1.5"
+      value: "用法用量"
       color: "#CCCCCC"
     key3:
-      value: "xian"
+      value: "提醒时间"
       color: "#CCCCCC"
     remark:
-      value: "欢迎再次使用111111。"
+      value: "谢谢使用！"
       color: "#173177"
