@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170111025102) do
+ActiveRecord::Schema.define(version: 20170112085534) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(version: 20170111025102) do
     t.string   "id_code",                             comment: "证件号码"
     t.integer  "education",                           comment: "最高学历"
     t.string   "duty",                                comment: "职务"
+    t.index ["wx_id"], name: "index_users_on_wx_id", unique: true, using: :btree
   end
 
   create_table "wechat_sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

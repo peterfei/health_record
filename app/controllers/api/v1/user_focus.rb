@@ -89,7 +89,7 @@ module API
 				desc"关注列表"
 				get :list_focu do
 					# authenticate!
-					UserFocu.where("follow_id='#{params[:user_id]}'")
+					UserFocu.where("follow_id='#{params[:user_id]}'").map{|m|m.attributes.merge(wx_avatar: m.user.wx_avatar)}
 				end
 			end
 

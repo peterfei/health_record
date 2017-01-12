@@ -1,4 +1,4 @@
-class User < ApplicationRecord
+	class User < ApplicationRecord
 	has_many :api_user_keys
 	has_one :user_vip
 	has_many :user_focus
