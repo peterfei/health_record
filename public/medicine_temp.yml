@@ -7,13 +7,13 @@ template:
       color: "#0A0A0A"
     key1:
       value: "药品名称"
-      color: "#CCCCCC"
+      color: "#A21A28"
     key2:
       value: "用法用量"
-      color: "#CCCCCC"
+      color: "#A21A28"
     key3:
       value: "提醒时间"
-      color: "#CCCCCC"
+      color: "#A21A28"
     remark:
       value: "谢谢使用！"
       color: "#173177"
