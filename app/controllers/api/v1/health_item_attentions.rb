@@ -19,7 +19,7 @@ module API
           end
           desc "添加健康项目提醒时间"
           post :add_health_item_attention do
-            # authenticate!
+            authenticate!
             begin
               L.info "添加健康项目提醒时间提交数据为**#{params.to_json}**"
               if HealthItemAttention.create! health_item_id: params[:health_item_id], item_attention_time: params[:item_attention_time]
