@@ -48,20 +48,57 @@
               <tr>
                 <th>姓名</th>
                 <th>采集时间</th>
-                <% if HealthItem.find(@health_item_records[0].health_item_id).subitem.present? %>
-                  <% HealthItem.find(@health_item_records[0].health_item_id).subitem.split(",").each do |sub| %>
-                    <th><%= sub %></th>
+                <% if @health_item.health_item_subs.present? %>
+                  <% @health_item.health_item_subs.each do |health_item_sub| %>
+                    <th>
+                      <%= health_item_sub.name %>
+                      <% if health_item_sub.sub_unit.present? %>
+                        (正常范围:<%= health_item_sub.sub_min %>~<%= health_item_sub.sub_max %>)
+                        (单位:<%= health_item_sub.sub_unit %>)
+                      <% else %>
+                        (正常范围:<%= @health_item.normal_min %>~<%= @health_item.normal_max %>)
+                        (单位:<%= @health_item.unit %>)
+                      <% end %>
+                    </th>
                   <% end %>
                 <% else %>
-                  <th><%= HealthItem.find(@health_item_records[0].health_item_id).name %></th>
+                  <th>
+                    <%= @health_item.name %>
+                    (正常范围:<%= @health_item.normal_min %>~<%= @health_item.normal_max %>)
+                    (单位:<%= @health_item.unit %>)
+                  </th>
                 <% end %>
               </tr>
               <% @health_item_records.each do |health_item_record| %>
                 <tr>
-                  <td><%= health_item_record.health_item.user.truename %></td>
+                  <td><%= @health_item.user.truename %></td>
                   <td><%= health_item_record.created_at.strftime('%Y-%m-%d %H:%M') %></td>
-                  <% health_item_record.content.split(",").each do |c| %>
-                    <td><%= c %></td>
+                  <% health_item_record.content.split(",").each_with_index do |c, index| %>
+                    <% if @health_item.health_item_subs.present? %>
+                      <% if @health_item.health_item_subs[index].sub_max.present? && @health_item.health_item_subs[index].sub_min.present? %>
+                        <% if c.to_f>@health_item.health_item_subs[index].sub_max %>
+                          <td><%= c %><i class="pull-right glyphicon glyphicon-arrow-up red"></td>
+                        <% elsif c.to_f<@health_item.health_item_subs[index].sub_min %>
+                          <td><%= c %><i class="pull-right glyphicon glyphicon-arrow-down red"></td>
+                        <% else %>
+                          <td><%= c %><i class="pull-right glyphicon glyphicon-thumbs-up green"></td>
+                        <% end %>
+                      <% else %>
+                        <td><%= c %></td>
+                      <% end %>
+                    <% else %>
+                      <% if @health_item.normal_max.present? && @health_item.normal_min.present? %>
+                        <% if c.to_f>@health_item.normal_max %>
+                          <td><%= c %><i class="pull-right glyphicon glyphicon-arrow-up red"></td>
+                        <% elsif c.to_f<@health_item.normal_min %>
+                          <td><%= c %><i class="pull-right glyphicon glyphicon-arrow-down red"></td>
+                        <% else %>
+                          <td><%= c %><i class="pull-right glyphicon glyphicon-thumbs-up green"></td>
+                        <% end %>
+                      <% else %>
+                        <td><%= c %></td>
+                      <% end %>
+                    <% end %>
                   <% end %>
                 </tr>
               <% end %>

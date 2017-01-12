@@ -18,11 +18,24 @@ module API
           end
 
           def current_user
-            token = ApiUserKey.where(access_token: params[:token]).first
-            if token && !token.expired?
-              @current_user = User.find(token.user_id)
+            if params[:wx_id].present?
+              if params[:token].present?
+                token = ApiUserKey.where(access_token: params[:token]).first
+                if token && !token.expired?
+                  @current_user = User.find(token.user_id)
+                else
+                  error!('错误的token', 401)
+                end
+              else
+                @current_user = User.find_by(wx_id: params[:wx_id])
+                if @current_user.present?
+                  @current_user
+                else
+                  error!('用户不存在')
+                end
+              end
             else
-              error!('错误的token', 401)
+              error!('未传wx_id')
             end
           end
 

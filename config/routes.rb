@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :health_item_subs
   resources :user_vips
   resource :wechat, only: [:show, :create]
   devise_for :accounts, controllers: { sessions: 'accounts/sessions', registrations:'accounts/registrations', passwords:'accounts/passwords' }
