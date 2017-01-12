@@ -4,14 +4,14 @@ module API
         include API::V1::Defaults
 
         resource :medical_record_managements do
-          params do
-            requires :user_id, type: Integer, message: "未传user_id"
-          end
+          # params do
+          #   requires :user_id, type: Integer, message: "未传user_id"
+          # end
           desc "查询用户所有病历记录"
           get :all_medical_records do
-            # authenticate!
+            authenticate!
             @dates = MedicalRecordManagement.select(:created_at).
-              where("user_id = ?", params[:user_id]).
+              where("user_id = ?", @current_user.id).
               group("DATE_FORMAT(created_at,'%Y-%m-%d')")
             @results = []
             if @dates.present?
@@ -19,7 +19,7 @@ module API
                 @record = {}
                 @date = d.created_at.strftime("%Y-%m-%d")
                 @record[:record_date] = @date
-                @record[:record_content] = MedicalRecordManagement.where("user_id = ? AND created_at LIKE ?", params[:user_id], "%#{@date}%")
+                @record[:record_content] = MedicalRecordManagement.where("user_id = ? AND created_at LIKE ?", @current_user.id, "%#{@date}%")
                 @results.push(@record)
               end
             end
@@ -30,12 +30,12 @@ module API
             requires :name, type: String, message: "未传病历名称"
             requires :category, type: String, message: "未传病历分类名称"
             requires :image_path, type: String, message: "未传病历图片路径"
-            requires :user_id, type: Integer, message: "未传user_id"
+            # requires :user_id, type: Integer, message: "未传user_id"
           end
           desc "添加病历记录"
           post :add_medical_record_management do
             # binding.pry
-            # authenticate!
+            authenticate!
             # serverID: 4Oyf-SFXnaySR8ncSm86OiuiAAlZqQo-i7UH81EUZLq-UC5PXBeH8FE_lLzCOWdk
             # 下载微信服务器上的图片
             tmp_file = Wechat.api.media params[:image_path]
@@ -52,13 +52,13 @@ module API
 
             begin
               L.info "添加病历记录提交数据为**#{params.to_json}**"
-              @record = MedicalRecordManagement.find_by("user_id = ? AND name = ?", params[:user_id], params[:name])
+              @record = MedicalRecordManagement.find_by("user_id = ? AND name = ?", @current_user.id, params[:name])
               if @record.present? && @record.category_list.join(",") == params[:category]
                 error!('病历记录已存在')
               else
                 @medical_record_management = MedicalRecordManagement.new  name: params[:name],
                                                                           image_path: "wechat/#{img_uuid}.jpg",
-                                                                          user_id: params[:user_id]
+                                                                          user_id: @current_user.id
                 @medical_record_management.category_list.add(params[:category], parse: true)
                 if @medical_record_management.save
                   { status: :ok }

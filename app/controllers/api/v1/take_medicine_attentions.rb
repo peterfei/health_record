@@ -38,7 +38,7 @@ module API
           end
           desc "删除服药记录提醒时间"
           get :delete_take_medicine_attention do
-            # authenticate!
+            authenticate!
             begin
               L.info "删除服药记录提醒时间提交数据为**#{params.to_json}**"
               if TakeMedicineAttention.find(params[:take_medicine_attention_id]).destroy

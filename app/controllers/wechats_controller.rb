@@ -11,7 +11,10 @@ class WechatsController < ActionController::Base
     begin
       # binding.pry
       unless User.where(wx_id:user.openid).exists?
-        User.create! truename:user.nickname,sex:user.sex,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname
+        User.transaction do
+          User.create! truename:user.nickname,sex:user.sex,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname
+        end
+
       end
 
     rescue Exception => e
