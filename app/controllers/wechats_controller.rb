@@ -9,7 +9,7 @@ class WechatsController < ActionController::Base
 	on :event, with: 'subscribe' do |request|
 		user = OpenStruct.new(wechat.user request[:FromUserName])
 		begin
-			binding.pry
+			# binding.pry
 			unless User.where(wx_id:user.openid).exists?
 				User.transaction do
 					@users=User.create! truename:user.nickname,sex:user.sex,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname
