@@ -78,7 +78,7 @@ module API
 									duty: params[:duty],
 									vip_mark:1)
 								UserVip.transaction do
-									if UserVip.create! card_number: create_card_number, barcode_image_path: create_barcode, user_id: @user.id
+									if UserVip.create! card_number: create_card_number, user_id: @user.id
 										{ status: :ok }
 									else
 										error!('保存失败')
@@ -112,7 +112,7 @@ module API
 							@new_user.skill_level_list.add(params[:skill_level_list], parse: true)
 							if @new_user.save
 								UserVip.transaction do
-									if UserVip.create! card_number: create_card_number, barcode_image_path: create_barcode, user_id: @new_user.id
+									if UserVip.create! card_number: create_card_number, user_id: @new_user.id
 										{ status: :ok }
 									else
 										error!('保存失败')
