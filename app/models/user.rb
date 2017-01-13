@@ -12,4 +12,19 @@
 	enum blood_type: [:type_a, :type_b, :type_ab, :type_o, :type_other]
 	enum children: [:zero, :one, :two, :three, :more]
 	enum education: [:primary, :middle, :high, :bachelor, :master, :doctor]
+  after_create :_create_item_user
+
+    private
+      def _create_item_user
+        helth_item=HealthItem.where("is_admin=1").group("name")
+        helth_item.each do |item|
+          HealthItem.create! name:item.name,
+                             unit:item.unit,
+                             is_check:item.is_check,
+                             user_id:self.id,
+                             is_admin:0,
+                             normal_max:item.normal_max,
+                             normal_min:item.normal_min
+        end
+      end
 end
