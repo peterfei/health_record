@@ -101,3 +101,6 @@ gem 'curb'
 gem 'whenever'
 #config配置
 gem 'figaro'
+###文件上传组件 和图片工具
+gem 'carrierwave'
+gem 'mini_magick'

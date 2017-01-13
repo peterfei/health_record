@@ -39,16 +39,19 @@ module API
             # serverID: 4Oyf-SFXnaySR8ncSm86OiuiAAlZqQo-i7UH81EUZLq-UC5PXBeH8FE_lLzCOWdk
             # 下载微信服务器上的图片
             tmp_file = Wechat.api.media params[:image_path]
-            img_uuid = SecureRandom.uuid
-            begin
-              img_path = FileUtils.mv(tmp_file.path, "#{Rails.public_path}/wechat/#{img_uuid}.jpg")
-            rescue Exception=>e
-              # binding.pry
-              L.debug("目录不存在,创建目录#{Rails.public_path}/wechat")
-              FileUtils.mkdir_p("#{Rails.public_path}/wechat")
-
-              FileUtils.mv(tmp_file.path, "#{Rails.public_path}/wechat/#{img_uuid}.jpg")
-            end
+            # binding.pry
+            # img_uuid = SecureRandom.uuid
+            uploader = AvatarUploader.new
+            uploader.store!(tmp_file)
+            # begin
+            #   img_path = FileUtils.mv(tmp_file.path, "#{Rails.public_path}/wechat/#{img_uuid}.jpg")
+            # rescue Exception=>e
+            #   # binding.pry
+            #   L.debug("目录不存在,创建目录#{Rails.public_path}/wechat")
+            #   FileUtils.mkdir_p("#{Rails.public_path}/wechat")
+            #
+            #   FileUtils.mv(tmp_file.path, "#{Rails.public_path}/wechat/#{img_uuid}.jpg")
+            # end
 
             begin
               L.info "添加病历记录提交数据为**#{params.to_json}**"
@@ -57,7 +60,7 @@ module API
                 error!('病历记录已存在')
               else
                 @medical_record_management = MedicalRecordManagement.new  name: params[:name],
-                                                                          image_path: "wechat/#{img_uuid}.jpg",
+                                                                          image_path: uploader.url,
                                                                           user_id: @current_user.id
                 @medical_record_management.category_list.add(params[:category], parse: true)
                 if @medical_record_management.save
