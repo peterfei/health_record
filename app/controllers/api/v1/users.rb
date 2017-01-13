@@ -14,7 +14,7 @@ module API
 					begin
 						L.info "用户注册提交数据为**#{params.to_json}**"
 						User.transaction do
-							if User.create! params[:wx_id], params[:wx_name], params[:wx_avatar]
+							if User.create!(params[:wx_id], params[:wx_name], params[:wx_avatar])
 								@admin_health_items = HealthItem.where("is_admin=1 AND user_id IS NULL")
 								HealthItem.transaction do
 									@admin_health_items.each do |item|
@@ -181,6 +181,7 @@ module API
 			# end
 			desc "是否是VIP"
 			get :vip_mark do
+				authenticate!
 				User.find(@current_user.id).vip_mark
 			end
 			# encoding: utf-8
@@ -210,6 +211,7 @@ module API
 			end
 			desc "编辑个人信息"
 			post :edit_details do
+				authenticate!
 				begin
 					L.info "编辑个人信息提交数据为**#{params.to_json}**"
 					@user=User.find(@current_user.id)

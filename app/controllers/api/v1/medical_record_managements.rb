@@ -61,7 +61,8 @@ module API
               else
                 @medical_record_management = MedicalRecordManagement.new  name: params[:name],
                                                                           image_path: uploader.url,
-                                                                          user_id: @current_user.id
+                                                                          user_id: @current_user.id,
+                                                                          thumb_image_path:uploader.thumb.url
                 @medical_record_management.category_list.add(params[:category], parse: true)
                 if @medical_record_management.save
                   { status: :ok }
