@@ -1,7 +1,7 @@
 class WechatApiController <  ActionController::Base
 	wechat_api
 	def text
-		template = YAML.load(File.read("#{Rails.public_path}/tem.yml"))
+		template = YAML.load(File.read("#{Rails.public_path}/item_temp.yml"))
 		wechat.template_message_send Wechat::Message.to('oF2Dhjny0UcMln2M6TIEJWH3HuIw').template(template['template'])
 	end
 

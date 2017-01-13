@@ -6,6 +6,16 @@ defaults: &defaults
   skill_level: ['教授','副教授','工程师','高级工程师','经济师','高级经济师','会计师','高级会计师','注册会计师','其他']
   category: ['CT','体检报告','血常规','B超','其他']
 
+  sms_setting:
+    sms_url: 'http://www.jianzhou.sh.cn/JianzhouSMSWSServer/http/sendBatchMessage'
+    account: 'sdk_rongyikeji'
+    password:  'Rytech_123.com'
+    content_tag: '【e租365VIP】'
+    verify_code: ''
+
+  wx:
+    appid: "wx53eb0519112c5efc"
+    secret: "bc127b0fbc1e366ef11fc4c24b539867"
 development:
   <<: *defaults
 

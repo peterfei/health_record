@@ -58,11 +58,6 @@ module API
             end
           end
 
-          #生成会员条形码
-          def create_barcode
-            '123.jpg'
-          end
-
         end
 
         rescue_from ActiveRecord::RecordNotFound do |e|

@@ -1,0 +1,22 @@
+#数据提醒
+#1月12日
+#健康数据！
+#数据名称：血压
+#提醒时间：8：00
+#谢谢使用！
+template:
+  template_id: "N6xNfNkuMyi2FfnhGn9jPbad2jC6yrvBajFhk0Ups9Y"
+  topcolor: "#FF0000"
+  data:
+    first:
+      value: "健康数据！"
+      color: "#0A0A0A"
+    key1:
+      value: "数据名称"
+      color: "#A21A28"
+    key2:
+      value: "提醒时间"
+      color: "#A21A28"
+    remark:
+      value: "谢谢使用！"
+      color: "#173177"

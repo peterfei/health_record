@@ -5,16 +5,16 @@ module API
 
         resource :health_items do
           params do
-            requires :user_id, type: Integer, message: "未传user_id"
+            # requires :user_id, type: Integer, message: "未传user_id"
             requires :status, type: Integer, message: "未传status"
           end
           desc "查询用户健康项目"
           get :all_health_items do
-            # authenticate!
+            authenticate!
             if params[:status]==1
-              HealthItem.where("user_id = ? AND is_check=1", params[:user_id]).map{|m| m.attributes}
+              HealthItem.where("user_id = ? AND is_check=1", @current_user.id)
             else
-              HealthItem.where("user_id = ?", params[:user_id]).map{|m| m.attributes}
+              HealthItem.where("user_id = ?", @current_user.id)
             end
           end
 
@@ -66,19 +66,19 @@ module API
           params do
             requires :name, type: String, message: "未传项目名称"
             optional :unit, type: String
-            requires :user_id, type: String, message: "未传user_id"
+            # requires :user_id, type: String, message: "未传user_id"
             requires :normal_min, type: Integer, message: "未传最小正常值"
             requires :normal_max, type: Integer, message: "未传最大正常值"
           end
           desc "添加健康项目"
           post :add_health_item do
-            # authenticate!
+            authenticate!
             begin
               L.info "添加健康项目提交数据为**#{params.to_json}**"
-              if HealthItem.find_by("user_id = ? AND name = ?", params[:user_id], params[:name]).present?
+              if HealthItem.find_by("user_id = ? AND name = ?", @current_user.id, params[:name]).present?
                 error!('项目已存在')
               else
-                if HealthItem.create! name: params[:name], unit: params[:unit], is_check: 0, user_id: params[:user_id], is_admin:0, normal_min: params[:normal_min], normal_max: params[:normal_max]
+                if HealthItem.create! name: params[:name], unit: params[:unit], is_check: 0, user_id: @current_user.id, is_admin:0, normal_min: params[:normal_min], normal_max: params[:normal_max]
                   { status: :ok }
                 else
                   error!('保存失败')

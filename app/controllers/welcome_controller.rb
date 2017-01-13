@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
-	#wechat_api
+	wechat_api
 	def index
 		@total_users = User.all.count rescue 0
 		@new_users = User.where("create_at > ?", Time.now.at_beginning_of_day).count rescue 0
@@ -8,8 +8,8 @@ class WelcomeController < ApplicationController
 	end
 
 	def text
-		template = YAML.load(File.read("#{Rails.public_path}/tem.yml"))
-		wechat.template_message_send Wechat::Message.to('oF2Dhjny0UcMln2M6TIEJWH3HuIw').template(template['template'])
+		template = YAML.load(File.read("#{Rails.public_path}/item_temp.yml"))
+		wechat.template_message_send Wechat::Message.to("oF2Dhjny0UcMln2M6TIEJWH3HuIw").template(template['template'])
 	end
 
 	def wx_rist

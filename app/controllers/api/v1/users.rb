@@ -78,7 +78,7 @@ module API
 									duty: params[:duty],
 									vip_mark:1)
 								UserVip.transaction do
-									if UserVip.create! card_number: create_card_number, barcode_image_path: create_barcode, user_id: @user.id
+									if UserVip.create! card_number: create_card_number, user_id: @user.id
 										{ status: :ok }
 									else
 										error!('保存失败')
@@ -112,7 +112,7 @@ module API
 							@new_user.skill_level_list.add(params[:skill_level_list], parse: true)
 							if @new_user.save
 								UserVip.transaction do
-									if UserVip.create! card_number: create_card_number, barcode_image_path: create_barcode, user_id: @new_user.id
+									if UserVip.create! card_number: create_card_number, user_id: @new_user.id
 										{ status: :ok }
 									else
 										error!('保存失败')
@@ -176,12 +176,12 @@ module API
 			# | 备注:vip_mark
 			# | 标签:get
 			# ########################################################
-			params do
-				requires :user_id, type: Integer, message: "未传user_id"
-			end
+			# params do
+			# 	requires :user_id, type: Integer, message: "未传user_id"
+			# end
 			desc "是否是VIP"
 			get :vip_mark do
-				User.find(params[:user_id]).vip_mark
+				User.find(@current_user.id).vip_mark
 			end
 			# encoding: utf-8
 			# ########################################################
@@ -192,7 +192,7 @@ module API
 			# | 标签:post
 			# ########################################################
 			params do
-				requires :user_id, type: Integer, message: "未传user_id"
+				# requires :user_id, type: Integer, message: "未传user_id"
 				requires :truename, type: String, message: "未传姓名"
 				requires :sex, type: Integer, message: "未传性别"
 				requires :age, type: Integer, message: "未传年龄"
@@ -212,7 +212,7 @@ module API
 			post :edit_details do
 				begin
 					L.info "编辑个人信息提交数据为**#{params.to_json}**"
-					@user=User.find(params[:user_id])
+					@user=User.find(@current_user.id)
 					if @user.present?
 						@user.hobby_list=params[:hobby_list]
 						@user.job_list=params[:job_list]
