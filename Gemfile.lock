@@ -364,11 +364,8 @@ DEPENDENCIES
   bootstrap3-datetimepicker-rails (~> 4.17.43)
   breadcrumbs_on_rails
   byebug
-<<<<<<< HEAD
   capybara
-=======
   carrierwave
->>>>>>> fdd858b0ce7bbe90313f8d0bea13b4ea278a9383
   coffee-rails (~> 4.2)
   connection_pool
   curb
@@ -388,15 +385,12 @@ DEPENDENCIES
   kaminari
   launchy
   listen (~> 3.0.5)
-<<<<<<< HEAD
+  mini_magick
   minitest-around
   minitest-rg
   minitest-spec-context
   minitest-spec-rails
   mocha
-=======
-  mini_magick
->>>>>>> fdd858b0ce7bbe90313f8d0bea13b4ea278a9383
   momentjs-rails (>= 2.9.0)
   mysql2
   omniauth-wechat-oauth2

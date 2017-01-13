@@ -6,7 +6,7 @@ class HealthItem < ApplicationRecord
 
 	enum is_check:[:cancel, :checked]
 
-	validates :name, presence: {message:'不能为空'}, uniqueness:{message:'不能重复'}, on: :create
+	validates :name, presence: {message:'不能为空'}, on: :create
 	validates :value_range, presence:{message:'不能为空'}
 
 	def attributes
