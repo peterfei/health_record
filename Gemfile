@@ -124,3 +124,7 @@ group :test do
   gem 'minitest-rg'
   # gem "test_after_commit"
 end
+
+#文件上传组件 和图片工具
+gem 'carrierwave'
+gem 'mini_magick'

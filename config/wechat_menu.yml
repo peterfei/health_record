@@ -1,32 +1,11 @@
 # More option see https://github.com/Eric-Guo/wechat#menu-create
 button:
  -
-  name: "张轩"
+  name: "健康数据"
   sub_button:
    -
     type: "view"
     name: "健康数据"
-    url: "http://zhangxuan.ittun.com/wx_health_data"
-   -
-    type: "click"
-    name: "预订午餐"
-    key:  "BOOK_LUNCH"
-   -
-    type: "click"
-    name: "预订晚餐"
-    key:  "BOOK_DINNER"
- -
-  name: "查询"
-  sub_button:
-   -
-    type: "click"
-    name: "进出记录"
-    key:  "BADGE_IN_OUT"
-   -
-    type: "click"
-    name: "年假余额"
-    key:  "ANNUAL_LEAVE"
- -
-  type: "view"
-  name: "gguangyu"
-  url:  "http://www.baidu.com"
+    url: "http://wechat.ittun.com/wx_health_data"
+
+
