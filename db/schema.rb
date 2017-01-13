@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170112085534) do
+ActiveRecord::Schema.define(version: 20170113065958) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -58,26 +58,28 @@ ActiveRecord::Schema.define(version: 20170112085534) do
   end
 
   create_table "health_item_subs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name",                                   comment: "子项目名称"
-    t.string   "sub_unit",                               comment: "子项目单位"
-    t.float    "sub_max",        limit: 24,              comment: "子项目正常最大值"
-    t.float    "sub_min",        limit: 24,              comment: "子项目正常最小值"
+    t.string   "name",                                    comment: "子项目名称"
+    t.string   "sub_unit",                                comment: "子项目单位"
+    t.float    "sub_max",         limit: 24,              comment: "子项目正常最大值"
+    t.float    "sub_min",         limit: 24,              comment: "子项目正常最小值"
     t.integer  "health_item_id"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.string   "sub_value_range",                         comment: "子项目取值范围"
     t.index ["health_item_id"], name: "index_health_item_subs_on_health_item_id", using: :btree
   end
 
   create_table "health_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name",                               comment: "名称"
-    t.string   "unit",                               comment: "单位"
-    t.integer  "is_check",                           comment: "是否开启项目数据记录"
+    t.string   "name",                                comment: "名称"
+    t.string   "unit",                                comment: "单位"
+    t.integer  "is_check",                            comment: "是否开启项目数据记录"
     t.integer  "user_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.integer  "is_admin",                           comment: "是否为系统默认项目"
-    t.float    "normal_max", limit: 24,              comment: "正常最大值"
-    t.float    "normal_min", limit: 24,              comment: "正常最小值"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.integer  "is_admin",                            comment: "是否为系统默认项目"
+    t.float    "normal_max",  limit: 24,              comment: "正常最大值"
+    t.float    "normal_min",  limit: 24,              comment: "正常最小值"
+    t.string   "value_range",                         comment: "取值范围"
     t.index ["user_id"], name: "index_health_items_on_user_id", using: :btree
   end
 
@@ -154,9 +156,7 @@ ActiveRecord::Schema.define(version: 20170112085534) do
   end
 
   create_table "user_vips", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "card_number",                     comment: "会员卡号"
-    t.string   "barcode_image_path",              comment: "会员条码"
-    t.string   "vip_score",                       comment: "会员积分"
+    t.string   "card_number",                          comment: "会员卡号"
     t.integer  "user_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false

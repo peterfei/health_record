@@ -40,7 +40,8 @@ class HealthItemsController < ApplicationController
                                         user_id: user.id, 
                                         is_admin:1, 
                                         normal_min: @health_item.normal_min, 
-                                        normal_max: @health_item.normal_max
+                                        normal_max: @health_item.normal_max,
+                                        value_range: @health_item.value_range
         end
         format.html { redirect_to health_items_path, notice: '新增成功！' }
         format.json { render :show, status: :created, location: @health_item }
@@ -83,6 +84,6 @@ class HealthItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def health_item_params
-      params.fetch(:health_item, {}).permit(:name, :unit, :normal_min, :normal_max, :is_admin)
+      params.fetch(:health_item, {}).permit(:name, :unit, :normal_min, :normal_max, :value_range, :is_admin)
     end
 end

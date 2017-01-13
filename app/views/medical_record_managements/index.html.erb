@@ -44,53 +44,55 @@
 
 <div class="row">
   <div class="text-center"><h2>病历管理</h2></div>
-    <div class="box col-md-12">
-      <div class="box-inner">
-        <div class="box-header well">
-          <h2>病历管理</h2>
-        </div>
-        <div class="box-content">
-        <% if @medical_record_managements && @medical_record_managements.length>0 %>
-          <% @medical_record_managements.each do |medical_record_management| %>
-            <h3><%= medical_record_management[:record_date] %></h3>
-            <ul class="thumbnails">
-            <% medical_record_management[:record_content].each do |content| %>
-              <li class="thumbnail">
-                <a href="<%= content.image_path %>" target="_blank">
-                  <img src="<%= content.image_path %>" />
-                </a>
-                <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
-                <dt class="text-center"><%= User.find(content.user_id).truename %> | <%= content.name %></dt>
-              </li>
-            <% end %>
-            </ul>
-          <% end %>
-        <% else %>
-          <h3 class="text-center">暂无数据</h3>
-        <% end %>
-          <!-- <h3 class="text-center">暂无数据</h3>
-
-          <h3>2017/01/05</h3>
+  <div class="box col-md-12">
+    <div class="box-inner">
+      <div class="box-header well">
+        <h2>病历管理</h2>
+      </div>
+      <div class="box-content">
+        <% @medical_record_managements.each do |medical_record_management| %>
+          <h3><%= medical_record_management[:record_date] %></h3>
           <ul class="thumbnails">
+          <% medical_record_management[:record_content].each do |content| %>
             <li class="thumbnail">
-              <a href="/medical_record_management/1.jpg" target="_blank"><img src="/medical_record_management/1.jpg" /></a>
+              <a href="<%= content.image_path %>" target="_blank">
+                <img src="<%= content.image_path %>" />
+              </a>
               <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
-              <dt class="text-center">123</dt>
+              <dt class="text-center"><%= User.find(content.user_id).truename %> | <%= content.name %></dt>
             </li>
-            <li class="thumbnail">
-              <a href="/medical_record_management/1.jpg" target="_blank"><img src="/medical_record_management/1.jpg" /></a>
-              <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
-              <dt class="text-center">123</dt>
-            </li>
-            <li class="thumbnail">
-              <a href="/medical_record_management/1.jpg" target="_blank"><img src="/medical_record_management/1.jpg" /></a>
-              <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
-              <dt class="text-center">123</dt>
-            </li>
-          </ul> -->
+          <% end %>
+          </ul>
+        <% end %>
 
+        <div style="background:#f1f1f1;" class="text-center">
+          <%= paginate @dates %>
+          <%= page_entries_info @dates %>
         </div>
+        
+        <!-- <h3 class="text-center">暂无数据</h3>
+
+        <h3>2017/01/05</h3>
+        <ul class="thumbnails">
+          <li class="thumbnail">
+            <a href="/medical_record_management/1.jpg" target="_blank"><img src="/medical_record_management/1.jpg" /></a>
+            <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
+            <dt class="text-center">123</dt>
+          </li>
+          <li class="thumbnail">
+            <a href="/medical_record_management/1.jpg" target="_blank"><img src="/medical_record_management/1.jpg" /></a>
+            <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
+            <dt class="text-center">123</dt>
+          </li>
+          <li class="thumbnail">
+            <a href="/medical_record_management/1.jpg" target="_blank"><img src="/medical_record_management/1.jpg" /></a>
+            <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
+            <dt class="text-center">123</dt>
+          </li>
+        </ul> -->
+
       </div>
     </div>
   </div>
+</div>
 

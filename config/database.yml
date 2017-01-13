@@ -16,6 +16,13 @@ development:
   username: root
   password: 123.com
   database: health_record
+test:
+  <<: *default
+  host: 172.16.100.51
+  port: 3306
+  username: root
+  password: 123.com
+  database: health_record_test
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
