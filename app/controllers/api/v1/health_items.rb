@@ -40,7 +40,7 @@ module API
 
           params do
             requires :health_item_id, type: Integer, message: "未传health_item_id"
-            requires :is_check, type: Integer, message: "未传是否开启状态"
+            requires :is_check, type: Boolean, message: "未传是否开启状态"
           end
           desc "选择或取消健康项目"
           post :check_item do
