@@ -31,13 +31,13 @@ module API
 
         desc '短信验证码接口'
         params do
-          requires :phone,type: String, message:'手机号码不能为空'
+          requires :username,type: String, message:'手机号码不能为空'
         end
         post :sms_api do
-          if params[:phone].size != 11
+          if params[:username].size != 11
             error!('电话号码格式不正确')
           else
-            result = SmsApi.new.verify_code(params[:phone])
+            result = SmsApi.new.verify_code(params[:username])
             {data:result,status: 1}
           end
         end
