@@ -70,10 +70,26 @@ class HealthItemsController < ApplicationController
 	# DELETE /health_items/1
 	# DELETE /health_items/1.json
 	def destroy
-		@health_item.destroy
-		respond_to do |format|
-			format.html { redirect_to health_items_url, notice: '删除成功！' }
-			format.json { head :no_content }
+		@item=HealthItem.find(params[:id])
+		if HealthItem.where("name='#{@item.name}'").count > 1 && !@item.user_id.present?
+			respond_to do |format|
+				format.html { redirect_to health_items_url, alert: '该项目已被使用不能删除' }
+				format.json { head :no_content }
+			end
+		else
+			if HealthItemRecord.find_by("health_item_id='#{params[:id]}'").present?
+				respond_to do |format|
+					format.html { redirect_to health_items_url, alert: '该项目已被使用不能删除' }
+					format.json { head :no_content }
+				end
+			else
+				@health_item.destroy
+				respond_to do |format|
+					format.html { redirect_to health_items_url, notice: '删除成功！' }
+					format.json { head :no_content }
+				end
+			end
+
 		end
 	end
 

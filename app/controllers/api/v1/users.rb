@@ -176,13 +176,13 @@ module API
 			# | 备注:vip_mark
 			# | 标签:get
 			# ########################################################
-			# params do
-			# 	requires :user_id, type: Integer, message: "未传user_id"
-			# end
+			params do
+				requires :wx_id, type: String, message: "未传wx_id"
+			end
 			desc "是否是VIP"
 			get :vip_mark do
 				authenticate!
-				User.find(@current_user.id).vip_mark
+				User.find_by(wx_id:wx_id).vip_mark
 			end
 			# encoding: utf-8
 			# ########################################################
