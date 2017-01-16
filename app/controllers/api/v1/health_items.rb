@@ -74,6 +74,7 @@ module API
           post :add_health_item do
             authenticate!
             begin
+              # binding.pry
               L.info "添加健康项目提交数据为**#{params.to_json}**"
               if HealthItem.find_by("user_id = ? AND name = ?", @current_user.id, params[:name]).present?
                 error!('项目已存在')
