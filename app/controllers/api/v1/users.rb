@@ -16,8 +16,8 @@ module API
 					requires :nation, type: String, message: "未传民族"
 					requires :id_type, type: Integer, message: "未传证件类型"
 					requires :id_code, type: String, message: "未传证件号码"
-					requires :blood_type, type: String, message: "未传血型"
-					requires :children, type: String, message: "未传子女数"
+					requires :blood_type, type: Integer, message: "未传血型"
+					requires :children, type: Integer, message: "未传子女数"
 					requires :education, type: Integer, message: "未传学历"
 					requires :duty, type: String, message: "未传职务"
 					requires :hobby_list, type: String, message: "未传兴趣爱好"
@@ -35,6 +35,7 @@ module API
 							@user.speciality_list.add(params[:speciality_list], parse: true)
 							@user.job_list.add(params[:job_list], parse: true)
 							@user.skill_level_list.add(params[:skill_level_list], parse: true)
+							# binding.pry
 							User.transaction do
 								if @user.update(username: params[:username],
 									password: params[:password],
