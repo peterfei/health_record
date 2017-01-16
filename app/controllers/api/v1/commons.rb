@@ -46,7 +46,7 @@ module API
       resource :wechat do
          desc "获取js api tickets"
          get :get_js_api_tickets do
-            binding.pry
+            # binding.pry
          end
       end
       

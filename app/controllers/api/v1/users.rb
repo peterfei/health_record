@@ -4,38 +4,10 @@ module API
 			include API::V1::Defaults
 
 			resource :users do
-				params do
-					requires :wx_id, type: String, message: "未传微信ID"
-					requires :wx_name, type: String, message: "未传微信名称"
-					requires :wx_avatar, type: String, message: "未传微信头像"
-				end
-				desc "用户注册"
-				post :register do
-					begin
-						L.info "用户注册提交数据为**#{params.to_json}**"
-						User.transaction do
-							if User.create!(params[:wx_id], params[:wx_name], params[:wx_avatar])
-								@admin_health_items = HealthItem.where("is_admin=1 AND user_id IS NULL")
-								HealthItem.transaction do
-									@admin_health_items.each do |item|
-										HealthItem.create! name: item.name, unit: item.unit, is_check:0, user_id: @user.id, is_admin:1, normal_min: item.normal_min, normal_max: item.normal_max
-									end
-								end
-								{ status: :ok }
-							else
-								error!('保存失败')
-							end
-						end
-					rescue Exception => e
-						L.debug "用户注册数据提交错误**#{e.to_json}**"
-						error!('提交失败')
-					end
-				end
+
 
 				params do
-					requires :wx_id, type: String
-					optional :wx_name, type: String
-					optional :wx_avatar, type: String
+					requires :wx_id, type: String, message: "未传wx_id"
 					requires :username, type: String, message: "未传账号"
 					requires :password, type: String, message: "未传密码"
 					requires :truename, type: String, message: "未传姓名"
@@ -44,8 +16,8 @@ module API
 					requires :nation, type: String, message: "未传民族"
 					requires :id_type, type: Integer, message: "未传证件类型"
 					requires :id_code, type: String, message: "未传证件号码"
-					requires :blood_type, type: String, message: "未传血型"
-					requires :children, type: String, message: "未传子女数"
+					requires :blood_type, type: Integer, message: "未传血型"
+					requires :children, type: Integer, message: "未传子女数"
 					requires :education, type: Integer, message: "未传学历"
 					requires :duty, type: String, message: "未传职务"
 					requires :hobby_list, type: String, message: "未传兴趣爱好"
@@ -63,6 +35,7 @@ module API
 							@user.speciality_list.add(params[:speciality_list], parse: true)
 							@user.job_list.add(params[:job_list], parse: true)
 							@user.skill_level_list.add(params[:skill_level_list], parse: true)
+							# binding.pry
 							User.transaction do
 								if @user.update(username: params[:username],
 									password: params[:password],
@@ -183,13 +156,15 @@ module API
 			# | 备注:vip_mark
 			# | 标签:get
 			# ########################################################
-			# params do
-			# 	requires :user_id, type: Integer, message: "未传user_id"
-			# end
+			params do
+				requires :wx_id, type: String, message: "未传wx_id"
+			end
 			desc "是否是VIP"
 			get :vip_mark do
 				authenticate!
-				User.find(@current_user.id).vip_mark
+				@current_user.vip_mark rescue nil
+				# binding.pry
+				# User.find(@current_user.id).vip_mark
 			end
 			# encoding: utf-8
 			# ########################################################
