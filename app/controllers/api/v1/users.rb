@@ -168,6 +168,13 @@ module API
 					error!('未传wx_id')
 				end
 			end
+
+			desc "获取用户信息"
+			get :get_user_info do
+				authenticate!
+				User.find(@current_user.id)
+			end
+
 			# encoding: utf-8
 			# ########################################################
 			# | 作者: guoxiaofeng <guoxiaofeng@rongyitech.com>
