@@ -32,21 +32,24 @@ class HealthItemsController < ApplicationController
     @health_item = HealthItem.new(health_item_params)
 
     respond_to do |format|
-      if @health_item.save
-        User.all.each do |user|
-          HealthItem.create! name: @health_item.name, 
-                                        unit: @health_item.unit, 
-                                        is_check:0, 
-                                        user_id: user.id, 
-                                        is_admin:1, 
-                                        normal_min: @health_item.normal_min, 
-                                        normal_max: @health_item.normal_max
+      HealthItem.transaction do
+        if @health_item.save
+          User.all.each do |user|
+            HealthItem.create! name: @health_item.name,
+            unit: @health_item.unit,
+            is_check:0,
+            user_id: user.id,
+            is_admin:1,
+            normal_min: @health_item.normal_min,
+            normal_max: @health_item.normal_max,
+            value_range: @health_item.value_range
+          end
+          format.html { redirect_to health_items_path, notice: '新增成功！' }
+          format.json { render :show, status: :created, location: @health_item }
+        else
+          format.html { render :new }
+          format.json { render json: @health_item.errors, status: :unprocessable_entity }
         end
-        format.html { redirect_to health_items_path, notice: '新增成功！' }
-        format.json { render :show, status: :created, location: @health_item }
-      else
-        format.html { render :new }
-        format.json { render json: @health_item.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -83,6 +86,6 @@ class HealthItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def health_item_params
-      params.fetch(:health_item, {}).permit(:name, :unit, :normal_min, :normal_max, :is_admin)
+      params.fetch(:health_item, {}).permit(:name, :unit, :normal_min, :normal_max, :is_admin, :value_range)
     end
-end
+  end

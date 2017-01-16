@@ -1,10 +1,10 @@
-	class User < ApplicationRecord
-	has_many :api_user_keys
-	has_one :user_vip
-	has_many :user_focus
-	has_many :health_items
-	has_many :medical_record_managements
-	has_many :take_medicine_managements
+class User < ApplicationRecord
+	has_many :api_user_keys, dependent: :destroy
+	has_one :user_vip, dependent: :destroy
+	has_many :user_focus, dependent: :destroy
+	has_many :health_items, dependent: :destroy
+	has_many :medical_record_managements, dependent: :destroy
+	has_many :take_medicine_managements, dependent: :destroy
 
 	acts_as_taggable_on :hobby, :job, :speciality, :skill_level
 	enum sex: [:male, :female]
