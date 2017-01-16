@@ -70,7 +70,6 @@
                   <% if !health_item.user_id.present? && health_item.is_admin==1%>
                     <%= link_to '子项目', health_item_subs_path(:health_item_id=> health_item.id), class:'btn btn-success btn-sm' %>
                   <% end %>
-
                 </td>
               </tr>
             <% end %>
@@ -81,7 +80,7 @@
           <%= paginate @health_items %>
           <%= page_entries_info @health_items %>
         </div>
-        
+
       </div>
     </div>
   </div>

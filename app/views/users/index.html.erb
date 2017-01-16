@@ -210,7 +210,7 @@
                       <%= link_to '查看', user, class: "btn btn-primary"  %>
                       <%= link_to '删除', user, method: :delete, data: { confirm: '确认删除吗?' }, class: "btn btn-danger" %>
                       <% if user.vip_mark==1 %>
-                        <%= link_to '会员卡', UserVip.find(user.id), class: "btn btn-success"  %>
+                        <%= link_to '会员卡', UserVip.find_by("user_id=#{user.id}"), class: "btn btn-success"  %>
                       <% end %>
                     </td>
                   </tr>

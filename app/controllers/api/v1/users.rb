@@ -141,6 +141,13 @@ module API
 					error!('未传wx_id')
 				end
 			end
+
+			desc "获取用户信息"
+			get :get_user_info do
+				authenticate!
+				User.find(@current_user.id)
+			end
+
 			# encoding: utf-8
 			# ########################################################
 			# | 作者: guoxiaofeng <guoxiaofeng@rongyitech.com>
@@ -149,9 +156,9 @@ module API
 			# | 备注:vip_mark
 			# | 标签:get
 			# ########################################################
-			# params do
-			# 	requires :user_id, type: Integer, message: "未传user_id"
-			# end
+			params do
+				requires :wx_id, type: String, message: "未传wx_id"
+			end
 			desc "是否是VIP"
 			get :vip_mark do
 				authenticate!
