@@ -29,7 +29,11 @@ class HealthItemsController < ApplicationController
   # POST /health_items
   # POST /health_items.json
   def create
+    binding.pry
     @health_item = HealthItem.new(health_item_params)
+    if params[:value_range]==''
+      binding.pry
+    end
 
     respond_to do |format|
       HealthItem.transaction do
