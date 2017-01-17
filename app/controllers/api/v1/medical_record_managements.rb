@@ -1,4 +1,5 @@
 module API
+<<<<<<< HEAD
   module V1
     class MedicalRecordManagements< Grape::API
         include API::V1::Defaults
@@ -62,9 +63,9 @@ module API
                 error!('病历记录已存在')
               else
                 @medical_record_management = MedicalRecordManagement.new  name: params[:name],
-                                                                          image_path: uploader.url,
-                                                                          user_id: @current_user.id,
-                                                                          thumb_image_path:uploader.thumb.url
+                image_path: uploader.url,
+                user_id: @current_user.id,
+                thumb_image_path:uploader.thumb.url
                 @medical_record_management.category_list.add(params[:category], parse: true)
                 if @medical_record_management.save
                   { status: :ok }
@@ -97,9 +98,46 @@ module API
             end
           end
 
+          # encoding: utf-8
+          # ########################################################
+          # | 作者: guoxiaofeng <guoxiaofeng@rongyitech.com>
+          # | 开发时间: 2017-01-16 15:01:35
+          # | 功能说明:病例搜索接口
+          # | 备注:默认按name,category,created_at
+          # | 标签:get
+          # ########################################################
+          params do
+            requires :name, type: String, message: "未传name"
+            end
+          desc "病例搜索接口"
+          get :search do
+            # authenticate!
+            #find_by_sql
+            @name=params[:name]
+            if @name.present?
+              @ex_where = "medical_record_managements.name LIKE '%#{@name}%' or date_format(medical_record_managements.created_at,'%Y-%m-%d') like '%#{@name}%' or tags.name like '%#{@name}%'"
+            end
+            MedicalRecordManagement.joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement'").where(@ex_where).page(params[:page]).per(params[:per_page])
+          end
+          # encoding: utf-8
+          # ########################################################
+          # | 作者: guoxiaofeng <guoxiaofeng@rongyitech.com>
+          # | 开发时间: 2017-01-16 17:10:27
+          # | 功能说明: 病例搜索接口
+          # | 备注: category
+          # | 标签: 搜索TWO
+          # ########################################################
+
+          params do
+            requires :name, type: String, message: "未传name"
+          end
+          desc "病例搜索接口2"
+          get :search_two do
+            # authenticate!
+            MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).page(params[:page]).per(params[:per_page])
+          end
 
         end
-
+      end
     end
   end
-end
