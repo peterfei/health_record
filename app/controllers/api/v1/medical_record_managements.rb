@@ -2,7 +2,8 @@ module API
   module V1
     class MedicalRecordManagements< Grape::API
         include API::V1::Defaults
-
+        include Grape::Kaminari
+        
         resource :medical_record_managements do
           # params do
           #   requires :user_id, type: Integer, message: "未传user_id"
@@ -10,9 +11,10 @@ module API
           desc "查询用户所有病历记录"
           get :all_medical_records do
             authenticate!
-            @dates = MedicalRecordManagement.select(:created_at).
+            @all_dates = MedicalRecordManagement.select(:created_at).
               where("user_id = ?", @current_user.id).
               group("DATE_FORMAT(created_at,'%Y-%m-%d')")
+            @dates = paginate(@all_dates)
             @results = []
             if @dates.present?
               @dates.each do |d|

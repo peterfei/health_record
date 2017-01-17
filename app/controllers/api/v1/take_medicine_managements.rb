@@ -2,13 +2,14 @@ module API
   module V1
     class TakeMedicineManagements< Grape::API
         include API::V1::Defaults
+        include Grape::Kaminari
 
         resource :take_medicine_managements do
-
           desc "查询用户所有服药记录"
           get :all_take_medicines do
             authenticate!
-            TakeMedicineManagement.where("user_id = ?", @current_user.id)
+            @result = TakeMedicineManagement.where("user_id = ?", @current_user.id)
+            paginate(@result)
           end
 
           params do

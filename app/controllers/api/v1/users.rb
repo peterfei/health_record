@@ -145,7 +145,7 @@ module API
 			desc "获取用户信息"
 			get :get_user_info do
 				authenticate!
-				User.find(@current_user.id)
+				User.find(@current_user.id).attributes{}
 			end
 
 			# encoding: utf-8
