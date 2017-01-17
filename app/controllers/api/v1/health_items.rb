@@ -13,9 +13,9 @@ module API
           get :all_health_items do
             authenticate!
             if params[:status]==1
-              @result = HealthItem.where("user_id = ? AND is_check=1", @current_user.id)
+              @result = HealthItem.where("user_id = ? AND is_check=1", @current_user.id).order("is_admin DESC")
             else
-              @result = HealthItem.where("user_id = ?", @current_user.id)
+              @result = HealthItem.where("user_id = ?", @current_user.id).order("is_admin DESC, is_check DESC")
             end
             paginate(@result)
           end
