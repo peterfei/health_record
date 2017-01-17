@@ -78,7 +78,7 @@ module API
                     @content[:name] = @health_item.name
                     @content[:content] = c.content
                     if @health_item.normal_max.present?
-                      if c.content>@health_item.normal_max
+                      if c.content.to_f>@health_item.normal_max
                         @content[:ex_max] = 1
                       else
                         @content[:ex_max] = 0
@@ -87,7 +87,7 @@ module API
                       @content[:ex_max] = 0
                     end
                     if @health_item.normal_min.present?
-                      if c.content<@health_item.normal_min
+                      if c.content.to_f<@health_item.normal_min
                         @content[:ex_min] = 1
                       else
                         @content[:ex_min] = 0
