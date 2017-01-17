@@ -105,13 +105,16 @@ module API
 					# ########################################################
 					params do
 						requires :name, type: String, message: "未传name"
-					end
-					desc "删除病历记录"
+						end
+					desc "病例搜索接口"
 					get :search do
 						# authenticate!
-						name_cat=MedicalRecordManagement.where("name LIKE '%#{params[:name]}%' or date_format(created_at,'%Y-%m-%d') like '%#{params[:name]}%'")
-						tag=MedicalRecordManagement.tagged_with(["#{params[:name]}"])
-						arr=name_cat+tag
+						#find_by_sql
+						@name=params[:name]
+						if @name.present?
+						  @ex_where = "medical_record_managements.name LIKE '%#{@name}%' or date_format(medical_record_managements.created_at,'%Y-%m-%d') like '%#{@name}%' or tags.name like '%#{@name}%'"
+						end
+						MedicalRecordManagement.joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement'").where(@ex_where).page(params[:page]).per(params[:per_page])
 					end
 					# encoding: utf-8
 					# ########################################################
@@ -125,10 +128,10 @@ module API
 					params do
 						requires :name, type: String, message: "未传name"
 					end
-					desc "删除病历记录"
+					desc "病例搜索接口2"
 					get :search_two do
 						# authenticate!
-						MedicalRecordManagement.tagged_with(["#{params[:name]}"])
+						MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).page(params[:page]).per(params[:per_page])
 					end
 
 				end
