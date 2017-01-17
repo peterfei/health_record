@@ -2,7 +2,8 @@ module API
   module V1
     class HealthItems< Grape::API
         include API::V1::Defaults
-
+        include Grape::Kaminari
+        
         resource :health_items do
           params do
             # requires :user_id, type: Integer, message: "未传user_id"
@@ -12,10 +13,11 @@ module API
           get :all_health_items do
             authenticate!
             if params[:status]==1
-              HealthItem.where("user_id = ? AND is_check=1", @current_user.id)
+              @result = HealthItem.where("user_id = ? AND is_check=1", @current_user.id)
             else
-              HealthItem.where("user_id = ?", @current_user.id)
+              @result = HealthItem.where("user_id = ?", @current_user.id)
             end
+            paginate(@result)
           end
 
           params do
