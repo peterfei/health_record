@@ -13,7 +13,7 @@ module API
             authenticate!
             @all_dates = MedicalRecordManagement.select(:created_at).
               where("user_id = ?", @current_user.id).
-              group("DATE_FORMAT(created_at,'%Y-%m-%d')")
+              group("DATE_FORMAT(created_at,'%Y-%m-%d')").order("created_at DESC")
             @dates = paginate(@all_dates)
             @results = []
             if @dates.present?
