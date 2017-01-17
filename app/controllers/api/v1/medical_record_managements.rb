@@ -1,10 +1,10 @@
 module API
   module V1
     class MedicalRecordManagements< Grape::API
-        include API::V1::Defaults
-        include Grape::Kaminari
+      include API::V1::Defaults
+      include Grape::Kaminari
 
-        resource :medical_record_managements do
+      resource :medical_record_managements do
           # params do
           #   requires :user_id, type: Integer, message: "未传user_id"
           # end
@@ -12,8 +12,8 @@ module API
           get :all_medical_records do
             authenticate!
             @all_dates = MedicalRecordManagement.select(:created_at).
-              where("user_id = ?", @current_user.id).
-              group("DATE_FORMAT(created_at,'%Y-%m-%d')").order("created_at DESC")
+            where("user_id = ?", @current_user.id).
+            group("DATE_FORMAT(created_at,'%Y-%m-%d')").order("created_at DESC")
             @dates = paginate(@all_dates)
             @results = []
             if @dates.present?
@@ -107,7 +107,7 @@ module API
           # ########################################################
           params do
             requires :name, type: String, message: "未传name"
-            end
+          end
           desc "病例搜索接口"
           get :search do
             # authenticate!
@@ -116,7 +116,26 @@ module API
             if @name.present?
               @ex_where = "medical_record_managements.name LIKE '%#{@name}%' or date_format(medical_record_managements.created_at,'%Y-%m-%d') like '%#{@name}%' or tags.name like '%#{@name}%'"
             end
-            MedicalRecordManagement.joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement'").where(@ex_where).page(params[:page]).per(params[:per_page]).order("created_at DESC")
+            @all_dates=MedicalRecordManagement.select(:created_at).joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').
+            joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement'").
+            where(@ex_where).page(params[:page]).per(params[:per_page]).
+            group("DATE_FORMAT(medical_record_managements.created_at,'%Y-%m-%d')").order("medical_record_managements.created_at DESC")
+            @dates = paginate(@all_dates)
+            @results = []
+            if @dates.present?
+              @dates.each do |d|
+                @record = {}
+                @date = d.created_at.strftime("%Y-%m-%d")
+                @ex_where_two = "medical_record_managements.name LIKE '%#{@name}%' or tags.name like '%#{@name}%'"
+                @record[:record_date] = @date
+                @record[:record_content] = MedicalRecordManagement.joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').
+                joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement' and date_format(medical_record_managements.created_at,'%Y-%m-%d') like '%#{@date}%'").
+                where(@ex_where_two).order("medical_record_managements.created_at DESC")
+                @results.push(@record)
+              end
+              @results
+            end
+
           end
           # encoding: utf-8
           # ########################################################
@@ -133,7 +152,20 @@ module API
           desc "病例搜索接口2"
           get :search_two do
             # authenticate!
-            MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).page(params[:page]).per(params[:per_page]).order("created_at DESC")
+            @category_all=MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).
+            group("DATE_FORMAT(medical_record_managements.created_at,'%Y-%m-%d')").order("created_at DESC")
+            @category = paginate(@category_all)
+            @results = []
+            if @category.present?
+              @category.each do |d|
+                @record = {}
+                @date = d.created_at.strftime("%Y-%m-%d")
+                @record[:record_date] = @date
+                @record[:record_content] = MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).where("created_at like '%#{@date}%'").order("created_at DESC")
+                @results.push(@record)
+              end
+              @results
+            end
           end
 
         end
