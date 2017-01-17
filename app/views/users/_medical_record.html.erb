@@ -51,7 +51,7 @@
               <% medical_record_management[:record_content].each do |content| %>
                 <li class="thumbnail">
                   <a href="<%= content.image_path %>" target="_blank">
-                    <img src="<%= content.image_path %>" />
+                    <img src="<%= content.thumb_image_path %>" />
                   </a>
                   <hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>
                   <dt class="text-center"><%= User.find(content.user_id).truename %> | <%= content.name %></dt>

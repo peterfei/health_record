@@ -1,5 +1,4 @@
 module API
-<<<<<<< HEAD
   module V1
     class MedicalRecordManagements< Grape::API
         include API::V1::Defaults
