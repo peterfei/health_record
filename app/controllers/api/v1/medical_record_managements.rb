@@ -3,7 +3,7 @@ module API
     class MedicalRecordManagements< Grape::API
         include API::V1::Defaults
         include Grape::Kaminari
-        
+
         resource :medical_record_managements do
           # params do
           #   requires :user_id, type: Integer, message: "未传user_id"
@@ -116,7 +116,7 @@ module API
             if @name.present?
               @ex_where = "medical_record_managements.name LIKE '%#{@name}%' or date_format(medical_record_managements.created_at,'%Y-%m-%d') like '%#{@name}%' or tags.name like '%#{@name}%'"
             end
-            MedicalRecordManagement.joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement'").where(@ex_where).page(params[:page]).per(params[:per_page])
+            MedicalRecordManagement.joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement'").where(@ex_where).page(params[:page]).per(params[:per_page]).order("created_at DESC")
           end
           # encoding: utf-8
           # ########################################################
@@ -133,7 +133,7 @@ module API
           desc "病例搜索接口2"
           get :search_two do
             # authenticate!
-            MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).page(params[:page]).per(params[:per_page])
+            MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).page(params[:page]).per(params[:per_page]).order("created_at DESC")
           end
 
         end
