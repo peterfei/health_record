@@ -26,6 +26,8 @@ class User < ApplicationRecord
 						job_list: job_list.join(","),
 						skill_level_list: skill_level_list.join(","),
 						user_vip_info: user_vip_info)
+		else
+			super
 		end
 	end
 
@@ -38,12 +40,12 @@ class User < ApplicationRecord
 			helth_item=HealthItem.where("is_admin=1").group("name")
 			helth_item.each do |item|
 				HealthItem.create! name:item.name,
-													 unit:item.unit,
-													 is_check:item.is_check,
-													 user_id:self.id,
-													 is_admin:0,
-													 normal_max:item.normal_max,
-													 normal_min:item.normal_min
+								 unit:item.unit,
+								 is_check:item.is_check,
+								 user_id:self.id,
+								 is_admin:0,
+								 normal_max:item.normal_max,
+								 normal_min:item.normal_min
 			end
 		end
 end
