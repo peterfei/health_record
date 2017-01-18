@@ -17,6 +17,7 @@ class User < ApplicationRecord
 	def attributes(&block)
 		if block
 			super.merge(sex: User.sexes[self.sex],
+
 						id_type: User.id_types[self.id_type],
 						blood_type: User.blood_types[self.blood_type],
 						children: User.children[self.children],
