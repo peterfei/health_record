@@ -21,6 +21,14 @@ module API
             paginate(@result)
           end
 
+          desc "查询用户健康项目"
+          params do
+            requires :health_item_id, type: Integer, message: "未传health_item_id"
+          end
+          get :health_item do
+          	HealthItem.find(params[:health_item_id])
+          end
+
           desc "查询家人健康项目"
           params do
             # requires :user_id, type: Integer, message: "未传user_id"
