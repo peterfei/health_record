@@ -1,7 +1,7 @@
 module API
-  module V1
-    class UserFocus< Grape::API
-      include API::V1::Defaults
+	module V1
+		class UserFocus< Grape::API
+			include API::V1::Defaults
 
 			resource :user_focus do
 				# encoding: utf-8
@@ -131,21 +131,28 @@ module API
 				# | 标签:get
 				# ########################################################
 				desc"删除关注"
-				get :remove_focu	 do
+				params do
+					requires :focu_id, type: Integer, message: "未传focu_id"
+				end
+				get :remove_focu do
 					authenticate!
 					begin
 						L.info "删除关注提交数据为**#{params.to_json}**"
-						if UserFocu.where("follow_id='#{@current_user.id}' or user_id='#{@current_user.id}'").destroy
-							{ status: :ok }
-						else
-							error!('删除失败')
+						@focu=UserFocu.find(params[:focu_id])
+						if @focu.user_id==@current_user.id
+							focu_two=UserFocu.find_by("follow_id='#{@focu.user_id}' and user_id='#{@focu.follow_id}'")
+							if @focu.destroy
+								focu_two.destroy
+								{ status: :ok }
+							else
+								error!('删除失败')
+							end
 						end
 					rescue Exception => e
 						L.debug "删除关注数据提交错误**#{e.to_json}**"
 						error!('提交失败')
 					end
 				end
-
 
 			end
 		end
