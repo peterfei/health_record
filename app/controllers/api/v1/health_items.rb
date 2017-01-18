@@ -28,7 +28,7 @@ module API
           end
           get :family_health_items do
             authenticate!
-            @user_focus = User.find_by("(user_id = ? AND follow_id = ?) OR (user_id = ? AND follow_id = ?) AND whether=1", @current_user.id, params[:family_user_id], params[:family_user_id], @current_user.id)
+            @user_focus = UserFocu.find_by("(user_id = ? AND follow_id = ?) OR (user_id = ? AND follow_id = ?) AND whether=1", @current_user.id, params[:family_user_id], params[:family_user_id], @current_user.id)
             if @user_focus.present?
             	@family_user_info = User.find(params[:family_user_id])
             	@family_health_items = HealthItem.where("user_id = ? AND is_check=1", params[:family_user_id])
@@ -65,10 +65,10 @@ module API
           end
           post :check_item do
             # authenticate!
-            if params[:is_check]==1
-              @is_check = 0
-            else
+            if params[:is_check].present?
               @is_check = 1
+            else
+              @is_check = 0
             end
             begin
               L.info "选择或取消健康项目提交数据为**#{params.to_json}**"
