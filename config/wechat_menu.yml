@@ -6,6 +6,6 @@ button:
    -
     type: "view"
     name: "健康数据"
-    url: "http://wechat.ittun.com/wx_health_data"
+    url: "http://peterfei.ittun.com/wx_health_data"
 
 
