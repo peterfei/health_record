@@ -4,20 +4,21 @@ module API
         include API::V1::Defaults
 
         resource :health_item_attentions do
+
+          desc "查询某健康项目所有提醒时间"
           params do
             requires :health_item_id, type: Integer, message: "未传health_item_id"
           end
-          desc "查询某健康项目所有提醒时间"
           get :all_item_attentions do
             # authenticate!
             HealthItemAttention.where("health_item_id = ?", params[:health_item_id])
           end
 
+          desc "添加健康项目提醒时间"
           params do
             requires :health_item_id, type: Integer, message: "未传health_item_id"
             requires :item_attention_time, type: String, message: "未传item_attention_time"
           end
-          desc "添加健康项目提醒时间"
           post :add_health_item_attention do
             authenticate!
             begin
@@ -33,10 +34,10 @@ module API
             end
           end
 
+          desc "删除健康项目提醒时间"
           params do
             requires :health_item_attention_id, type: Integer, message: "未传health_item_attention_id"
           end
-          desc "删除健康项目提醒时间"
           get :delete_health_item_attention do
             # authenticate!
             begin
@@ -51,7 +52,6 @@ module API
               error!('提交失败')
             end
           end
-
 
         end
 
