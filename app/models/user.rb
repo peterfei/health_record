@@ -49,5 +49,4 @@ class User < ApplicationRecord
 								 normal_min:item.normal_min
 			end
 		end
-	end
 end
