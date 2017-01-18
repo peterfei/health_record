@@ -117,21 +117,28 @@ module API
             if @name.present?
               @ex_where = "medical_record_managements.name LIKE '%#{@name}%' or date_format(medical_record_managements.created_at,'%Y-%m-%d') like '%#{@name}%' or tags.name like '%#{@name}%'"
             end
+            #分组排序拿日期
             @all_dates=MedicalRecordManagement.select(:created_at).joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').
             joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement'").
-            where(@ex_where).page(params[:page]).per(params[:per_page]).
-            group("DATE_FORMAT(medical_record_managements.created_at,'%Y-%m-%d')").order("medical_record_managements.created_at DESC")
+            where(@ex_where).group("DATE_FORMAT(medical_record_managements.created_at,'%Y-%m-%d')").
+            order("medical_record_managements.created_at DESC")
             @dates = paginate(@all_dates)
+            #排序拿搜索数据
+            @all_data=MedicalRecordManagement.joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').
+            joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement'").
+            where(@ex_where).order("medical_record_managements.created_at DESC")
+            @data = paginate(@all_data)
             @results = []
             if @dates.present?
               @dates.each do |d|
-                @record = {}
-                @date = d.created_at.strftime("%Y-%m-%d")
-                @ex_where_two = "medical_record_managements.name LIKE '%#{@name}%' or tags.name like '%#{@name}%'"
-                @record[:record_date] = @date
-                @record[:record_content] = MedicalRecordManagement.joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').
-                joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement' and date_format(medical_record_managements.created_at,'%Y-%m-%d') like '%#{@date}%'").
-                where(@ex_where_two).order("medical_record_managements.created_at DESC")
+                @record ={}
+                @record[:record_date]=(d.created_at.strftime("%Y-%m-%d"))
+                @record[:record_content]=[]
+                @data.each do |t|
+                  if d.created_at.strftime("%Y-%m-%d")==t.created_at.strftime("%Y-%m-%d")
+                    @record[:record_content].push(t)
+                    end
+                end
                 @results.push(@record)
               end
               @results
