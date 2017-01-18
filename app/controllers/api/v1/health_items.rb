@@ -21,6 +21,23 @@ module API
             paginate(@result)
           end
 
+          desc "查询家人健康项目"
+          params do
+            # requires :user_id, type: Integer, message: "未传user_id"
+            requires :family_user_id, type: Integer, message: "未传family_user_id"
+          end
+          get :family_health_items do
+            authenticate!
+            @user_focus = User.find_by("(user_id = ? AND follow_id = ?) OR (user_id = ? AND follow_id = ?) AND whether=1", @current_user.id, params[:family_user_id], params[:family_user_id], @current_user.id)
+            if @user_focus.present?
+            	@family_user_info = User.find(params[:family_user_id])
+            	@family_health_items = HealthItem.where("user_id = ? AND is_check=1", params[:family_user_id])
+            	{ family_user_info: @family_user_info, family_health_items: @family_health_items }
+            else
+            	error!("此用户未被关注")
+            end
+          end
+
           desc "保存健康项目记录"
           params do
             requires :health_item_id, type: Integer, message: "未传health_item_id"
@@ -90,25 +107,6 @@ module API
               end
             rescue Exception => e
               L.debug "添加健康项目数据提交错误**#{e.to_json}**"
-              error!('提交失败')
-            end
-          end
-
-          desc "删除健康项目"
-          params do
-            requires :health_item_id, type: Integer, message: "未传health_item_id"
-          end
-          get :delete_health_item do
-            # authenticate!
-            begin
-              L.info "删除健康项目提交数据为**#{params.to_json}**"
-              if HealthItem.find(params[:health_item_id]).destroy
-                { status: :ok }
-              else
-                error!('删除失败')
-              end
-            rescue Exception => e
-              L.debug "删除健康项目数据提交错误**#{e.to_json}**"
               error!('提交失败')
             end
           end
