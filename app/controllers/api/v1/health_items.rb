@@ -5,11 +5,12 @@ module API
         include Grape::Kaminari
         
         resource :health_items do
+          
+          desc "查询用户健康项目"
           params do
             # requires :user_id, type: Integer, message: "未传user_id"
             requires :status, type: Integer, message: "未传status"
           end
-          desc "查询用户健康项目"
           get :all_health_items do
             authenticate!
             if params[:status]==1
@@ -36,11 +37,11 @@ module API
             end
           end
 
+          desc "保存健康项目记录"
           params do
             requires :health_item_id, type: Integer, message: "未传health_item_id"
             requires :content, type: String, message: "未传健康项目内容"
           end
-          desc "保存健康项目记录"
           post :add_item_record do
             # authenticate!
             begin
@@ -56,11 +57,11 @@ module API
             end
           end
 
+          desc "选择或取消健康项目"
           params do
             requires :health_item_id, type: Integer, message: "未传health_item_id"
             requires :is_check, type: Boolean, message: "未传是否开启状态"
           end
-          desc "选择或取消健康项目"
           post :check_item do
             # authenticate!
             if params[:is_check]==1
@@ -81,6 +82,7 @@ module API
             end
           end
 
+          desc "添加健康项目"
           params do
             requires :name, type: String, message: "未传项目名称"
             optional :unit, type: String
@@ -88,7 +90,6 @@ module API
             requires :normal_min, type: Integer, message: "未传最小正常值"
             requires :normal_max, type: Integer, message: "未传最大正常值"
           end
-          desc "添加健康项目"
           post :add_health_item do
             authenticate!
             begin
@@ -108,10 +109,10 @@ module API
             end
           end
 
+          desc "删除健康项目"
           params do
             requires :health_item_id, type: Integer, message: "未传health_item_id"
           end
-          desc "删除健康项目"
           get :delete_health_item do
             # authenticate!
             begin

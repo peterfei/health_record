@@ -6,6 +6,7 @@ module API
       require 'wechat'
       
       included do
+        
         prefix "api"
         version "v1", using: :path
         default_format :json

@@ -5,6 +5,7 @@ module API
         include Grape::Kaminari
         
         resource :health_item_records do
+          
           desc "查询某健康项目记录"
           params do
             requires :health_item_id, type: Integer, message: "未传health_item_id"
