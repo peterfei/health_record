@@ -20,6 +20,22 @@ module API
 						paginate(@result)
 					end
 
+					desc "查询家人健康项目"
+					params do
+						requires :family_user_id, type: Integer, message: "未传family_user_id"
+					end
+					get :family_health_items do
+						authenticate!
+						@user_focus = UserFocu.find_by("(user_id = ? AND follow_id = ?) OR (user_id = ? AND follow_id = ?) AND whether=1", params[:family_user_id], @current_user.id, @current_user.id, params[:family_user_id])
+						if @user_focus.present?
+							@family_user_info = User.find(params[:family_user_id])
+							@family_health_items = HealthItem.where("user_id = ? AND is_check=1", params[:family_user_id]).order("is_admin DESC").first
+							{ family_user_info: @family_user_info, family_health_items: @family_health_items }
+						else
+							error!("此用户未被关注")
+						end
+					end
+
 					params do
 						requires :health_item_id, type: Integer, message: "未传health_item_id"
 						requires :content, type: String, message: "未传健康项目内容"
