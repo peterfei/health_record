@@ -52,8 +52,8 @@ module API
 				# | 作者: guoxiaofeng <guoxiaofeng@rongyitech.com>
 				# | 开发时间: 2017-01-09 13:30:08
 				# | 功能说明:是否同意别人的请求关注
-				# | 备注:处理关注请求
-				# | 标签:post
+				# | 备注:     whether处理结果：0为未处理，1为同意，2为忽略
+				# | 标签:处理关注请求
 				# ########################################################
 				params do
 					requires :focu_id, type: Integer, message: "未传focu_id"
@@ -64,7 +64,11 @@ module API
 					# authenticate!
 					begin
 						L.info "处理关注请求提交数据为**#{params.to_json}**"
+						@focu=UserFocu.find(params[:focu_id])
 						if UserFocu.find(params[:focu_id]).update(whether: params[:whether])
+							if params[:whether]==1
+								UserFocu.create! appellation: @focu.user.truename, follow_id: @focu.user_id, user_id: @focu.follow_id, whether: 1
+							end
 							{ status: :ok }
 						else
 							error!('保存失败')
@@ -89,10 +93,61 @@ module API
 				desc"关注列表"
 				get :list_focu do
 					authenticate!
-					UserFocu.where("follow_id='#{@current_user.id}'")
+					UserFocu.where("follow_id='#{@current_user.id}' or user_id='#{@current_user.id}'")
 				end
-			end
+				# encoding: utf-8
+				# ########################################################
+				# | 作者: guoxiaofeng <guoxiaofeng@rongyitech.com>
+				# | 开发时间: 2017-01-18 11:04:46
+				# | 功能说明:编辑关注
+				# | 备注:编辑被关注人称呼
+				# | 标签:post
+				# ########################################################
+				desc"编辑关注"
+				params do
+					requires :focu_id, type: Integer, message: "未传focu_id"
+					requires :appellation, type: String, message: "未传appellation"
+				end
+				post :edit_focu do
+					#authenticate!
+					begin
+						L.info "编辑关注提交数据为**#{params.to_json}**"
+						if UserFocu.find(params[:focu_id]).update(appellation: params[:appellation])
+							{ status: :ok }
+						else
+							error!('保存失败')
+						end
+					rescue Exception => e
+						L.debug "编辑关注数据提交错误**#{e.to_json}**"
+						error!('提交失败')
+					end
+				end
+				# encoding: utf-8
+				# ########################################################
+				# | 作者: guoxiaofeng <guoxiaofeng@rongyitech.com>
+				# | 开发时间: 2017-01-18 11:04:46
+				# | 功能说明:删除关注
+				# | 备注:删除已关注者
+				# | 标签:get
+				# ########################################################
+				desc"删除关注"
+				get :remove_focu	 do
+					authenticate!
+					begin
+						L.info "删除关注提交数据为**#{params.to_json}**"
+						if UserFocu.where("follow_id='#{@current_user.id}' or user_id='#{@current_user.id}'").destroy
+							{ status: :ok }
+						else
+							error!('删除失败')
+						end
+					rescue Exception => e
+						L.debug "删除关注数据提交错误**#{e.to_json}**"
+						error!('提交失败')
+					end
+				end
 
+
+			end
 		end
 	end
 end
