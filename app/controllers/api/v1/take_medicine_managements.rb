@@ -5,6 +5,7 @@ module API
         include Grape::Kaminari
 
         resource :take_medicine_managements do
+
           desc "查询用户所有服药记录"
           get :all_take_medicines do
             authenticate!
@@ -12,13 +13,13 @@ module API
             paginate(@result)
           end
 
+          desc "添加服药记录"
           params do
             requires :name, type: String, message: "未传药品名称"
             requires :usage, type: Integer, message: "未传药品用法"
             requires :dosage, type: String, message: "未传药品用量"
             # requires :user_id, type: Integer, message: "未传user_id"
           end
-          desc "添加服药记录"
           post :add_take_medicine_management do
             authenticate!
             begin
@@ -39,10 +40,10 @@ module API
             end
           end
 
+          desc "删除服药记录"
           params do
             requires :take_medicine_management_id, type: Integer, message: "未传take_medicine_management_id"
           end
-          desc "删除服药记录"
           get :delete_take_medicine_management do
             authenticate!
             begin
@@ -57,7 +58,6 @@ module API
               error!('提交失败')
             end
           end
-
 
         end
 

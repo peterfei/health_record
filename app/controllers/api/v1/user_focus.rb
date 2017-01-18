@@ -1,7 +1,7 @@
 module API
-	module V1
-		class UserFocus< Grape::API
-			include API::V1::Defaults
+  module V1
+    class UserFocus< Grape::API
+      include API::V1::Defaults
 
 			resource :user_focus do
 				# encoding: utf-8

@@ -4,20 +4,21 @@ module API
         include API::V1::Defaults
 
         resource :take_medicine_attentions do
+
+          desc "查询某服药记录所有提醒时间"
           params do
             requires :take_medicine_management_id, type: Integer, message: "未传take_medicine_management_id"
           end
-          desc "查询某服药记录所有提醒时间"
           get :all_medicine_attentions do
             # authenticate!
             TakeMedicineAttention.where("take_medicine_management_id = ?", params[:take_medicine_management_id])
           end
 
+          desc "添加服药记录提醒时间"
           params do
             requires :take_medicine_management_id, type: Integer, message: "未传take_medicine_management_id"
             requires :medicine_attention_time, type: String, message: "未传服药记录提醒时间"
           end
-          desc "添加服药记录提醒时间"
           post :add_take_medicine_attention do
             # authenticate!
             begin
@@ -33,10 +34,10 @@ module API
             end
           end
 
+          desc "删除服药记录提醒时间"
           params do
             requires :take_medicine_attention_id, type: Integer, message: "未传take_medicine_attention_id"
           end
-          desc "删除服药记录提醒时间"
           get :delete_take_medicine_attention do
             authenticate!
             begin
@@ -51,7 +52,6 @@ module API
               error!('提交失败')
             end
           end
-
 
         end
 
