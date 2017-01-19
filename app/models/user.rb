@@ -38,15 +38,16 @@ class User < ApplicationRecord
 
 	private
 		def _create_item_user
-			helth_item=HealthItem.where("is_admin=1").group("name")
+			helth_item=HealthItem.where("is_admin=1 AND user_id IS NULL")
 			helth_item.each do |item|
 				HealthItem.create! name:item.name,
 								 unit:item.unit,
-								 is_check:item.is_check,
+								 is_check:0,
 								 user_id:self.id,
-								 is_admin:0,
+								 is_admin:1,
 								 normal_max:item.normal_max,
-								 normal_min:item.normal_min
+								 normal_min:item.normal_min,
+								 value_range:item.value_range
 			end
 		end
 end
