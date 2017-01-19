@@ -22,13 +22,13 @@ module API
 					authenticate!
 					begin
 						L.info "添加关注提交数据为**#{params.to_json}**"
-						user=User.find_by("username=#{params[:tel]}")
+						user=User.find_by("username=#{params[:tel]} and vip_mark=1")
 						if user.present?
 							if  user.id != @current_user.id
 								follow_id=user.id
-								focu=UserFocu.where("user_id='#{@current_user.id}' and follow_id='#{follow_id}' and (whether = 1 or whether = 0) ")
+								focu=UserFocu.where("((user_id='#{@current_user.id}' and follow_id='#{follow_id}') or (user_id='#{follow_id}' and follow_id='#{@current_user.id}') ) and (whether = 1 or whether = 0) ")
 								if focu.present?
-									error!('请勿重复提交！')
+									error!('已申请关注或已关注成功')
 								else
 									if UserFocu.create! appellation: params[:appellation], follow_id: follow_id, user_id: @current_user.id, whether: 0
 										{ status: :ok }
@@ -37,7 +37,7 @@ module API
 									end
 								end
 							else
-								error!('您不能关注您自己')
+								error!('您不能关注自己')
 							end
 						else
 							error!('该用户不存在')
@@ -67,7 +67,7 @@ module API
 						@focu=UserFocu.find(params[:focu_id])
 						if UserFocu.find(params[:focu_id]).update(whether: params[:whether])
 							if params[:whether]==1
-								UserFocu.create! appellation: @focu.user.truename, follow_id: @focu.user_id, user_id: @focu.follow_id, whether: 1
+								UserFocu.create! appellation: @focu.user.wx_name, follow_id: @focu.user_id, user_id: @focu.follow_id, whether: 1
 							end
 							{ status: :ok }
 						else
