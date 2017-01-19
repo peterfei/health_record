@@ -42,7 +42,7 @@ class User < ApplicationRecord
 			helth_item.each do |item|
 				HealthItem.create! name:item.name,
 								 unit:item.unit,
-								 is_check:0,
+								 is_check:1,
 								 user_id:self.id,
 								 is_admin:1,
 								 normal_max:item.normal_max,
