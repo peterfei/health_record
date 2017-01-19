@@ -93,7 +93,7 @@ module API
 				desc"关注列表"
 				get :list_focu do
 					authenticate!
-					UserFocu.where("(follow_id='#{@current_user.id}' and whether=0) or (user_id='#{@current_user.id}' and whether=1)")
+					UserFocu.where("(follow_id='#{@current_user.id}' and whether=0) or (user_id='#{@current_user.id}' and whether=1)").map{|m|m.attributes.merge(wx_avatar: m.user.wx_avatar)}
 				end
 				# encoding: utf-8
 				# ########################################################
