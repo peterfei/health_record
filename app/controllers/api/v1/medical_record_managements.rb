@@ -125,7 +125,7 @@ module API
             @dates = paginate(@all_dates)
             #排序拿搜索数据
             @all_data=MedicalRecordManagement.joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').
-            joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement' and medical_record_managements.user_id=@current_user.id").
+            joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement' and medical_record_managements.user_id=#{@current_user.id}").
             where(@ex_where).order("medical_record_managements.created_at DESC")
             @data = paginate(@all_data)
             @results = []
@@ -142,6 +142,8 @@ module API
                 @results.push(@record)
               end
               @results
+            else
+              error!('暂无数据')
             end
 
           end
@@ -173,6 +175,8 @@ module API
                 @results.push(@record)
               end
               @results
+            else
+              error!("暂无数据")
             end
           end
 
