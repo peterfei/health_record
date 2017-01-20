@@ -111,7 +111,7 @@ module API
             requires :name, type: String, message: "未传name"
           end
           get :search do
-            # authenticate!
+            authenticate!
             #find_by_sql
             @name=params[:name]
             if @name.present?
@@ -119,13 +119,13 @@ module API
             end
             #分组排序拿日期
             @all_dates=MedicalRecordManagement.select(:created_at).joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').
-            joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement'").
+            joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement' and medical_record_managements.user_id=#{@current_user.id}").
             where(@ex_where).group("DATE_FORMAT(medical_record_managements.created_at,'%Y-%m-%d')").
             order("medical_record_managements.created_at DESC")
             @dates = paginate(@all_dates)
             #排序拿搜索数据
             @all_data=MedicalRecordManagement.joins('JOIN taggings on taggings.taggable_id=medical_record_managements.id ').
-            joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement'").
+            joins('JOIN tags on tags.id=taggings.tag_id').where("taggings.taggable_type='MedicalRecordManagement' and medical_record_managements.user_id=#{@current_user.id}").
             where(@ex_where).order("medical_record_managements.created_at DESC")
             @data = paginate(@all_data)
             @results = []
@@ -142,6 +142,8 @@ module API
                 @results.push(@record)
               end
               @results
+            else
+              error!('暂无数据')
             end
 
           end
@@ -159,8 +161,8 @@ module API
             requires :name, type: String, message: "未传name"
           end
           get :search_two do
-            # authenticate!
-            @category_all=MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).
+            authenticate!
+            @category_all=MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).where("user_id = #{@current_user.id}").
               group("DATE_FORMAT(medical_record_managements.created_at,'%Y-%m-%d')").order("created_at DESC")
             @category = paginate(@category_all)
             @results = []
@@ -169,15 +171,17 @@ module API
                 @record = {}
                 @date = d.created_at.strftime("%Y-%m-%d")
                 @record[:record_date] = @date
-                @record[:record_content] = MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).where("created_at like '%#{@date}%'").order("created_at DESC")
+                @record[:record_content] = MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).where("created_at like '%#{@date}%' and user_id = #{@current_user.id}").order("created_at DESC")
                 @results.push(@record)
               end
               @results
+            else
+              error!("暂无数据")
             end
           end
 
         end
-        
+
       end
     end
   end
