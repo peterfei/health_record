@@ -38,7 +38,7 @@ class HealthItemsController < ApplicationController
             User.all.each do |user|
               HealthItem.create! name: @health_item.name,
               unit: @health_item.unit,
-              is_check:0,
+              is_check:1,
               user_id: user.id,
               is_admin:1,
               normal_min: @health_item.normal_min,
