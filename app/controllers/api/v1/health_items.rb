@@ -106,7 +106,13 @@ module API
               if HealthItem.find_by("user_id = ? AND name = ?", @current_user.id, params[:name]).present?
                 error!('项目已存在')
               else
-                if HealthItem.create! name: params[:name], unit: params[:unit], is_check: 0, user_id: @current_user.id, is_admin:0, normal_min: params[:normal_min], normal_max: params[:normal_max]
+                if HealthItem.create! name: params[:name], 
+                                                  unit: params[:unit], 
+                                                  is_check: 0, 
+                                                  user_id: @current_user.id, 
+                                                  is_admin:0, 
+                                                  normal_min: params[:normal_min], 
+                                                  normal_max: params[:normal_max]
                   { status: :ok }
                 else
                   error!('保存失败')

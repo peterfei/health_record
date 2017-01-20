@@ -10,6 +10,8 @@
         normal_min: "正常最小值"
         normal_max: "正常最大值"
         value_range: "取值范围"
+        icon: "图标"
+        icon_bgcolor: "图标背景色"
       health_item_sub:
         name: "子项目名称"
         sub_unit: "单位"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170113073314) do
+ActiveRecord::Schema.define(version: 20170119091253) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -70,16 +70,18 @@ ActiveRecord::Schema.define(version: 20170113073314) do
   end
 
   create_table "health_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name",                                comment: "名称"
-    t.string   "unit",                                comment: "单位"
-    t.integer  "is_check",                            comment: "是否开启项目数据记录"
+    t.string   "name",                                 comment: "名称"
+    t.string   "unit",                                 comment: "单位"
+    t.integer  "is_check",                             comment: "是否开启项目数据记录"
     t.integer  "user_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.integer  "is_admin",                            comment: "是否为系统默认项目"
-    t.float    "normal_max",  limit: 24,              comment: "正常最大值"
-    t.float    "normal_min",  limit: 24,              comment: "正常最小值"
-    t.string   "value_range",                         comment: "取值范围"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "is_admin",                             comment: "是否为系统默认项目"
+    t.float    "normal_max",   limit: 24,              comment: "正常最大值"
+    t.float    "normal_min",   limit: 24,              comment: "正常最小值"
+    t.string   "value_range",                          comment: "取值范围"
+    t.string   "icon",                                 comment: "图标"
+    t.string   "icon_bgcolor",                         comment: "图标背景色"
     t.index ["user_id"], name: "index_health_items_on_user_id", using: :btree
   end
 
