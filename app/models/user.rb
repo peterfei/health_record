@@ -17,7 +17,6 @@ class User < ApplicationRecord
 	def attributes(&block)
 		if block
 			super.merge(sex: User.sexes[self.sex],
-
 						id_type: User.id_types[self.id_type],
 						blood_type: User.blood_types[self.blood_type],
 						children: User.children[self.children],
@@ -40,14 +39,27 @@ class User < ApplicationRecord
 		def _create_item_user
 			helth_item=HealthItem.where("is_admin=1 AND user_id IS NULL")
 			helth_item.each do |item|
-				HealthItem.create! name:item.name,
+				@h = HealthItem.create! name:item.name,
 								 unit:item.unit,
 								 is_check:1,
 								 user_id:self.id,
 								 is_admin:1,
 								 normal_max:item.normal_max,
 								 normal_min:item.normal_min,
-								 value_range:item.value_range
+								 value_range:item.value_range,
+								 icon: item.icon,
+								 icon_bgcolor: item.icon_bgcolor
+				@health_item_subs = item.health_item_subs
+				if @health_item_subs.present?
+					@health_item_subs.each do |sub|
+						HealthItemSub.create! name: sub.name,
+							sub_unit: sub.sub_unit,
+							sub_max: sub.sub_max,
+							sub_min: sub.sub_min,
+							health_item_id: @h.id,
+							sub_value_range: sub.sub_value_range
+					end
+				end
 			end
 		end
 end

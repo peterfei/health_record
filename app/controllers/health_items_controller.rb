@@ -6,7 +6,7 @@ class HealthItemsController < ApplicationController
   # GET /health_items.json
   def index
     @name = params[:q][:name_cont] if params[:q].present?
-    @q=HealthItem.all.ransack(params[:q])
+    @q=HealthItem.all.order("is_admin DESC, is_check DESC").ransack(params[:q])
     @health_items = @q.result.page(params[:page])
   end
 
@@ -30,19 +30,22 @@ class HealthItemsController < ApplicationController
   # POST /health_items.json
   def create
     @health_item = HealthItem.new(health_item_params)
-    if params[:health_item][:value_range].present?
+    
+    if params[:health_item][:value_range].present? && params[:health_item][:icon].present? && params[:health_item][:icon_bgcolor].present?
       respond_to do |format|
         HealthItem.transaction do
           if @health_item.save
             User.all.each do |user|
               HealthItem.create! name: @health_item.name,
               unit: @health_item.unit,
-              is_check:0,
+              is_check:1,
               user_id: user.id,
               is_admin:1,
               normal_min: @health_item.normal_min,
               normal_max: @health_item.normal_max,
-              value_range: @health_item.value_range
+              value_range: @health_item.value_range,
+              icon: @health_item.icon,
+              icon_bgcolor: @health_item.icon_bgcolor
             end
             format.html { redirect_to health_items_path, notice: '新增成功！' }
             format.json { render :show, status: :created, location: @health_item }
@@ -54,14 +57,26 @@ class HealthItemsController < ApplicationController
       end
     else
       if params[:health_item][:name].present?
-        @health_item.errors.add(:value_range,"不能为空")
+        if !params[:health_item][:value_range].present?
+          @health_item.errors.add(:value_range,"不能为空")
+        elsif !params[:health_item][:icon].present?
+          @health_item.errors.add(:icon,"不能为空")
+        elsif !params[:health_item][:icon_bgcolor].present?
+          @health_item.errors.add(:icon_bgcolor,"不能为空")
+        end
         respond_to do |format|
           format.html { render :new }
           format.json { render json: @health_item.errors, status: :unprocessable_entity }
         end
       else
-        @health_item.errors.add(:value_range,"不能为空")
         @health_item.errors.add(:name,"不能为空")
+        if !params[:health_item][:value_range].present?
+          @health_item.errors.add(:value_range,"不能为空")
+        elsif !params[:health_item][:icon].present?
+          @health_item.errors.add(:icon,"不能为空")
+        elsif !params[:health_item][:icon_bgcolor].present?
+          @health_item.errors.add(:icon_bgcolor,"不能为空")
+        end
         respond_to do |format|
           format.html { render :new }
           format.json { render json: @health_item.errors, status: :unprocessable_entity }
@@ -96,6 +111,6 @@ class HealthItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def health_item_params
-      params.fetch(:health_item, {}).permit(:name, :unit, :normal_min, :normal_max, :is_admin, :value_range)
+      params.fetch(:health_item, {}).permit(:name, :unit, :normal_min, :normal_max, :is_admin, :value_range, :icon, :icon_bgcolor)
     end
   end

@@ -20,11 +20,11 @@ class MedicalRecordManagementsController < ApplicationController
       @ex_where << " AND created_at < '#{@end_at}'"
     end
     if @category.present?
-      @dates = MedicalRecordManagement.select(:created_at).where(@ex_where).
+      @dates = MedicalRecordManagement.select(:created_at).where(@ex_where).order("created_at DESC").
         group("DATE_FORMAT(created_at,'%Y-%m-%d')").
         tagged_with([@category], :any=> true, :wild => true).page(params[:page])
     else
-      @dates = MedicalRecordManagement.select(:created_at).where(@ex_where).
+      @dates = MedicalRecordManagement.select(:created_at).where(@ex_where).order("created_at DESC").
         group("DATE_FORMAT(created_at,'%Y-%m-%d')").page(params[:page])
     end
     @medical_record_managements = []
