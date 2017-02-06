@@ -186,7 +186,7 @@
                   <th>职称</th>
                   <th>兴趣爱好</th>
                   <th>手机号码</th>
-                  <th>操作</th>
+                  <th width="18%">操作</th>
                 </tr>
               </thead>
 
@@ -208,9 +208,9 @@
                     <td><%= user.username %></td>
                     <td>
                       <%= link_to '查看', user, class: "btn btn-primary"  %>
-                      <%= link_to '删除', user, method: :delete, data: { confirm: '确认删除吗?' }, class: "btn btn-danger" %>
+                      <%= link_to '删除', user, method: :delete, data: { confirm: '此用户所有相关数据将被永久移除,确认删除吗?' }, class: "btn btn-danger" %>
                       <% if user.vip_mark==1 %>
-                        <%= link_to '会员卡', UserVip.find(user.id), class: "btn btn-success"  %>
+                        <%= link_to '会员卡', UserVip.find_by("user_id=#{user.id}"), class: "btn btn-success"  %>
                       <% end %>
                     </td>
                   </tr>
@@ -245,7 +245,7 @@
                     <td><img style="width:100px;height:120px;" src="<%= user.wx_avatar %>"/></td>
                     <td>
                       <%= link_to '查看', user, class: "btn btn-primary"  %>
-                      <%= link_to '删除', user, method: :delete, data: { confirm: '确认删除吗?' }, class: "btn btn-danger" %>
+                      <%= link_to '删除', user, method: :delete, data: { confirm: '此用户所有数据将被永久移除,确认删除吗?' }, class: "btn btn-danger" %>
                     </td>
                   </tr>
                 <% end %>

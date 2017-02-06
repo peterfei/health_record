@@ -7,9 +7,9 @@ class HealthItemRecordsController < ApplicationController
   # GET /health_item_records.json
   def index
     if params[:q]
-      @health_item_id = params[:q][:health_item_id_eq]
-      @health_item = HealthItem.find(@health_item_id)
-      @user_id = params[:q][:health_item_user_id_eq]
+      @health_item_id = params[:q][:health_item_id_eq] rescue nil
+      @health_item = HealthItem.find(@health_item_id) rescue nil
+      @user_id = params[:q][:health_item_user_id_eq] rescue nil
       @start_at = DateTime.parse(params[:q][:created_at_gt]).strftime('%Y-%m-%d') if params[:q][:created_at_gt].present?
       @end_at = DateTime.parse(params[:q][:created_at_lt]).strftime('%Y-%m-%d') if params[:q][:created_at_lt].present?
       @q = HealthItemRecord.all.ransack(params[:q])

@@ -4,7 +4,9 @@ module API
       extend ActiveSupport::Concern
       require 'grape-kaminari' #分页
       require 'wechat'
+      
       included do
+        
         prefix "api"
         version "v1", using: :path
         default_format :json

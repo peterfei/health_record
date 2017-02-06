@@ -6,8 +6,7 @@ class MedicalRecordManagement < ApplicationRecord
 	before_save :_save_img
 	
 	private
-	# @return [转化ServerID保存]
-	def _save_img
-
-	end
+		# @return [转化ServerID保存]
+		def _save_img
+		end
 end

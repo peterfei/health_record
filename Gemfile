@@ -93,14 +93,38 @@ gem 'rb-readline'
 gem 'wechat'
 gem "omniauth-wechat-oauth2"
 
-
 #http request
 gem 'curb'
 
 #计划任务
 gem 'whenever'
+
 #config配置
 gem 'figaro'
-###文件上传组件 和图片工具
+
+#测试数据
+group :test do
+  gem "capybara"
+  gem "connection_pool"
+  gem "launchy"
+  gem "mocha"
+  gem "poltergeist"
+  gem "shoulda-context"
+  gem "shoulda-matchers", ">= 3.0.1"
+  gem 'fabrication'
+  gem 'database_cleaner'
+  gem 'minitest-around'
+  gem 'minitest-spec-context'
+  gem "guard"
+  gem "guard-minitest"
+  gem "rb-fsevent"
+  gem "terminal-notifier-guard"
+  gem 'minitest-spec-rails'
+  gem 'faker'
+  gem 'minitest-rg'
+  # gem "test_after_commit"
+end
+
+#文件上传组件 和图片工具
 gem 'carrierwave'
 gem 'mini_magick'

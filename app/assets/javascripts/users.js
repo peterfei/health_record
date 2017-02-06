@@ -15,7 +15,7 @@ function checkmedicalrecords(){
           for(var j=0;j<result[i].record_content.length;j++){
             str += '<li class="thumbnail">'+
               '<a href="'+result[i].record_content[j].image_path+'" target="_blank">'+
-                '<img src="'+result[i].record_content[j].image_path+'" />'+
+                '<img src="'+result[i].record_content[j].thumb_image_path+'" />'+
               '</a>'+
               '<hr style="margin-top:0px;margin-bottom:0px;border-color:#000;"/>'+
               '<dt class="text-center">'+result[i].record_content[j].name+'</dt>'+

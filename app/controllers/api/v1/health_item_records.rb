@@ -3,8 +3,9 @@ module API
     class HealthItemRecords< Grape::API
         include API::V1::Defaults
         include Grape::Kaminari
+        
         resource :health_item_records do
-
+          
           desc "查询某健康项目记录"
           params do
             requires :health_item_id, type: Integer, message: "未传health_item_id"
@@ -78,7 +79,7 @@ module API
                     @content[:name] = @health_item.name
                     @content[:content] = c.content
                     if @health_item.normal_max.present?
-                      if c.content>@health_item.normal_max
+                      if c.content.to_f>@health_item.normal_max
                         @content[:ex_max] = 1
                       else
                         @content[:ex_max] = 0
@@ -87,7 +88,7 @@ module API
                       @content[:ex_max] = 0
                     end
                     if @health_item.normal_min.present?
-                      if c.content<@health_item.normal_min
+                      if c.content.to_f<@health_item.normal_min
                         @content[:ex_min] = 1
                       else
                         @content[:ex_min] = 0

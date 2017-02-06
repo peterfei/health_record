@@ -13,7 +13,6 @@ class WechatsController < ActionController::Base
       user = OpenStruct.new(wechat.user request[:FromUserName])
       unless User.where(wx_id:user.openid).exists?
         User.transaction do
-
           User.create! truename:user.nickname,sex:user.sex,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname
         end
       end
