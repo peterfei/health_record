@@ -131,3 +131,4 @@ gem 'mini_magick'
 
 #部署项目
 gem 'mina'
+gem 'mina-puma', :require => false
