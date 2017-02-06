@@ -47,7 +47,10 @@ task :environment do
   # For those using RVM, use this to load an RVM version@gemset.
   invoke :'rvm:use[ruby-2.3.0@default]'
 end
-
+desc "Push repository to the remote server"
+task :before_clone do
+  system "git push server #{branch}"
+end
 # Put any custom mkdir's in here for when `mina setup` is ran.
 # For Rails apps, we'll make some of the shared paths that are shared between
 # all releases.
@@ -102,6 +105,7 @@ task :deploy => :environment do
   deploy do
     # Put things that will set up an empty directory into a fully set-up
     # instance of your project.
+    invoke :before_clone
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
@@ -113,6 +117,7 @@ task :deploy => :environment do
       # queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       # queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
     end
+    invoke :'deploy:cleanup'
   end
 end
 
