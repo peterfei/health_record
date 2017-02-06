@@ -16,6 +16,9 @@ require 'mina/whenever'
 set :domain, 'deploy@121.40.204.98'
 set :port, '23232'
 set :deploy_to, '/home/deploy/health_record'
+#git代码仓库
+# set :repository, 'git@172.16.101.16:ror/ezu365push.git'
+# git remote add server ssh://deploy@121.40.204.98:23232/home/deploy/ezu365.git
 set :repository, '/home/deploy/health_record.git'
 
 set :branch, 'dev'
