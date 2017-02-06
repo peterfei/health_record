@@ -13,13 +13,13 @@ require 'mina/whenever'
 #   repository   - Git repo to clone from. (needed by mina/git)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
-set :domain, 'root@172.16.100.195'
-set :port, '22'
-set :deploy_to, '/root/deploy/health_record'
-set :repository, '/root/deploy/health_record.git'
+set :domain, 'deploy@121.40.204.98'
+set :port, '23232'
+set :deploy_to, '/home/deploy/health_record'
+set :repository, '/home/deploy/health_record.git'
 
 set :branch, 'dev'
-set :rvm_path, '/root/deploy/.rvm/scripts/rvm'
+set :rvm_path, '/home/deploy/.rvm/scripts/rvm'
 set :bundle_gemfile, 'app/Gemfile'
 
 # For system-wide RVM install.
