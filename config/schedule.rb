@@ -17,14 +17,14 @@
 #   runner "AnotherModel.prune_old_records"
 # end
 
-##吃药提醒
-# every 1.minute do
-#   rake "call_sb_do_sm:reminding_medicine"
-# end
+#吃药提醒
+every 1.minute do
+  rake 'call_sb_do_sm:reminding_medicine'
+end
 
-##数据提醒
-# every 1.minute do
-#   rake "call_sb_do_sm:reminding_item"
-# end
+#数据提醒
+every 1.minute do
+  rake 'call_sb_do_sm:reminding_item'
+end
 
 # Learn more: http://github.com/javan/whenever
