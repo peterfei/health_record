@@ -16,6 +16,14 @@ development:
   username: root
   password: 123.com
   database: health_record
+
+production:
+  <<: *default
+  host: 172.16.100.51
+  port: 3306
+  username: root
+  password: 123.com
+  database: health_record
 test:
   <<: *default
   host: 172.16.100.51
