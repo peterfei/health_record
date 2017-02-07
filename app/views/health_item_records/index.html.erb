@@ -45,6 +45,7 @@
       <div class="box-content">
           <table class="table table-bordered">
             <tr>
+              <% if @health_item.present? %>
               <th>姓名</th>
               <th>采集时间</th>
               <% if @health_item.health_item_subs.present? %>
@@ -67,6 +68,7 @@
                   (单位:<%= @health_item.unit %>)
                 </th>
               <% end %>
+            <% end %>
             </tr>
             <% @health_item_records.each do |health_item_record| %>
               <tr>

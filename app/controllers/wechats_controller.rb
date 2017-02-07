@@ -35,7 +35,7 @@ class WechatsController < ActionController::Base
 
 
 	# 当用户点击菜单时
-	on :view, with: 'http://wechat.ittun.com/app' do |request, view|
+	on :view, with: 'http://jkgl.ezu365.cn/app' do |request, view|
 		request.reply.text "#{request[:FromUserName]} view #{view}"
 	end
 end

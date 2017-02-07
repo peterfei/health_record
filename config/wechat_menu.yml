@@ -6,6 +6,6 @@ button:
    -
     type: "view"
     name: "健康数据"
-    url: "http://peterfei.ittun.com/wx_health_data"
+    url: "http://jkgl.ezu365.cn/wx_health_data"
 
 
