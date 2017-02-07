@@ -30,7 +30,7 @@ set :bundle_gemfile, 'app/Gemfile'
 
 # 中括号里的文件 会出现在服务器项目附录的shared文件夹中，这里加入了secrets.yml，环境密钥无需跟开发计算机一样
 set :shared_paths, ['config/database.yml', 'log', 'config/secrets.yml','tmp','log','config/puma.rb','pid','public/uploads']
-set :rails_env, 'production'
+set :rails_env, 'development'
 
 # Optional settings:
 #   set :user, 'foobar'    # Username in the server to SSH to.
