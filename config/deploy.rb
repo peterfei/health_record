@@ -121,6 +121,11 @@ task :deploy => :environment do
   end
 end
 
+desc "加载种子数据"
+task :load_seed_data=> :environment do
+  queue 'echo "加载种子数据"'
+  queue! "cd #{deploy_to}/current  && bundle exec  rake db:seed"
+end
 # For help in making your deploy script, see the Mina documentation:
 #
 #  - http://nadarei.co/mina
