@@ -9,6 +9,7 @@ class HealthItem < ApplicationRecord
 	validates :name, presence: {message:'不能为空'}
 	validates_uniqueness_of :name, scope: :user_id, message: "不能重复"
 
+
 	def attributes
 		super.merge(subitems: subitems)
 	end

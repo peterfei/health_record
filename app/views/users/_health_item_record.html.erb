@@ -8,20 +8,20 @@
 	      </div>
 
 	      <div class="form-group col-md-2">
-	        <div style="font-size:18px;font-weight:bold;">姓名：<%= @user.truename %></div>
+	        <div style="font-weight:bold;margin-top: 8px">姓名：<%= @user.truename %></div>
 	      </div>
 	      <div class="form-group col-md-5">
-	        <label class="col-sm-3 control-label">日期:</label>
+	        <label class="col-sm-3 control-label" style="margin-top: 8px">日期:</label>
 	        <div class="col-md-4">
 	          <input type="text" name="start_at_record" id="start_at_record" class="form-control datepicker"/>
 	        </div>
-	        <div class="text-center col-sm-1">至</div>
+	        <div class="text-center col-sm-1" style="font-weight:bold;margin-top: 8px">至</div>
 	        <div class="col-md-4">
 	          <input type="text" name="end_at_record" id="end_at_record" class="form-control datepicker"/>
 	        </div>
 	      </div>
 	      <div class="form-group col-md-3">
-	        <label class="col-sm-5 control-label">项目名称:</label>
+	        <label class="col-sm-5 control-label" style="margin-top: 8px">项目名称:</label>
 	        <div class="col-md-7">
 	          <select name="health_item_id" id="health_item_id" class="form-control select2">
 			<option value="">--- 请选择 ---</option>
