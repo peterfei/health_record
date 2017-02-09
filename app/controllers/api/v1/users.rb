@@ -29,14 +29,45 @@ module API
           begin
             L.info "会员注册提交数据为**#{params.to_json}**"
             @user = User.find_by("wx_id = ?", params[:wx_id])
-            if @user.present?
-              @user.hobby_list.add(params[:hobby_list], parse: true)
-              @user.speciality_list.add(params[:speciality_list], parse: true)
-              @user.job_list.add(params[:job_list], parse: true)
-              @user.skill_level_list.add(params[:skill_level_list], parse: true)
-              # binding.pry
-              User.transaction do
-                if @user.update(username: params[:username],
+            if User.find_by("username = ?", params[:username]).present?
+              error!("此手机号已注册")
+            else
+              if @user.present?
+                @user.hobby_list.add(params[:hobby_list], parse: true)
+                @user.speciality_list.add(params[:speciality_list], parse: true)
+                @user.job_list.add(params[:job_list], parse: true)
+                @user.skill_level_list.add(params[:skill_level_list], parse: true)
+                User.transaction do
+                  if @user.update(username: params[:username],
+                    password: params[:password],
+                    truename: params[:truename],
+                    sex: params[:sex],
+                    age: params[:age],
+                    nation: params[:nation],
+                    id_type:params[:id_type],
+                    id_code:params[:id_code],
+                    blood_type: params[:blood_type],
+                    children: params[:children],
+                    education: params[:education],
+                    duty: params[:duty],
+                    vip_mark:1)
+                    UserVip.transaction do
+                      if UserVip.create! card_number: create_card_number, user_id: @user.id
+                        { status: :ok }
+                      else
+                        error!('保存失败')
+                      end
+                    end
+                  else
+                    error!('保存失败')
+                  end
+                end
+              else
+                User.transaction do
+                  @new_user = User.new :wx_id=> params[:wx_id],
+                  wx_name: params[:wx_name],
+                  wx_avatar: params[:wx_avatar],
+                  username: params[:username],
                   password: params[:password],
                   truename: params[:truename],
                   sex: params[:sex],
@@ -48,50 +79,22 @@ module API
                   children: params[:children],
                   education: params[:education],
                   duty: params[:duty],
-                  vip_mark:1)
-                  UserVip.transaction do
-                    if UserVip.create! card_number: create_card_number, user_id: @user.id
-                      { status: :ok }
-                    else
-                      error!('保存失败')
+                  vip_mark:1
+                  @new_user.hobby_list.add(params[:hobby_list], parse: true)
+                  @new_user.speciality_list.add(params[:speciality_list], parse: true)
+                  @new_user.job_list.add(params[:job_list], parse: true)
+                  @new_user.skill_level_list.add(params[:skill_level_list], parse: true)
+                  if @new_user.save
+                    UserVip.transaction do
+                      if UserVip.create! card_number: create_card_number, user_id: @new_user.id
+                        { status: :ok }
+                      else
+                        error!('保存失败')
+                      end
                     end
+                  else
+                    error!('保存失败')
                   end
-                else
-                  error!('保存失败')
-                end
-              end
-            else
-              User.transaction do
-                @new_user = User.new :wx_id=> params[:wx_id],
-                wx_name: params[:wx_name],
-                wx_avatar: params[:wx_avatar],
-                username: params[:username],
-                password: params[:password],
-                truename: params[:truename],
-                sex: params[:sex],
-                age: params[:age],
-                nation: params[:nation],
-                id_type:params[:id_type],
-                id_code:params[:id_code],
-                blood_type: params[:blood_type],
-                children: params[:children],
-                education: params[:education],
-                duty: params[:duty],
-                vip_mark:1
-                @new_user.hobby_list.add(params[:hobby_list], parse: true)
-                @new_user.speciality_list.add(params[:speciality_list], parse: true)
-                @new_user.job_list.add(params[:job_list], parse: true)
-                @new_user.skill_level_list.add(params[:skill_level_list], parse: true)
-                if @new_user.save
-                  UserVip.transaction do
-                    if UserVip.create! card_number: create_card_number, user_id: @new_user.id
-                      { status: :ok }
-                    else
-                      error!('保存失败')
-                    end
-                  end
-                else
-                  error!('保存失败')
                 end
               end
             end
