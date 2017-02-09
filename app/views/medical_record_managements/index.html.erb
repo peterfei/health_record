@@ -3,7 +3,7 @@
     <div class="box-self">
       <form  method="GET" accept-charset="UTF-8" action="/medical_record_managements" class="form-horizontal">
         <div class="form-group col-md-4">
-          <label class="col-sm-4 control-label">姓名:</label>
+          <label class="col-sm-4 control-label">名称:</label>
           <div class="col-md-8">
             <input type="text" name="name" value="<%= @name %>" id="name" class="form-control"/>
           </div>
@@ -13,7 +13,7 @@
           <div class="col-md-4">
             <input type="text" name="start_at" value="<%= @start_at %>" id="start_at" class="form-control datepicker"/>
           </div>
-          <div class="text-center col-sm-1">至</div>
+          <div class="text-center col-sm-1" style="font-weight:bold;margin-top: 8px">至</div>
           <div class="col-md-4">
             <input type="text" name="end_at" value="<%= @end_at %>" id="end_at" class="form-control datepicker"/>
           </div>
@@ -69,7 +69,7 @@
           <%= paginate @dates %>
           <%= page_entries_info @dates %>
         </div>
-        
+
         <!-- <h3 class="text-center">暂无数据</h3>
 
         <h3>2017/01/05</h3>
