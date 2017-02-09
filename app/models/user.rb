@@ -7,7 +7,7 @@ class User < ApplicationRecord
 	has_many :take_medicine_managements, dependent: :destroy
 
 	acts_as_taggable_on :hobby, :job, :speciality, :skill_level
-	enum sex: [:male, :female]
+	enum sex: [:unknown,:male, :female]
 	enum id_type: [:identity, :passport, :officer, :other_id]
 	enum blood_type: [:type_a, :type_b, :type_ab, :type_o, :type_other]
 	enum children: [:zero, :one, :two, :three, :more]
