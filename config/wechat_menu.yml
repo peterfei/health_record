@@ -1,0 +1,11 @@
+# More option see https://github.com/Eric-Guo/wechat#menu-create
+button:
+ -
+  name: "健康数据"
+  sub_button:
+   -
+    type: "view"
+    name: "健康数据"
+    url: "http://jkgl.ezu365.cn/wx_health_data"
+
+

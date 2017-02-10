@@ -1,0 +1,15 @@
+default: &default
+  appid:  <%= Figaro.env.wechat_app_id %>
+  secret: <%= Figaro.env.wechat_secret %>
+  token:  <%= Figaro.env.wechat_token %>
+
+development:
+  <<: *default
+  access_token: "/var/tmp/wechat_access_token"
+  # trusted_domain_fullname: "http://wechatdo.ngrok.cc"
+
+test:
+  <<: *default
+
+production:
+  <<: *default
