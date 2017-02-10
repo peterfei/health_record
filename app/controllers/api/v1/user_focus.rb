@@ -3,6 +3,14 @@ module API
 		class UserFocus< Grape::API
 			include API::V1::Defaults
 
+			helpers do
+        def send_temp_message(user)
+          wechat_api
+          temp = YAML.load(File.read("#{Rails.public_path}/add_user.yml"))
+          temp['templete']['data']['first']['value'] = user.wx_name
+          wechat.template_message_send Wechat::Message.to(user.wx_id).template(template['template'])
+        end
+			end
 			resource :user_focus do
 				# encoding: utf-8
 				# ########################################################
@@ -28,6 +36,7 @@ module API
 								follow_id=user.id
 								focu=UserFocu.where("((user_id='#{@current_user.id}' and follow_id='#{follow_id}') or (user_id='#{follow_id}' and follow_id='#{@current_user.id}') ) and (whether = 1 or whether = 0) ")
 								if focu.present?
+                  send_temp_message(user)
 									error!('已申请关注或已关注成功')
 								else
 									if UserFocu.create! appellation: params[:appellation], follow_id: follow_id, user_id: @current_user.id, whether: 0
