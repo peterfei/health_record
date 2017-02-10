@@ -1,6 +1,7 @@
 "zh-CN":
   user:
     sex:
+      unknown: "保密"
       male: "男"
       female: "女"
     id_type:
