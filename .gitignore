@@ -25,3 +25,4 @@
 # Ignore application configuration
 /config/application.yml
 /public/uploads/avatar/*
+/config/wechat_menu.yml
