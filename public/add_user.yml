@@ -1,0 +1,15 @@
+#添加关注提醒的模版消息
+template:
+  template_id: "3yGfp3ds033tcnR-rkuPQbUhGTtZGjW3QsnOPKBNhoA"
+  url: "http://jkgl.ezu365.cn/wx_health_data"
+  topcolor: "#FF0000"
+  data:
+    first:
+      value: "某某某"
+      color: "#173177"
+    key1:
+      value: "关注了你的账号"
+      color: "#FF0000"
+    remark:
+      value: "请点击查看详情！"
+      color: "#173177"
