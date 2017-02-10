@@ -10,13 +10,14 @@ function validate(){
       return false;
     }else{
       if(normal_min){
-        if(normal_min<value_arr[0]){
+        debugger
+        if(Number(normal_min)<Number(value_arr[0])){
           alert("正常最小值不能小于取值范围最小值!");
           return false;
         }
       }
       if(normal_max){
-        if(normal_max>value_arr[1]){
+        if(Number(normal_max)>Number(value_arr[1])){
           alert("正常最大值不能大于取值范围最大值!");
           return false;
         }
