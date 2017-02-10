@@ -14,7 +14,7 @@ class SmsApi
     result = client_post(phone,"验证码为#{code}。#{Figaro.env.content_tag}")
     {result:result,code:code}
   end
-  
+
   private
   def client_post(phone,content,wk:nil)
     begin
