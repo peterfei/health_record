@@ -26,3 +26,4 @@
 /config/application.yml
 /public/uploads/avatar/*
 /config/wechat_menu.yml
+/config/database.yml
