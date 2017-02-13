@@ -17,13 +17,13 @@ class User < ApplicationRecord
   before_update :_hashed_password
   after_create :_create_item_user
 
-  def attributes(&block)
+  def attributes &block
     if block
-      super.merge(sex: User.sexes[self.sex],
-            id_type: User.id_types[self.id_type],
-            blood_type: User.blood_types[self.blood_type],
-            children: User.children[self.children],
-            education: User.educations[self.education],
+      super.merge(sex: I18n.t("user.sex.#{self.sex}"),
+            id_type: I18n.t("user.id_type.#{self.id_type}"),
+            blood_type: I18n.t("user.blood_type.#{self.blood_type}"),
+            children: I18n.t("user.children.#{self.children}"),
+            education: I18n.t("user.education.#{self.education}"),
             hobby_list: hobby_list.join(","),
             speciality_list: speciality_list.join(","),
             job_list: job_list.join(","),
