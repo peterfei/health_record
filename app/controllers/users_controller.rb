@@ -48,7 +48,18 @@ class UsersController < ApplicationController
       @ex_where << " AND duty LIKE '%#{params[:duty]}%'"
     end
     if params[:hobby].present? || params[:job].present? || params[:skill_level].present?
-      @vip_users = User.where(@ex_where).tagged_with([params[:hobby], params[:job], params[:skill_level]], :any=> true, :wild => true).page(params[:vip_page])
+      @vip_users = User.where(@ex_where)
+      if params[:hobby].present?
+        @vip_users = @vip_users.tagged_with([params[:hobby]], :on => :hobby, :any => true)
+      end
+      if params[:job].present?
+        @vip_users = @vip_users.tagged_with([params[:job]], :on => :job, :any => true)
+      end
+      if params[:skill_level].present?
+        @vip_users = @vip_users.tagged_with([params[:skill_level]], :on => :skill_level, :any => true)
+      end
+      @vip_users = @vip_users.page(params[:vip_page])
+      # @vip_users = User.where(@ex_where).tagged_with([params[:hobby], params[:job], params[:skill_level]], :any=> true).page(params[:vip_page])
     else
       @vip_users = User.where(@ex_where).page(params[:vip_page])
     end
