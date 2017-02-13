@@ -37,6 +37,8 @@ module API
         post :sms_api do
           if params[:username].size != 11
             error!('电话号码格式不正确')
+          elsif User.all.exists?(username:params[:username])
+            error!('电话号码已被注册')
           else
             result = SmsApi.new.verify_code(params[:username])
             {data:result,status: 1}

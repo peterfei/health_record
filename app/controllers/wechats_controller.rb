@@ -14,11 +14,11 @@ class WechatsController < ActionController::Base
       unless User.where(wx_id:user.openid).exists?
 
         User.transaction do
-           if user.sex=='2' ||user.sex.to_i==2
-           	sex=1
-           else
-            sex=0
-           end
+           # if user.sex=='2' ||user.sex.to_i==2
+           # 	sex=1
+           # else
+           #  sex=0
+           # end
           User.create! truename:user.nickname,sex:sex,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname
 
         end

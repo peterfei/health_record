@@ -10,13 +10,24 @@ function validate(){
       return false;
     }else{
       if(normal_min){
-        debugger
+        if (Number(normal_min)==Number(value_arr[0])){
+          if (normal_min.length!=(value_arr[0].length)){
+            alert("正常最小值格式与取值范围最小值格式不统一");
+            return false;
+          }
+        }
         if(Number(normal_min)<Number(value_arr[0])){
           alert("正常最小值不能小于取值范围最小值!");
           return false;
         }
       }
       if(normal_max){
+        if (Number(normal_max)==Number(value_arr[1])){
+          if (normal_max.length!=(value_arr[1].length)){
+            alert("正常最大值格式与取值范围最大值格式不统一");
+            return false;
+          }
+        }
         if(Number(normal_max)>Number(value_arr[1])){
           alert("正常最大值不能大于取值范围最大值!");
           return false;
