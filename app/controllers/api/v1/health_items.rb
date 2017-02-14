@@ -106,14 +106,15 @@ module API
               if HealthItem.find_by("user_id = ? AND name = ?", @current_user.id, params[:name]).present?
                 error!('项目已存在')
               else
-                if HealthItem.create! name: params[:name],
+                @health_item = HealthItem.new name: params[:name],
                   unit: params[:unit],
                   is_check: 1,
                   user_id: @current_user.id,
                   is_admin:0,
                   normal_min: params[:normal_min],
                   normal_max: params[:normal_max]
-                  { status: :ok }
+                if @health_item.save
+                  { status: :ok, health_item: @health_item }
                 else
                   error!('保存失败')
                 end
