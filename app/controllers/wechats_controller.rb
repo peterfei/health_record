@@ -19,7 +19,7 @@ class WechatsController < ActionController::Base
            # else
            #  sex=0
            # end
-          User.create! truename:user.nickname,sex:sex,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname
+          User.create! truename:user.nickname,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname
 
         end
       end

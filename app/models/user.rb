@@ -58,7 +58,8 @@ class User < ApplicationRecord
   private
     #密码加密
     def _hashed_password
-      self.password = Digest::SHA1.hexdigest(self.password)
+      # binding.pry
+      self.password = Digest::SHA1.hexdigest(self.password) if self.password
     end
 
     def _create_item_user
