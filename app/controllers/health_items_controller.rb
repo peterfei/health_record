@@ -75,24 +75,34 @@ class HealthItemsController < ApplicationController
 		if params[:health_item][:value_range].present? && params[:health_item][:icon].present? && params[:health_item][:icon_bgcolor].present?
 			respond_to do |format|
 				HealthItem.transaction do
-					if @health_item.save
-						User.all.each do |user|
-							HealthItem.create! name: @health_item.name,
-							unit: @health_item.unit,
-							is_check:1,
-							user_id: user.id,
-							is_admin:1,
-							normal_min: @health_item.normal_min,
-							normal_max: @health_item.normal_max,
-							value_range: @health_item.value_range,
-							icon: @health_item.icon,
-							icon_bgcolor: @health_item.icon_bgcolor
+					if @health_item.is_admin==0
+						if @health_item.save
+							format.html { redirect_to health_items_path, notice: '新增成功！' }
+							format.json { render :show, status: :created, location: @health_item }
+						else
+							format.html { render :new }
+							format.json { render json: @health_item.errors, status: :unprocessable_entity }
 						end
-						format.html { redirect_to health_items_path, notice: '新增成功！' }
-						format.json { render :show, status: :created, location: @health_item }
 					else
-						format.html { render :new }
-						format.json { render json: @health_item.errors, status: :unprocessable_entity }
+						if @health_item.save
+							User.all.each do |user|
+								HealthItem.create! name: @health_item.name,
+								unit: @health_item.unit,
+								is_check:1,
+								user_id: user.id,
+								is_admin:1,
+								normal_min: @health_item.normal_min,
+								normal_max: @health_item.normal_max,
+								value_range: @health_item.value_range,
+								icon: @health_item.icon,
+								icon_bgcolor: @health_item.icon_bgcolor
+							end
+							format.html { redirect_to health_items_path, notice: '新增成功！' }
+							format.json { render :show, status: :created, location: @health_item }
+						else
+							format.html { render :new }
+							format.json { render json: @health_item.errors, status: :unprocessable_entity }
+						end
 					end
 				end
 			end
