@@ -47,11 +47,15 @@
 				<%= f.text_field :icon_bgcolor, placeholder: "格式: red, #f0f0f0, rgb(255,255,255)", class: "form-control" %>
 			</div>
 
-			<div class="btn-group">
+			<div>
+				<%if params[:action]=='new'%>
 				<%= f.radio_button :is_admin, 0, checked:true %>
-				<%= f.label :is_admin, "不是默认项目" %>
+				<%= f.label :is_admin, "不是默认项目"%>
 				<%= f.radio_button :is_admin, 1 %>
 				<%= f.label :is_admin, "是默认项目" %>
+				<%else%>
+				<%= f.hidden_field :is_admin %>
+				<%end%>
 			</div>
 
 			<div class="center col-md-8">
