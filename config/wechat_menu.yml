@@ -13,24 +13,20 @@ button:
     url: "http://jkgl.ezu365.cn/wx_health_family_data"
 
  -
-  name: "乐享'月.季'"
+  name: "乐享新生活"
   sub_button:
-   -
-    type: 'view'
-    name: '会员服务'
-    url: ''
    -
     type: "view"
     name: '基地展示'
-    url: ''
+    url: 'http://jkgl.ezu365.cn/wx_health_data'
    -
     type: "view"
-    name: "旅居产品"
-    url: ''
+    name: "产品介绍"
+    url: 'http://jkgl.ezu365.cn/wx_health_data'
    -
     type: "view"
-    name: "旅居产品"
-    url: ''
+    name: "公司介绍"
+    url: 'http://jkgl.ezu365.cn/wx_health_data'
  -
   name: "会员中心"
   sub_button:
