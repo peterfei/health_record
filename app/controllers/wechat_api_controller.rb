@@ -21,6 +21,18 @@ class WechatApiController <  ActionController::Base
 	end
 
 
+	def wx_health_family_data
+		wechat_oauth2 do |openid|
+			redirect_to("#{root_url<<"app?wx_id="<<openid<<"#/focusFamily"}")
+		end
+	end
+
+	def wx_health_family_member
+		wechat_oauth2 do |openid|
+			redirect_to("#{root_url<<"app?wx_id="<<openid<<"#/member"}")
+		end
+	end
+
 	def get_api_tickets
 		sign = wechat.jsapi_ticket.signature(URI::escape(params[:url]))
 		L.debug "生成的签名:#{sign}"

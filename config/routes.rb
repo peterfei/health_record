@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   # 微信相关
   get 'wx_rist' =>'wechat_api#wx_rist'
   get 'wx_health_data'=>'wechat_api#wx_health_data'
+  get 'wx_health_family_data'=>"wechat_api#wx_health_family_data"
+  get 'wx_health_family_member'=>"wechat_api#wx_health_family_member"
   post 'get_api_tickets'=>'wechat_api#get_api_tickets'
   #接口
   mount API::Base => "/"

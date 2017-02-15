@@ -5,7 +5,44 @@ button:
   sub_button:
    -
     type: "view"
-    name: "健康数据"
+    name: "我的健康"
     url: "http://jkgl.ezu365.cn/wx_health_data"
+   -
+    type: "view"
+    name: "家人健康"
+    url: "http://jkgl.ezu365.cn/wx_health_family_data"
 
-
+ -
+  name: "乐享'月.季'"
+  sub_button:
+   -
+    type: 'view'
+    name: '会员服务'
+    url: ''
+   -
+    type: "view"
+    name: '基地展示'
+    url: ''
+   -
+    type: "view"
+    name: "旅居产品"
+    url: ''
+   -
+    type: "view"
+    name: "旅居产品"
+    url: ''
+ -
+  name: "会员中心"
+  sub_button:
+   -
+    type: 'view'
+    name: '我的会员卡'
+    url: 'http://jkgl.ezu365.cn/wx_health_family_member'
+   -
+    type: 'view'
+    name: '会员权益'
+    url: 'http://jkgl.ezu365.cn/wx_health_family_member'
+   -
+    type: 'view'
+    name: '我的积分'
+    url: 'http://jkgl.ezu365.cn/wx_health_family_member'
