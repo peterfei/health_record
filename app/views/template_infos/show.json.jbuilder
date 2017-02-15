@@ -1,0 +1,1 @@
+json.partial! "template_infos/template_info", template_info: @template_info

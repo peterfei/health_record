@@ -27,7 +27,7 @@ class WechatsController < ActionController::Base
 			L.debug "微信关注用户获取失败#{e.to_json}"
 		end
 		# request.reply.text "欢迎使用 #{request[:FromUserName]}"
-		request.reply.text "欢迎使用"
+		request.reply.text Setting.template_info #template_img模板图片
 	end
 
 	on :text, with: '张轩' do |request|
