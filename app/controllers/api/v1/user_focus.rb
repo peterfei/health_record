@@ -4,11 +4,11 @@ module API
 			include API::V1::Defaults
 
 			helpers do
-        def send_temp_message(user,current_user)
-          temp = YAML.load(File.read("#{Rails.public_path}/add_user.yml"))
-          temp['template']['data']['first']['value'] = current_user.wx_name
-          Wechat.api.template_message_send Wechat::Message.to(user.wx_id).template(temp['template'])
-        end
+				def send_temp_message(user,current_user)
+					temp = YAML.load(File.read("#{Rails.public_path}/add_user.yml"))
+					temp['template']['data']['first']['value'] = current_user.wx_name
+					Wechat.api.template_message_send Wechat::Message.to(user.wx_id).template(temp['template'])
+				end
 			end
 			resource :user_focus do
 				# encoding: utf-8
@@ -29,7 +29,7 @@ module API
 					authenticate!
 					begin
 						L.info "添加关注提交数据为**#{params.to_json}**"
-						user=User.find_by("username=#{params[:tel]} and vip_mark=1")
+						user=User.find_by("username=#{params[:tel]}")
 						if user.present?
 							if  user.id != @current_user.id
 								follow_id=user.id
@@ -38,8 +38,9 @@ module API
 									error!('已申请关注或已关注成功')
 								else
 									if UserFocu.create! appellation: params[:appellation], follow_id: follow_id, user_id: @current_user.id, whether: 0
-                    send_temp_message(user,@current_user)
-                    { status: :ok }
+										binding.pry
+										send_temp_message(user,@current_user)
+										{ status: :ok }
 									else
 										error!('保存失败')
 									end
