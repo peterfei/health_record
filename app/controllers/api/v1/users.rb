@@ -147,7 +147,7 @@ module API
         desc "获取用户信息"
         get :get_user_info do
           authenticate!
-          User.find(@current_user.id).attributes{}
+          User.find(@current_user.id).attributes
         end
 
         # encoding: utf-8
@@ -167,6 +167,17 @@ module API
           @current_user.vip_mark rescue nil
           # binding.pry
           # User.find(@current_user.id).vip_mark
+        end
+
+        # ########################################################
+        # | Author: wangyang
+        # | Time: 2017-02-14 09:31:01
+        # | Description: 编辑获取用户信息
+        # ########################################################
+        desc "编辑获取用户信息"
+        get :edit_user_info do
+          authenticate!
+          User.find(@current_user.id).attributes
         end
 
         # encoding: utf-8

@@ -19,14 +19,15 @@ class WechatsController < ActionController::Base
            # else
            #  sex=0
            # end
-          User.create! truename:user.nickname,sex:sex,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname
+          User.create! truename:user.nickname,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname
 
         end
       end
 		rescue Exception => e
 			L.debug "微信关注用户获取失败#{e.to_json}"
 		end
-		request.reply.text "欢迎使用 #{request[:FromUserName]}"
+		# request.reply.text "欢迎使用 #{request[:FromUserName]}"
+		request.reply.text "欢迎使用"
 	end
 
 	on :text, with: '张轩' do |request|
