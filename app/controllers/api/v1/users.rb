@@ -238,6 +238,28 @@ module API
           end
         end
 
+        desc "开通关注家人"
+        params do
+          requires :phone, type: String, message: "未传电话号码"
+        end
+        post :init_focus do
+          authenticate!
+          begin
+            L.info "开通关注家人提交数据为**#{params.to_json}**"
+            @user=User.find(@current_user.id)
+            if @user.present?
+              if@user.update(username:params[:phone])
+                { status: :ok }
+              else
+                error!('提交失败')
+              end
+            end
+          rescue Exception => e
+            L.debug "开通关注家人数据提交错误**#{e.to_json}**"
+            error!('提交失败')
+          end
+        end
+
       end
       
     end
