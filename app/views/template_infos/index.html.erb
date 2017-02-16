@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="well col-md-5 center">
+    <form action="<%= template_infos_path %>" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>信息内容</label>
+        <textarea name="template_info" class="form-control"><%= @template_info %></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>图片</label>
+        <input type="file" name="template_img" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <img style="width:300px;height:350px;" src="<%= @template_img %>">
+      </div>
+
+      <div class="center col-md-8">
+        <button class="btn btn-success">更改</button>
+        <%= link_to "返回", "/", class: "btn btn-primary" %>
+      </div>
+    </form>
+  </div>
+</div><!--/row-->
