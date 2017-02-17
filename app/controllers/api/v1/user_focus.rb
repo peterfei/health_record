@@ -32,7 +32,7 @@ module API
 						if params[:tel].length>6
 						user=User.find_by("username=#{params[:tel]}")
 						else
-						user=User.find_by_sql("select * from users where RIGHT(wx_id,6)='#{params[:tel]}'")
+						user=User.where("right(wx_id,6) =?",params[:tel]).first
 						end
 						if user.present?
 							if  user.id != @current_user.id
@@ -42,7 +42,7 @@ module API
 									error!('已申请关注或已关注成功')
 								else
 									if UserFocu.create! appellation: params[:appellation], follow_id: follow_id, user_id: @current_user.id, whether: 0
-										send_temp_message(user,@current_user)
+										#send_temp_message(user,@current_user)
 										{ status: :ok }
 									else
 										error!('保存失败')
