@@ -22,7 +22,7 @@ module API
                 @record = {}
                 @date = d.created_at.strftime("%Y-%m-%d")
                 @record[:record_date] = @date
-                @record[:record_content] = MedicalRecordManagement.where("user_id = ? AND created_at LIKE ?", @current_user.id, "%#{@date}%")
+                @record[:record_content] = MedicalRecordManagement.where("user_id = ? AND created_at LIKE ?", @current_user.id, "%#{@date}%").map{|m| m.attributes.merge(:category=> m.category_list.join(","))}
                 @results.push(@record)
               end
             end
