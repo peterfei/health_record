@@ -29,7 +29,11 @@ module API
 					authenticate!
 					begin
 						L.info "添加关注提交数据为**#{params.to_json}**"
+						if params[:tel].length>6
 						user=User.find_by("username=#{params[:tel]}")
+						else
+						user=User.where("right(wx_id,6) =?",params[:tel]).first
+						end
 						if user.present?
 							if  user.id != @current_user.id
 								follow_id=user.id
