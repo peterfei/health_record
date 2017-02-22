@@ -139,6 +139,7 @@ module API
                     @record[:record_content].push(t)
                     end
                 end
+                 @record[:record_content]=@record[:record_content].map{|m|m.attributes.merge(category:m.category_list.join(","))}
                 @results.push(@record)
               end
               @results
@@ -171,7 +172,7 @@ module API
                 @record = {}
                 @date = d.created_at.strftime("%Y-%m-%d")
                 @record[:record_date] = @date
-                @record[:record_content] = MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).where("created_at like '%#{@date}%' and user_id = #{@current_user.id}").order("created_at DESC")
+                @record[:record_content] = MedicalRecordManagement.tagged_with(["#{params[:name]}"],:any => true,:wild => true).where("created_at like '%#{@date}%' and user_id = #{@current_user.id}").order("created_at DESC").map{|m|m.attributes.merge(category:m.category_list.join(","))}
                 @results.push(@record)
               end
               @results
