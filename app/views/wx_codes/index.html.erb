@@ -1,37 +1,37 @@
 <div class="row">
-  <div class="text-center"><h2>欢迎消息管理</h2></div>
+  <div class="text-center"><h2>推广二维码管理</h2></div>
   <div class="col-md-12">
     <div class="pull-right" style="margin-right:20px;">
-      <%= link_to '消息选择', select_message_template_infos_path,class:'btn btn-success' %>
-
-      <%= link_to '新增消息', new_template_info_path, class: 'btn btn-primary' %>
+      <%= link_to '新增二维码', new_wx_code_url, class: 'btn btn-primary' %>
     </div>
   </div>
   <div class="box col-md-12">
     <div class="box-inner">
       <div class="box-header well">
-        <h2>消息管理</h2>
+        <h2>二维码管理</h2>
       </div>
       <div class="box-content">
         <table class="table table-bordered text-overflow">
           <thead>
           <tr>
-            <th>标题</th>
-            <th>描述</th>
-            <th>封面图片</th>
-            <th>文章链接</th>
+            <th>名称</th>
+            <th>二维码类型</th>
+            <th>过期时间</th>
+            <th>二维码参数类型</th>
+            <th>二维码参数</th>
+            <th>二维码预览</th>
             <th>操作</th>
           </tr>
           </thead>
 
           <tbody>
-            <%= render partial: 'template_info'%>
+          <%= render partial: 'wx_codes'%>
           </tbody>
         </table>
 
         <div style="background:#f1f1f1;" class="text-center">
-          <%= paginate @wx_messages %>
-          <%= page_entries_info @wx_messages %>
+          <%= paginate @wx_codes %>
+          <%= page_entries_info @wx_codes %>
         </div>
 
       </div>

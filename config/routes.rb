@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :template_infos
+  resources :template_infos do
+    collection do
+      get 'select_message'
+      post 'do_select_message'
+    end
+  end
   resources :health_item_subs
   resources :user_vips
   resource :wechat, only: [:show, :create]
@@ -28,6 +33,14 @@ Rails.application.routes.draw do
     collection do
       post 'check_medical_records'
       post 'check_item_records'
+    end
+  end
+  resources :wx_codes do
+    collection do
+      post 'create_qrcode'
+    end
+    member do
+      get 'download_qrcode'
     end
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

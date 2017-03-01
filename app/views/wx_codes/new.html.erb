@@ -1,0 +1,23 @@
+<div class="box col-md-6">
+  <div class="box-inner">
+    <div class="box-header well">
+      <h2>新增二维码</h2>
+    </div>
+    <div class="box-content">
+      <%= render 'form'%>
+    </div>
+  </div>
+</div>
+<div class="box col-md-6">
+  <div class="box-header well">
+    <h2>二维码生成</h2>
+  </div>
+  <div class="box-content center">
+    <div class="alert alert-info">
+      请将做左边的表单填写完整后再点击下方的生成二维码字样
+    </div>
+    <%= link_to '产生二维码','#',class:'btn btn-warning btn-lg',title:'点击按钮，会生成左侧表单中所要求的二维码','data-toggle':'tooltip','data-placement':'left',id:'create_code'%>
+    <div id="loading" style="width:100%;margin-top: 20px">
+    </div>
+  </div>
+</div>

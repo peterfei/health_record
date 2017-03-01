@@ -7,27 +7,34 @@ class WechatsController < ActionController::Base
 	end
 
   on :event, with: 'subscribe' do |request|
-
-
+		#查询参数设置
+		if request[:EventKey].present?
+			mark = request[:EventKey][8...-1] rescue ''
+		end
+		#生成用户数据
     begin
       user = OpenStruct.new(wechat.user request[:FromUserName])
       unless User.where(wx_id:user.openid).exists?
-
         User.transaction do
-           # if user.sex=='2' ||user.sex.to_i==2
-           # 	sex=1
-           # else
-           #  sex=0
-           # end
-          User.create! truename:user.nickname,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname
-
+          User.create! truename:user.nickname,wx_avatar:user.headimgurl,wx_id:user.openid,wx_name:user.nickname,mark:mark
         end
       end
 		rescue Exception => e
 			L.debug "微信关注用户获取失败#{e.to_json}"
 		end
+		#欢迎消息发送
 		# request.reply.text "欢迎使用 #{request[:FromUserName]}"
-		request.reply.text Setting.template_info #template_img模板图片
+		# news = (1..1).each_with_object([]) { |n, memo| memo << { title: '新闻标题', description: "第#{n}条新闻的内容#{n.hash}" } }
+		news = WxMessage.where(:message_type=>'news',:status=>1).order('id asc').each_with_object([]){ |n,memo|
+			memo << { title:n.title,description:n.description,pic_url:root_url[0...-1]+n.pic_url.url,url:n.url}
+		}
+		request.reply.news(news) do |article, n| # 回复"articles"
+			article.item title: "#{n[:title]}", description: n[:description], pic_url: n[:pic_url], url: n[:url]
+		end
+	end
+
+	on :event,with: 'SCAN' do |request|
+
 	end
 
 	on :text, with: '张轩' do |request|
