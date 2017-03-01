@@ -17,4 +17,8 @@ class HealthItem < ApplicationRecord
 	def subitems
 		self.health_item_subs rescue nil
 	end
+
+	# def normal_min
+	# 	read_attribute(:normal_min).to_s
+	# end
 end

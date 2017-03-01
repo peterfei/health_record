@@ -2,7 +2,7 @@ module API
   module V1
     class Commons< Grape::API
       include API::V1::Defaults
-      
+
       # wechat_api
       resource :commons do
         desc "用户兴趣爱好"
@@ -52,7 +52,7 @@ module API
             # binding.pry
          end
       end
-      
+
     end
   end
 end
