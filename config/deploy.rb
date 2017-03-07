@@ -29,7 +29,7 @@ set :bundle_gemfile, 'app/Gemfile'
 #   set :rvm_path, '/usr/local/rvm/bin/rvm'
 
 # 中括号里的文件 会出现在服务器项目附录的shared文件夹中，这里加入了secrets.yml，环境密钥无需跟开发计算机一样
-set :shared_paths, ['config/database.yml', 'log', 'config/secrets.yml','tmp','log','config/puma.rb','pid','public/uploads']
+set :shared_paths, ['config/database.yml', 'log', 'config/secrets.yml','tmp','log','config/puma.rb','pid','public/uploads','config/application.yml']
 set :rails_env, 'development'
 
 # Optional settings:
