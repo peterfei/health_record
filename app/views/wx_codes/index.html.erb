@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="text-center"><h2>推广二维码管理</h2></div>
+  <div class="col-md-12">
+    <div class="pull-right" style="margin-right:20px;">
+      <%= link_to '新增二维码', new_wx_code_url, class: 'btn btn-primary' %>
+    </div>
+  </div>
+  <div class="box col-md-12">
+    <div class="box-inner">
+      <div class="box-header well">
+        <h2>二维码管理</h2>
+      </div>
+      <div class="box-content">
+        <table class="table table-bordered text-overflow">
+          <thead>
+          <tr>
+            <th>名称</th>
+            <th>二维码类型</th>
+            <th>过期时间</th>
+            <th>二维码参数类型</th>
+            <th>二维码参数</th>
+            <th>二维码预览</th>
+            <th>操作</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <%= render partial: 'wx_codes'%>
+          </tbody>
+        </table>
+
+        <div style="background:#f1f1f1;" class="text-center">
+          <%= paginate @wx_codes %>
+          <%= page_entries_info @wx_codes %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,4 +13,4 @@ Rails.application.config.assets.paths << Rails.root.join("vendor","assets","bowe
 Rails.application.config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff|woff2)$)
 Rails.application.config.assets.precompile += %w( **/*.coffee *.coffee *.css users.js health_items.js health_item_records.js health_item_attentions.js
 	medical_record_managements.js take_medicine_managements.js take_medicine_attentions.js welcome.js accounts.js user_focus.js user_vips.js
-	health_item_subs.js)
+	health_item_subs.js template_infos.js wx_codes.js)

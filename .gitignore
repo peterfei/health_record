@@ -27,3 +27,4 @@
 /public/uploads/avatar/*
 /config/wechat_menu.yml
 /config/database.yml
+/public/qr_code

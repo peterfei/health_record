@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170119091253) do
+ActiveRecord::Schema.define(version: 20170228070027) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -150,9 +150,9 @@ ActiveRecord::Schema.define(version: 20170119091253) do
 
   create_table "user_focus", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "appellation",              comment: "称呼"
-    t.integer  "whether",                  comment: "处理结果：0为未处理，1为同意，2为忽略"
-    t.integer  "follow_id",                comment: "被关注人ID"
-    t.integer  "user_id",                  comment: "请求关注人ID"
+    t.integer  "whether",                  comment: "关注状态，0为失败，1为成功，2为忽略"
+    t.integer  "follow_id",                comment: "被关注者id"
+    t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["user_id"], name: "index_user_focus_on_user_id", using: :btree
@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(version: 20170119091253) do
     t.string   "id_code",                             comment: "证件号码"
     t.integer  "education",                           comment: "最高学历"
     t.string   "duty",                                comment: "职务"
+    t.string   "mark",                                comment: "推广标记"
     t.index ["wx_id"], name: "index_users_on_wx_id", unique: true, using: :btree
   end
 
@@ -195,6 +196,33 @@ ActiveRecord::Schema.define(version: 20170119091253) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["openid"], name: "index_wechat_sessions_on_openid", unique: true, using: :btree
+  end
+
+  create_table "wx_codes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "title",                    comment: "名称"
+    t.integer  "expire_time",              comment: "二维码到期时间"
+    t.string   "url",                      comment: "二维码解析地址"
+    t.string   "ticket",                   comment: "二维码的ticket"
+    t.integer  "code_type"
+    t.integer  "scence_id",                comment: "二维码场景ID（数字类型参数）"
+    t.string   "scence_str",               comment: "二维码场景ID（字符串类型参数）"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "code_name"
+    t.string   "code_url"
+  end
+
+  create_table "wx_messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "title",                     comment: "标题"
+    t.string   "description",               comment: "描述"
+    t.string   "content",                   comment: "内容"
+    t.string   "pic_url",                   comment: "配图链接"
+    t.string   "url",                       comment: "跳转链接"
+    t.string   "media_id",                  comment: "微信多媒体文件ID"
+    t.integer  "message_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.integer  "status",                    comment: "启用状态"
   end
 
   add_foreign_key "api_user_keys", "users"

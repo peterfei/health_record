@@ -26,6 +26,8 @@
 //= require select2
 //= require select2_locale_zh-CN
 //= require select2/select2_ext
+//= require image-picker/image-picker.min
+//= require jquery.noty
 
 $(function () {
     //不带时间选择的datepicker
@@ -72,5 +74,47 @@ $(function () {
 
 	// 初始化页面中的 select
 	$('body').init_components();
+    $('.ImagePick').imagepicker({
+        show_label:true,
+        changed:function (oldValues,newValues) {
+            var dif,check;
+            var diff = function(a,b) {
+                var c = new Array();
+                for(var i = 0;i < a.length;i++){
+                    for(var j = 0; j < b.length;j++){
+                        if(a[i] == b[j]){
+                            break
+                        }else{
+                            if(j == b.length-1){
+                                c.push(a[i])
+                            }else{
+                                continue
+                            }
+                        }
+                    }
+                }
+                return c
+            };
+            if(newValues.length > oldValues.length){
+                dif = diff(newValues,oldValues);
+                check = 1
+            }else{
+                dif = diff(oldValues,newValues);
+                check = 0
+            }
+            $.ajax({
+                url:'/template_infos/do_select_message',
+                data:{
+                    diff:dif,
+                    updateValue:check
+                },
+                type:'post'
+            }).success(function () {
+
+            });
+        }
+
+
+    });
 });
 

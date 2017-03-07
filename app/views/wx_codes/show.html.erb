@@ -1,0 +1,62 @@
+<div class="box col-md-12">
+  <div class="box-inner">
+    <div class="box-header well">
+      <h2>
+        <i class="glyphicon glyphicon-plus"></i>
+        推广二维码
+      </h2>
+    </div>
+    <div class="box-content">
+      <div class="row">
+        <div class="col-md-6 word-wrap">
+          <ul class="dashboard-list">
+            <li>
+              <h4>名称</h4>
+              <%= @wx_code.title%>
+            </li>
+            <li>
+              <h4>二维码类型</h4>
+              <%= t("wx_code.code_type.#{@wx_code.code_type }") rescue ''%>
+            </li>
+            <li>
+              <h4>过期时间</h4>
+              <%= Time.at(@wx_code.expire_time).strftime('%Y-%m-%d %H:%M:%S') rescue '' %>
+            </li>
+            <li>
+              <h4>二维码参数类型</h4>
+              <%if @wx_code.scence_id.present?%>
+                  数字
+              <%elsif @wx_code.scence_str.present?%>
+                  字符
+              <%end%>
+            </li>
+            <li>
+              <h4>二维码参数</h4>
+              <%= @wx_code.scence_id || @wx_code.scence_str || '无参数'%>
+            </li>
+            <li>
+              <h4>二维码解析地址</h4>
+              <%= @wx_code.url%>
+            </li>
+            <li>
+              <h4>ticket</h4>
+              <%= @wx_code.ticket%>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <div class="center">
+            <p><%= image_tag @wx_code.code_url%></p>
+          </div>
+          <div class="center">
+            <%if @wx_code.url.present?%>
+                <%= link_to '下载二维码',download_qrcode_wx_code_path(@wx_code.id),class:'btn btn-info btn-lg'%>
+            <%end%>
+            <%= link_to '  返 回  ',wx_codes_path,class:'btn btn-warning btn-lg'%>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

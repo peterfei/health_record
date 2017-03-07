@@ -65,8 +65,7 @@ class User < ApplicationRecord
     def _create_item_user
       helth_item=HealthItem.where("is_admin=1 AND user_id IS NULL")
       helth_item.each do |item|
-        @h = HealthItem.create! name:item.name,
-                 unit:item.unit,
+        @h = HealthItem.create! name:item.name,unit:item.unit,
                  is_check:1,
                  user_id:self.id,
                  is_admin:1,
@@ -75,6 +74,7 @@ class User < ApplicationRecord
                  value_range:item.value_range,
                  icon: item.icon,
                  icon_bgcolor: item.icon_bgcolor
+        @h.update_attribute('is_check',0) unless %w(血压 空腹血糖 体温 体重).include?(@h.name)
         @health_item_subs = item.health_item_subs
         if @health_item_subs.present?
           @health_item_subs.each do |sub|

@@ -36,6 +36,10 @@
     role:
       admin: "管理员"
       general: "普通账号"
+  wx_code:
+    code_type:
+      temporary: "临时(有过期时间)"
+      permanent: "永久(无过期时间)"
   views:
     pagination:
       first: "&laquo; 首页"

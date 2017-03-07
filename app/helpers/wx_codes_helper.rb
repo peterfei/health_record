@@ -1,0 +1,2 @@
+module WxCodesHelper
+end

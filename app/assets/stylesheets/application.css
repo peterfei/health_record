@@ -17,8 +17,12 @@
  *= require bootstrap-datetimepicker
  *= require datepicker/datepicker3
  *= require select2/select2.min
+ *= require image-picker/image-picker
+ *= require noty-css/jquery.noty
+ *= require noty-css/noty_theme_default
  */
-//分页样式
+
+/*分页样式*/
 .pagination {
     background: #f1f1f1;
     border: 1px solid #e5e5e5;

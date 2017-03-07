@@ -1,0 +1,22 @@
+<%= content_tag_for(:tr,@wx_codes) do |code| %>
+  <td><%= code.title%></td>
+  <td><%= t("wx_code.code_type.#{code.code_type }") rescue '' %></td>
+  <td><%= Time.at(code.expire_time).strftime('%Y-%m-%d %H:%M:%S') rescue ''%></td>
+  <td>
+    <%if code.scence_id.present?%>
+      数字
+    <%elsif code.scence_str.present?%>
+      字符
+    <%end%>
+  </td>
+  <td><%= code.scence_id || code.scence_str || '无参数'%></td>
+  <td>
+    <%if code.url.present?%>
+      <%= image_tag code.code_url,width: 50,height: 50%>
+    <%end%>
+  </td>
+  <td>
+    <%= link_to '查看',wx_code_path(code.id),class:'btn btn-success'%>
+    <%= link_to '修改',edit_wx_code_path(code.id), class:'btn btn-primary'%>
+  </td>
+<%end%>

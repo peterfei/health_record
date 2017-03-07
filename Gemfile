@@ -133,3 +133,5 @@ gem 'mini_magick'
 #部署项目
 gem 'mina'
 gem 'mina-puma', :require => false
+
+gem 'record_tag_helper'

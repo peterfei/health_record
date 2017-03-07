@@ -1,17 +1,25 @@
-<%= form_for(template_info) do |f| %>
-  <% if template_info.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(template_info.errors.count, "error") %> prohibited this template_info from being saved:</h2>
-
-      <ul>
-      <% template_info.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<%= form_for @wx_message,:url=>template_infos_url,:html=>{:class=>''},multipart:true do |wx_message|%>
+    <div class="form-group">
+      <%= wx_message.label :title,'消息标题'%>
+      <%= wx_message.text_field :title,class:'form-control'%>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+    <div class="form-group">
+      <%= wx_message.label :description,'消息内容'%>
+      <%= wx_message.text_area :description,class:'form-control',size:'30x10',style:'resize:none'%>
+    </div>
+    <div class="form-group">
+      <%= wx_message.label :pic_url,'封面图片'%>
+      <%= wx_message.file_field :pic_url,class:'form-control'%>
+    </div>
+    <div class="form-group" style="display: none">
+      <%= image_tag '',style:'height:120px'%>
+    </div>
+    <div class="form-group">
+      <%= wx_message.label :url,'消息链接'%>
+      <%= wx_message.text_field :url,class:'form-control'%>
+    </div>
+    <div class="center col-md-8">
+      <%= wx_message.submit '新增',class:'btn btn-success'%>
+      <%= link_to '返回', template_infos_path, class: 'btn btn-primary' %>
+    </div>
+<%end%>

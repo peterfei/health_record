@@ -1,0 +1,15 @@
+<%= content_tag_for(:tr,@wx_messages) do |message| %>
+    <td><%= message.title%></td>
+    <td><%= message.description%></td>
+    <td>
+      <%if message.pic_url.present?%>
+        <%= image_tag message.pic_url,width: 50,height:50%>
+      <%else%>
+        无封面图片
+      <%end%>
+    </td>
+    <td><%= message.url%></td>
+    <td>
+      <%= link_to '修改',edit_template_info_path(message.id), class:'btn btn-primary'%>
+    </td>
+<%end%>
