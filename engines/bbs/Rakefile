@@ -35,3 +35,6 @@ end
 
 
 task default: :test
+
+spec = Gem::Specification.find_by_name 'bower-rails'
+load "#{spec.gem_dir}/lib/tasks/bower.rake"
