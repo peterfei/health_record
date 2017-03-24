@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :template_infos do
     collection do
       get 'select_message'
@@ -55,5 +56,7 @@ Rails.application.routes.draw do
   post 'get_api_tickets'=>'wechat_api#get_api_tickets'
   #接口
   mount API::Base => "/"
+  mount Bbs::Engine=>'/bbs',as:"/bbs"
+  # mount Agreements::Engine => "/agreements",:as => 'agreements'
 end
 

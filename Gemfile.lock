@@ -6,6 +6,12 @@ GIT
       grape
       kaminari
 
+PATH
+  remote: ./engines/bbs
+  specs:
+    bbs (0.1.0)
+      rails (~> 5.0.1)
+
 GEM
   remote: https://ruby.taobao.org/
   specs:
@@ -370,6 +376,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on (~> 4.0)
+  bbs (= 0.1.0)!
   bcrypt (~> 3.1.7)
   bootstrap3-datetimepicker-rails (~> 4.17.43)
   breadcrumbs_on_rails

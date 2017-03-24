@@ -70,18 +70,18 @@ ActiveRecord::Schema.define(version: 20170228070027) do
   end
 
   create_table "health_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name",                                 comment: "名称"
-    t.string   "unit",                                 comment: "单位"
-    t.integer  "is_check",                             comment: "是否开启项目数据记录"
+    t.string   "name",                                              comment: "名称"
+    t.string   "unit",                                              comment: "单位"
+    t.integer  "is_check",                                          comment: "是否开启项目数据记录"
     t.integer  "user_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "is_admin",                             comment: "是否为系统默认项目"
-    t.float    "normal_max",   limit: 24,              comment: "正常最大值"
-    t.float    "normal_min",   limit: 24,              comment: "正常最小值"
-    t.string   "value_range",                          comment: "取值范围"
-    t.string   "icon",                                 comment: "图标"
-    t.string   "icon_bgcolor",                         comment: "图标背景色"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "is_admin",                                          comment: "是否为系统默认项目"
+    t.float    "normal_max",   limit: 24,                           comment: "正常最大值"
+    t.float    "normal_min",   limit: 24,                           comment: "正常最小值"
+    t.string   "value_range",                                       comment: "取值范围"
+    t.string   "icon",                                              comment: "图标"
+    t.string   "icon_bgcolor",            default: "",              comment: "图标背景色"
     t.index ["user_id"], name: "index_health_items_on_user_id", using: :btree
   end
 
@@ -150,9 +150,9 @@ ActiveRecord::Schema.define(version: 20170228070027) do
 
   create_table "user_focus", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "appellation",              comment: "称呼"
-    t.integer  "whether",                  comment: "关注状态，0为失败，1为成功，2为忽略"
-    t.integer  "follow_id",                comment: "被关注者id"
-    t.integer  "user_id"
+    t.integer  "whether",                  comment: "处理结果：0为未处理，1为同意，2为忽略"
+    t.integer  "follow_id",                comment: "被关注人ID"
+    t.integer  "user_id",                  comment: "请求关注人ID"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["user_id"], name: "index_user_focus_on_user_id", using: :btree

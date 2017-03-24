@@ -135,3 +135,5 @@ gem 'mina'
 gem 'mina-puma', :require => false
 
 gem 'record_tag_helper'
+
+gem 'bbs','0.1.0',path:'./engines/bbs'
