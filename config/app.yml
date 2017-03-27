@@ -14,8 +14,8 @@ defaults: &defaults
     verify_code: ''
 
   wx:
-    appid: "wx53eb0519112c5efc"
-    secret: "bc127b0fbc1e366ef11fc4c24b539867"
+    appid: "wx068fdeb17841a0d7"
+    secret: "f96c2b0c7b951921fe7a930bdec4a15f"
 development:
   <<: *defaults
 
