@@ -10,8 +10,10 @@ PATH
   remote: ./engines/bbs
   specs:
     bbs (0.1.0)
+      acts_as_votable (~> 0.10.0)
       bower-rails
       rails (~> 5.0.1)
+      rails-settings-cached
       slim-rails
 
 GEM
@@ -56,6 +58,7 @@ GEM
       tzinfo (~> 1.1)
     acts-as-taggable-on (4.0.0)
       activerecord (>= 4.0)
+    acts_as_votable (0.10.0)
     addressable (2.5.0)
       public_suffix (~> 2.0, >= 2.0.2)
     arel (7.1.4)
@@ -324,7 +327,7 @@ GEM
     slim (3.0.7)
       temple (~> 0.7.6)
       tilt (>= 1.3.3, < 2.1)
-    slim-rails (3.1.1)
+    slim-rails (3.1.2)
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (~> 3.0)

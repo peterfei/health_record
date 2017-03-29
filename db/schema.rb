@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170228070027) do
+ActiveRecord::Schema.define(version: 20170329071726) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -39,6 +39,17 @@ ActiveRecord::Schema.define(version: 20170228070027) do
     t.datetime "updated_at",   null: false
     t.index ["access_token"], name: "index_api_user_keys_on_access_token", unique: true, using: :btree
     t.index ["user_id"], name: "index_api_user_keys_on_user_id", using: :btree
+  end
+
+  create_table "bbs_basics", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "bbs_name",                                    comment: "社区名称"
+    t.string   "bbs_desc",                                    comment: "社区简介"
+    t.string   "bbs_img",                                     comment: "社区头像"
+    t.string   "bbs_link",                                    comment: "社区链接地址"
+    t.integer  "bbs_super_user",                              comment: "社区创建者ID"
+    t.integer  "bbs_visit_count", default: 3000,              comment: "社区访问量"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   create_table "health_item_attentions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -188,6 +199,20 @@ ActiveRecord::Schema.define(version: 20170228070027) do
     t.string   "duty",                                comment: "职务"
     t.string   "mark",                                comment: "推广标记"
     t.index ["wx_id"], name: "index_users_on_wx_id", unique: true, using: :btree
+  end
+
+  create_table "votes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "votable_type"
+    t.integer  "votable_id"
+    t.string   "voter_type"
+    t.integer  "voter_id"
+    t.boolean  "vote_flag"
+    t.string   "vote_scope"
+    t.integer  "vote_weight"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope", using: :btree
+    t.index ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope", using: :btree
   end
 
   create_table "wechat_sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

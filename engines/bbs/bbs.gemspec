@@ -19,5 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 5.0.1"
   s.add_dependency "bower-rails"
   s.add_dependency "slim-rails"
-  # s.add_development_dependency "sqlite3"
+  s.add_dependency "rails-settings-cached"
+  s.add_dependency "acts_as_votable",'~> 0.10.0'
+
 end

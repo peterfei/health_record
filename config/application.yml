@@ -11,8 +11,8 @@
 #   stripe_publishable_key: pk_live_9lcthxpSIHbGwmdO941O1XVU
 
 
-wechat_app_id: "wxd7dcf2bd4d9c9617"
-wechat_secret: "744300d59f4334fecc57790d50c6da64"
+wechat_app_id: "wx068fdeb17841a0d7"
+wechat_secret: "f96c2b0c7b951921fe7a930bdec4a15f"
 wechat_token:  "wechat"
 wechat_encoding_aes_key: "Qg9jrCxMt1qKaDo0eMFuwycnEPUEtR1Kp0hGvNjhGMO"
 wechat_trusted_domain_fullname: "http://your_dev.proxy.qqbrowser.cc"
