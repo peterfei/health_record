@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170329071726) do
+ActiveRecord::Schema.define(version: 20170330050415) do
 
   create_table "accounts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
@@ -167,6 +167,19 @@ ActiveRecord::Schema.define(version: 20170329071726) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["user_id"], name: "index_user_focus_on_user_id", using: :btree
+  end
+
+  create_table "user_ssos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "account_id",                 null: false
+    t.string   "uid",                        null: false
+    t.string   "username"
+    t.string   "email"
+    t.string   "name"
+    t.string   "avatar_url"
+    t.text     "last_payload", limit: 65535, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["uid"], name: "index_user_ssos_on_uid", unique: true, using: :btree
   end
 
   create_table "user_vips", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

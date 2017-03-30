@@ -57,6 +57,15 @@ Rails.application.routes.draw do
   #接口
   mount API::Base => "/"
   mount Bbs::Engine=>'/bbs',as:"/bbs"
+
+  namespace :auth do
+    resource :sso, controller: 'sso' do
+      collection do
+        get :login
+        get :provider
+      end
+    end
+  end
   # mount Agreements::Engine => "/agreements",:as => 'agreements'
 end
 

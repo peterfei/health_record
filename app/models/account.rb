@@ -4,6 +4,8 @@ class Account < ApplicationRecord
 	devise :database_authenticatable, :registerable,
 	       :recoverable, :rememberable, :trackable, :authentication_keys => [:username]
 	enum role:[:admin, :general]
+	# 单点登陆
+    has_one :sso, class_name: 'UserSSO', dependent: :destroy
 	validates :username, uniqueness:{message:'不能重复'}, on: :create
 	validates :role, presence:{message:'不能为空'}, on: :create
 	validates :username, presence: {message:'账号不能为空'}

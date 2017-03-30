@@ -16,6 +16,11 @@ defaults: &defaults
   wx:
     appid: "wx068fdeb17841a0d7"
     secret: "f96c2b0c7b951921fe7a930bdec4a15f"
+  sso:
+    enable: true
+    enable_provider: true
+    url: 'http://localhost:3000/auth/sso'
+    secret: '1234'
 development:
   <<: *defaults
 

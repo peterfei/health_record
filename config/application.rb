@@ -24,5 +24,20 @@ module HealthRecord
         resource "*", headers: :any, methods: [:get, :post, :put, :delete, :options]
       end
     end
+
+    config.autoload_paths += [
+      Rails.root.join('lib')
+    ]
+    config.eager_load_paths += [
+      Rails.root.join('lib/health_record')
+    ]
+
+    if Rails.env.development?
+      %w( redis).each do |fname|
+        filename = "config/#{fname}.yml"
+        next if File.exist?(Rails.root.join(filename))
+        FileUtils.cp(Rails.root.join("#{filename}.default"), Rails.root.join(filename))
+      end
+    end
   end
 end

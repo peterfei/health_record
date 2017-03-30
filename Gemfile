@@ -137,3 +137,10 @@ gem 'mina-puma', :require => false
 gem 'record_tag_helper'
 
 gem 'bbs','0.1.0',path:'./engines/bbs'
+
+# Redis
+gem 'redis'
+gem 'hiredis'
+gem 'redis-namespace'
+gem 'redis-objects'
+gem 'redis-session-store'
